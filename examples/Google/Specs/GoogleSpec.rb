@@ -27,6 +27,6 @@ Scenario "On the Score Sense dashboard" do
     end
   #-------------------------------------------------------------------------------
   Finally "Close the browser" do
-    #Exit Browser
+    Exit Browser
   end
 end
