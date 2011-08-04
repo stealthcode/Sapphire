@@ -9,6 +9,7 @@ require 'win32ole'
 require 'json'
 
 Dir[File.dirname(__FILE__) + '/sapphire/Testing/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/sapphire/Configuration/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/Base/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DataAbstractions/*.rb'].each {|file| require file }
@@ -23,6 +24,8 @@ module Sapphire
     include DSL::Browser
     include DSL::Configuration
     include DSL::Data
+    include Configuration::AttrMethods
+    include Configuration
     include DataAbstractions
     include WebAbstractions
     include Testing
