@@ -5,11 +5,11 @@ module Sapphire
         if(item.is_a? Hash)
           ExecuteHashAgainstControl(item) do |control, arg|
             wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-            text = wait.until { x = control.Text
-              x unless x == ""
+            text = wait.until { x = control
+              x unless (!x.Equals(arg) && x.Equals(""))
             }
 
-            return text == arg
+            return text.Equals(arg)
           end
         elsif(item.is_a? Symbol)
           return IsVisible(item) == true

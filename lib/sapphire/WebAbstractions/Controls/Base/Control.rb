@@ -16,6 +16,16 @@ module Sapphire
         end
       end
 
+      def FindAll
+        if(@hash.has_key?(:id))
+          FindAllBy :id
+        elsif (@hash.has_key?(:name))
+          FindAllBy :name
+        elsif (@hash.has_key?(:xpath))
+          FindAllBy :xpath
+        end
+      end
+
       def FindWithoutWait
         if(@hash.has_key?(:id))
           FindWithoutWaitBy :id
@@ -33,6 +43,13 @@ module Sapphire
       def FindBy(symbol)
         wait = Selenium::WebDriver::Wait.new(:timeout => 10)
         element = wait.until { x = @browser.find_element symbol, @hash.fetch(symbol)
+            x
+        }
+      end
+
+      def FindAllBy(symbol)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+        element = wait.until { x = @browser.find_elements symbol, @hash.fetch(symbol)
             x
         }
       end
@@ -66,6 +83,10 @@ module Sapphire
           @browser.execute_script("document.evaluate( '" + @hash.fetch(:xpath) + "', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.visibility = 'visible'; ")
         end
         sleep(1)
+      end
+
+      def Equals(value)
+         self.Text == value
       end
     end
   end

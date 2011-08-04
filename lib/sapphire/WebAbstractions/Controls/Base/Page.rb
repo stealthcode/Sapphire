@@ -41,6 +41,10 @@ module Sapphire
         @fields << { args.first => Hyperlink.new(@browser, args[1]) }
       end
 
+      def List(*args)
+        @fields << { args.first => List.new(@browser, args[1]) }
+      end
+
     end
   end
 end
