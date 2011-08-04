@@ -1,6 +1,6 @@
 require File.expand_path('../../includes', File.dirname(__FILE__))
 
-Scenario "On the Score Sense dashboard" do
+Scenario "At google.com" do
 
   Background "A user is at www.google.com" do
     Start ConfiguredBrowser With GoogleUrl

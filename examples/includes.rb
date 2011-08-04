@@ -3,6 +3,7 @@ require 'sapphire'
 include Sapphire::Sapphire
 
 Dir[File.dirname(__FILE__) + '/Google/Pages/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/GitHub/Pages/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/RefactorToSapphire/*.rb'].each {|file| require file }
 
 if(!$config)
