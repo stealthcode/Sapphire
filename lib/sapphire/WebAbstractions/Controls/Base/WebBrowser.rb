@@ -49,7 +49,7 @@ module Sapphire
           nav = page
         end
 
-        temp = self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase) == true
+        temp = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
 
         return temp, nav
       end
@@ -65,11 +65,11 @@ module Sapphire
 
       def ShouldTransitionTo(url)
         if(url.instance_of?(String))
-          temp = self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase) == true
+          temp = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
           @rootUrl = url
         else
           x = url.new().Url
-          temp = self.CurrentUrl.upcase.start_with?("HTTPS://" + x.upcase) == true
+          temp = self.CurrentUrl.upcase.start_with?("HTTP://" + x.upcase) || temp = self.CurrentUrl.upcase.start_with?("HTTPS://" + x.upcase)
           @rootUrl = x
         end
 
