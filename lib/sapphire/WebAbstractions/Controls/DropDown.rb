@@ -11,6 +11,11 @@ module Sapphire
         text.value
       end
 
+      def Text
+        text = self.Find
+        text.attribute("value")
+      end
+
       def Set(value)
         text = self.Find
         text.send_keys value
@@ -18,8 +23,3 @@ module Sapphire
     end
   end
 end
-
-
-
-
-
