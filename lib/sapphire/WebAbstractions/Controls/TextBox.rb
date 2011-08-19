@@ -9,7 +9,7 @@ module Sapphire
 
       def Text
         text = self.Find
-        text.text
+        text.attribute("value")
       end
 
       def Set(value)
