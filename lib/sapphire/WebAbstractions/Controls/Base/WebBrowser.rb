@@ -51,6 +51,16 @@ module Sapphire
 
         temp = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
 
+        #if you aren't on the expected page, check the alternate urls
+        if(temp == false)
+          nav.AlternateUrls.each do |url|
+            temp = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
+            if(temp)
+              return temp, nav
+            end
+          end
+        end
+
         return temp, nav
       end
 
