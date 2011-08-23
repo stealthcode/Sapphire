@@ -2,6 +2,10 @@ module Sapphire
   module WebAbstractions
     class Page
 
+      def AlternateUrls
+        []
+      end
+
       attr_reader :fields
 
       def initialize(browser)
