@@ -7,8 +7,8 @@ module Sapphire
         x.each do |item|
           return true if item.text == value
         end
+        return false
       end
-
     end
   end
 end
