@@ -17,6 +17,7 @@ Dir[File.dirname(__FILE__) + '/sapphire/DSL/Browser/*.rb'].each {|file| require 
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Configuration/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Data/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Scenarios/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/sapphire/DSL/TestPlans/*.rb'].each {|file| require file }
 
 module Sapphire
   module Sapphire
@@ -24,6 +25,7 @@ module Sapphire
     include DSL::Browser
     include DSL::Configuration
     include DSL::Data
+    include DSL::TestPlans
     include Configuration::AttrMethods
     include Configuration
     include DataAbstractions
