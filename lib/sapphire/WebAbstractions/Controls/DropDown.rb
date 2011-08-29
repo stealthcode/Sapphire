@@ -2,8 +2,7 @@ module Sapphire
   module WebAbstractions
     class DropDown < Control
       def Selected= (value)
-        text = self.Find
-        text.send_keys value
+        Set(value)
       end
 
       def Selected
@@ -18,7 +17,10 @@ module Sapphire
 
       def Set(value)
         text = self.Find
-        text.send_keys value
+        options = text.find_elements(:tag_name, "option")
+        selection = options.find{|o| o.text == value}
+        raise "could not find the value " + value if selection.nil?
+        selection.click
       end
     end
   end

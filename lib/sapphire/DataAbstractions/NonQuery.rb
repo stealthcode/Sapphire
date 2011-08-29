@@ -5,8 +5,8 @@ module Sapphire
           x = self.Database.new
 
           x.Open $config[x.Connection]
-
-          path = File.expand_path(self.Script, __FILE__)
+          y = AppConfig.Current.SqlPath || ""
+          path = File.expand_path(y + self.Script, __FILE__)
           file = File.open(path)
           contents = file.read
           self.Tokenize(contents)
