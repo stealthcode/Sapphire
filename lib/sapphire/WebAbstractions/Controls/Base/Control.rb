@@ -50,7 +50,7 @@ module Sapphire
       def FindAllBy(symbol)
         wait = Selenium::WebDriver::Wait.new(:timeout => 10)
         element = wait.until { x = @browser.find_elements symbol, @hash.fetch(symbol)
-            x
+            x unless x.count == 0
         }
       end
 
@@ -86,7 +86,7 @@ module Sapphire
       end
 
       def Equals(value)
-         self.Text == value
+         Evaluation.new(self.Text, value)
       end
     end
   end

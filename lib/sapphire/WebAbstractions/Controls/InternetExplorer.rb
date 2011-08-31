@@ -11,7 +11,7 @@ module Sapphire
       attr_reader :browser
 
       def initialize
-        #@browser = Selenium::WebDriver.for :ie
+        @browser = Selenium::WebDriver.for :ie
         super(@browser)
         $browser = @browser
       end

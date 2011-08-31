@@ -8,11 +8,13 @@ require 'Forwardable'
 require 'win32ole'
 require 'json'
 
+require File.expand_path(File.dirname(__FILE__) +'/sapphire/Strategies/Strategy.rb', __FILE__)
 Dir[File.dirname(__FILE__) + '/sapphire/Testing/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/Configuration/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/Base/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DataAbstractions/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/sapphire/Strategies/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Browser/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Configuration/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Data/*.rb'].each {|file| require file }
@@ -21,6 +23,7 @@ Dir[File.dirname(__FILE__) + '/sapphire/DSL/TestPlans/*.rb'].each {|file| requir
 
 module Sapphire
   module Sapphire
+    include DSL::Strategies
     include DSL::Scenarios
     include DSL::Browser
     include DSL::Configuration

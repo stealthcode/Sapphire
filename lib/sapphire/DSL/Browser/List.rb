@@ -5,9 +5,11 @@ module Sapphire
       def Equals(value)
         x = self.FindAll
         x.each do |item|
-          return true if item.text == value
+          if item.text == value
+            return Evaluation.new(item.text, value)
+          end
         end
-        return false
+        return Evaluation.new("Value not found in list", value)
       end
     end
   end

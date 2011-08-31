@@ -2,12 +2,22 @@ module Sapphire
   module DSL
     module Data
       def Validate(hash)
-        hash.keys.each do |key|
-          if(hash[key].is_a? Symbol)
-            return GetPageField(hash[key]).Equals(key.to_s)
-          else
-            return key.to_s == hash[key].to_s
-          end
+        NullModifier.new(Validate.new(hash, @page, @browser))
+      end
+
+      class Validate
+        def initialize(item, page, browser)
+          @item = item
+          @page = page
+          @browser = browser
+        end
+
+        def ModifyWith(item)
+          @modifier = item
+        end
+
+        def execute
+          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page, @browser).Validate(@item), :modifier => @modifier }
         end
       end
     end

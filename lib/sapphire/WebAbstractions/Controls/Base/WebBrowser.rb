@@ -56,11 +56,12 @@ module Sapphire
           nav.AlternateUrls.each do |url|
             temp = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
             if(temp)
+              temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase), true)
               return temp, nav
             end
           end
         end
-
+        temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase), true)
         return temp, nav
       end
 
@@ -75,11 +76,11 @@ module Sapphire
 
       def ShouldTransitionTo(url)
         if(url.instance_of?(String))
-          temp = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
+          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase), true)
           @rootUrl = url
         else
           x = url.new().Url
-          temp = self.CurrentUrl.upcase.start_with?("HTTP://" + x.upcase) || temp = self.CurrentUrl.upcase.start_with?("HTTPS://" + x.upcase)
+          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + x.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + x.upcase), true)
           @rootUrl = x
         end
 

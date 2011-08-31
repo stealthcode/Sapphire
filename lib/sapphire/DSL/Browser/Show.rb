@@ -2,25 +2,22 @@ module Sapphire
   module DSL
     module Browser
       def Show(item)
-        if(item.is_a? Hash)
-          ExecuteHashAgainstControl(item) do |control, arg|
-            wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-            text = wait.until { x = control
-              x unless (!x.Equals(arg) && x.Equals(""))
-            }
+        NullModifier.new(Show.new(item, @page, @browser))
+      end
 
-            return text.Equals(arg)
-          end
-        elsif(item.is_a? Symbol)
-          return IsVisible(item) == true
-        elsif(item.is_a? Class)
-          temp, @page = @browser.ShouldNavigateTo item
-          @page.Init
-          return temp
-        else
-          @page = item
-          @page.Init
-          return true
+      class Show
+        def initialize(item, page, browser)
+          @item = item
+          @page = page
+          @browser = browser
+        end
+
+        def ModifyWith(item)
+          @modifier = item
+        end
+
+        def execute
+          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page, @browser).Show(@item, @modifier), :modifier => @modifier }
         end
       end
     end

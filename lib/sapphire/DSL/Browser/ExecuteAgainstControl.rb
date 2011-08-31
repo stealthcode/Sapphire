@@ -1,12 +1,12 @@
 module Sapphire
   module DSL
     module Browser
-      def ExecuteHashAgainstControl(hash, &block)
+      def ExecuteHashAgainstControl(hash, page, &block)
         hash.keys.each do |key|
-          @page.fields.each do |field|
+          page.fields.each do |field|
             field.keys.each do |field_key|
               if(field_key == key)
-                block.call(field[key], hash[key])
+                block.call(field[field_key], hash[key])
                 return
               end
             end
