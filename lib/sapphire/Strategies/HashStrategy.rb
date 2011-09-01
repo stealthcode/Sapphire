@@ -22,6 +22,7 @@ module Sapphire
              return control.Equals(arg)
            end
         end
+
       end
     end
   end

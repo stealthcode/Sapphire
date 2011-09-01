@@ -26,7 +26,28 @@ module Sapphire
           end
         end
 
-        raise "cannot find control matching " + args.to_s + " for page " + @page.to_s
+        raise "cannot find control matching " + item.to_s + " for page " + @page.to_s
+        end
+
+        def Hide(item, modifier)
+          @page.fields.each do |field|
+            field.keys.each do |field_key|
+              if(field_key == item)
+                begin
+                  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+                  element = wait.until { x = field[field_key].Find
+                      x and modifier.Modify(!x.displayed?)
+                  }
+                  if(element)
+                    return Evaluation.new(modifier.Modify(element.displayed?), modifier.Modify(true))
+                  end
+                rescue
+                 return Evaluation.new(true, true)
+                end
+              end
+            end
+          end
+          raise "cannot find control matching " + item.to_s + " for page " + @page.to_s
         end
 
         def Validate(hash)
