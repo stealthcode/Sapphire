@@ -31,7 +31,15 @@ module Sapphire
         end
 
         def Add(item)
-          @items << item
+          item.keys.each do |key|
+            @handlers.each do |handler|
+              handler.keys.each do |handler_key|
+                if(handler_key == key)
+                  handler[handler_key].Handle item[key]
+                end
+              end
+            end
+          end
         end
 
         def AddHandler(handler)
@@ -40,20 +48,8 @@ module Sapphire
 
         def execute
           @block.call
-          @items.each do |item|
-            item.keys.each do |key|
-              @handlers.each do |handler|
-                handler.keys.each do |handler_key|
-                  if(handler_key == key)
-                    handler[handler_key].Handle item[key]
-                  end
-                end
-              end
-            end
-          end
         end
       end
-
     end
   end
 end
