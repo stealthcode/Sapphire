@@ -1,17 +1,13 @@
 module Sapphire
   module DSL
     module Browser
-      class Browser
-        def Close
-          sleep(2)
-          $browser.close
-        end
-
-        def Switch
+      class AlertBox
+        def Accept
+          alert = $browser.switch_to.alert
+          alert.accept()
           $browser.switch_to.window($browser.window_handles[0])
         end
       end
     end
   end
 end
-
