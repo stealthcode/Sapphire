@@ -14,6 +14,7 @@ Dir[File.dirname(__FILE__) + '/sapphire/Configuration/*.rb'].each {|file| requir
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/Base/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DataAbstractions/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/sapphire/JobAbstractions/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/Strategies/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Browser/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Configuration/*.rb'].each {|file| require file }
@@ -32,6 +33,7 @@ module Sapphire
     include Configuration::AttrMethods
     include Configuration
     include DataAbstractions
+    include JobAbstractions
     include WebAbstractions
     include Testing
   end
