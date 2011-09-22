@@ -4,18 +4,24 @@ module Sapphire
 
       attr_accessor :results
       attr_accessor :type
+      attr_accessor :text
+      attr_accessor :message
+      attr_accessor :stack
+      attr_accessor :time
+      attr_accessor :parent
+      attr_accessor :item
 
       def initialize(text, result)
 
         @type = 'pass'
-        @execution_time = 0
+        @time = 0
 
         if(result != nil)
           self.type = result.type
           @iconCls = "accept" if result.type == "pass"
           @iconCls = "delete" if result.type == "fail"
           @iconCls = "error" if result.type == "pending"
-          @execution_time = result.execution_time
+          @time = result.execution_time
           @expanded = true
           @message = result.message
           @stack = result.stack
@@ -27,6 +33,7 @@ module Sapphire
       end
 
       def AddChild(node)
+        node.parent = self
         @results << node
         @leaf = false
       end

@@ -16,6 +16,7 @@ class Background
   end
 
   def AddResult(result)
+    result.item = self
     @results << result
     self.parent.result.AddChild(result)
   end

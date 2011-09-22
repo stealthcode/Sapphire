@@ -27,6 +27,7 @@ class Then
   end
 
   def AddResult(result)
+    result.item = self
     @results << result
     self.parent.results.last.AddChild(result)
   end

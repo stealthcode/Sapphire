@@ -78,6 +78,8 @@ module Sapphire
           end
           end
         end
+
+        true
       end
     end
   end

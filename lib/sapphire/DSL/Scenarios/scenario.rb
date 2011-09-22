@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Scenarios
       class Scenario
-        include Sapphire::Testing::RSpecRunner
+        include Sapphire::Testing::TestRunnerAdapter
 
         attr_reader :block
         attr_reader :value

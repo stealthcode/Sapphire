@@ -47,7 +47,9 @@ module Sapphire
         end
 
         def execute
+          $stdout.puts ""
           @block.call
+          ConsoleReporter.new().OutputResults
         end
       end
     end

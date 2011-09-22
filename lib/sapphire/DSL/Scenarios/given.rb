@@ -45,11 +45,12 @@ class Given
     if(self.value.is_a? Pending)
       self.and << And.new(self, Pending.new(pre + text), &block)
     else
-      self.and << And.new(self, text, &block)
+      self.and << And.new(self, pre + text, &block)
     end
   end
 
   def AddResult(result)
+    result.item = self
     @results << result
     self.parent.result.AddChild(result)
   end

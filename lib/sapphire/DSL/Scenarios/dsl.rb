@@ -50,8 +50,8 @@ module Sapphire
 
       def Scenario(text, &block)
         Runner.instance.add_scenario(Scenario.new(text, &block))
-        #Runner.instance.last_scenario.block.call
-        Runner.instance.last_scenario.execute 1
+        Runner.instance.last_scenario.block.call
+        #Runner.instance.last_scenario.execute 1
       end
     end
   end

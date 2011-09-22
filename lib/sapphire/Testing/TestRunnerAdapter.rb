@@ -3,6 +3,9 @@ module Sapphire
     module TestRunnerAdapter
 
       def execute(id)
+        @failures = []
+        @pendings = []
+        @success = []
 
         self.backgrounds.each do |b|
 
@@ -53,7 +56,6 @@ module Sapphire
         end
 
       end
-
     end
   end
 end

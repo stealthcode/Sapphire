@@ -5,14 +5,14 @@ module Sapphire
       attr_reader :execution_time
       attr_reader :message
       attr_reader :myId
-      attr_reader :text
+      attr_reader :item
       attr_reader :type
       attr_reader :stack
       attr_reader :message
 
-      def initialize(type, text, message, stack, execution_time, id)
+      def initialize(type, item, message, stack, execution_time, id)
         @myId = id
-        @text = text
+        @item = item
         @execution_time = execution_time
         @message = message
         @stack = stack

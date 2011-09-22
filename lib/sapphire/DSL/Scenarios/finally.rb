@@ -26,6 +26,7 @@ class Finally
   end
 
   def AddResult(result)
+    result.item = self
     @results << result
   end
 

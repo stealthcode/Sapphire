@@ -5,6 +5,8 @@ module Sapphire
       attr_reader :results
       attr_accessor :myId
       attr_reader :type
+      attr_reader :time
+      attr_reader :parent
 
       def initialize(text)
         @text = text
@@ -12,10 +14,13 @@ module Sapphire
         @leaf = true
         @myId = -1
         @type = 'pass'
+        @time = 0
       end
 
       def AddChild(result)
+        result.parent = self
         @results << result
+        @time += result.time
       end
 
       def set_id(id)

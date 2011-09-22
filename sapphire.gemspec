@@ -17,5 +17,7 @@ Gem::Specification.new do |s|
   #s.add_dependency('rspec', '= 2.6.0.rc6')
   s.add_dependency('selenium-webdriver')
   s.add_dependency('activesupport')
+  s.add_dependency('colorize')
+  s.add_dependency('win32console')
 end
 
