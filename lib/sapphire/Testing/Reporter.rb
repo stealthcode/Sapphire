@@ -36,7 +36,7 @@ module Sapphire
       end
 
       def PrintResult(entry)
-        if entry.item.is_a? Given
+        if entry.item.is_a? Given or entry.item.is_a? Background
           self.InsertLineBreak
           self.Output entry, 0
           self.InsertLineBreak
@@ -112,7 +112,7 @@ module Sapphire
 
         result.results.each do |r|
           result_passes = r.type == "pass"
-          if !result_passes and (r.item.is_a? Given or r.item.is_a? When)
+          if !result_passes and (r.item.is_a? Given or r.item.is_a? When or r.item.is_a? Background)
             results = results.merge({ r => r })
             next
           elsif !result_passes and (r.item.is_a? And or r.item.parent.is_a? Given)

@@ -1,0 +1,12 @@
+$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+
+require 'sapphire'
+
+include Sapphire::Sapphire
+
+ARGV.each do |arg|
+  require arg
+  Runner.instance.last_scenario.execute 1
+end
+
+ConsoleReporter.new().OutputResults

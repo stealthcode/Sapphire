@@ -19,7 +19,7 @@ module Sapphire
       end
 
       def PrintHeader()
-
+        $stdout.puts ""
       end
 
       def PrintFooter()

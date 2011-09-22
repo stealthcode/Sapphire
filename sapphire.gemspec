@@ -13,10 +13,9 @@ Gem::Specification.new do |s|
   s.files       = Dir['lib/**/*.rb']
   s.has_rdoc    = false
   s.require_paths = ["lib"]
-  s.add_dependency('albacore')
-  #s.add_dependency('rspec', '= 2.6.0.rc6')
+  s.default_executable = %q{sapphire}
+  s.executables = ["sapphire"]
   s.add_dependency('selenium-webdriver')
-  s.add_dependency('activesupport')
   s.add_dependency('colorize')
   s.add_dependency('win32console')
 end
