@@ -3,8 +3,9 @@ module Sapphire
     module TestPlans
 
       def TestPlan(text, &block)
-         Runner.instance.add_test_plan(TestPlan.new(text, &block))
-         Runner.instance.last_test_plan.execute
+        reporter = ConsoleReporter.new()
+        Runner.instance.add_test_plan(TestPlan.new(text, &block))
+        Runner.instance.last_test_plan.execute reporter
       end
 
       class TestPlan
@@ -46,10 +47,10 @@ module Sapphire
           @handlers << handler
         end
 
-        def execute
+        def execute(reporter)
           $stdout.puts ""
           @block.call
-          ConsoleReporter.new().OutputResults
+          reporter.OutputResults
         end
       end
     end

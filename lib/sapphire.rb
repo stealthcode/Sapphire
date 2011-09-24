@@ -1,5 +1,4 @@
 require "rubygems"
-require "rspec"
 require 'yaml'
 require 'selenium-webdriver'
 require 'delegate'

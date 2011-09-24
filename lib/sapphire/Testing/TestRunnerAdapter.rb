@@ -2,14 +2,15 @@ module Sapphire
   module Testing
     module TestRunnerAdapter
 
-      def execute(id)
+      def execute(reporter)
+        reporter.ScenarioStart self
         @failures = []
         @pendings = []
         @success = []
 
         self.backgrounds.each do |b|
 
-          b.execute id
+          b.execute reporter
 
         end
 
@@ -17,29 +18,29 @@ module Sapphire
 
           g.when.each do |w|
 
-            g.execute id
+            g.execute reporter
 
             g.and.each do |g_a|
 
-              g_a.execute id
+              g_a.execute reporter
 
             end
 
-            w.execute id
+            w.execute reporter
 
             w.and.each do |w_a|
 
-              w_a.execute id
+              w_a.execute reporter
 
             end
 
             w.then.each do |t|
 
-              t.execute id
+              t.execute reporter
 
               t.and.each do |t_a|
 
-                t_a.execute id
+                t_a.execute reporter
 
               end
 
@@ -49,11 +50,13 @@ module Sapphire
 
           if(g.finally)
 
-            g.finally.execute id
+            g.finally.execute reporter
 
           end
 
         end
+
+        reporter.ScenarioComplete self
 
       end
     end

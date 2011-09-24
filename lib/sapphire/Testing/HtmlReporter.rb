@@ -2,11 +2,27 @@ module Sapphire
   module Testing
     class HtmlReporter < Reporter
 
+      def ScenarioStart(scenario)
+
+      end
+
+      def ScenarioComplete
+
+      end
+
+      def PrintItem(result, depth)
+
+      end
+
       def PrintHeader()
 
       end
 
-      def Output(result, tabber)
+      def PrintFooter()
+
+      end
+
+      def InsertLineBreak()
 
       end
 
@@ -14,15 +30,15 @@ module Sapphire
 
       end
 
-      def PrintResult(entry)
-
-      end
-
       def PostPrint
 
       end
 
-      def PrintFooter()
+      def TestStarted(test)
+
+      end
+
+      def TestCompleted(test)
 
       end
 

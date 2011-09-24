@@ -1,28 +1,29 @@
 module Sapphire
   module Testing
     module Executable
-      def execute(id)
+      def execute(reporter)
         start = Time.now
+        reporter.TestStarted(self.text)
         begin
           if(self.value.is_a? Pending)
-            self.AddResult(ResultTree.new(self.text, TestResult.new("pending", self, "Pending", "", Time.now - start, id)))
-            $stdout.print "*".yellow
+            result = ResultTree.new(self.text, TestResult.new("pending", self, "Pending", "", Time.now - start))
+            self.AddResult(result)
+            reporter.TestCompleted result
             return
           end
           self.block.call
-          self.AddResult(ResultTree.new(self.text, TestResult.new("pass", self, "Success", "", Time.now - start, id)))
-          $stdout.print ".".green
+          result = ResultTree.new(self.text, TestResult.new("pass", self, "Success", "", Time.now - start))
+          self.AddResult(result)
+          reporter.TestCompleted result
         rescue => msg
-          stack = ""
-          msg.backtrace.each do |line|
-            stack += "\r\n" + line
-          end
-
-          self.AddResult(ResultTree.new(self.text, TestResult.new("fail", self, msg.message, stack, Time.now - start, id)))
-          $stdout.print "F".red
+          stack = msg.backtrace
+          message = msg.messages if (msg.is_a? ExpectationException)
+          message ||= msg.message
+          result = ResultTree.new(self.text, TestResult.new("fail", self, message, stack, Time.now - start))
+          self.AddResult(result)
+          reporter.TestCompleted result
         end
       end
-      @result
     end
   end
 end

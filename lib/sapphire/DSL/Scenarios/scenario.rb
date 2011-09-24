@@ -10,6 +10,7 @@ module Sapphire
         attr_reader :givens
         attr_reader :backgrounds
         attr_reader :result
+        attr_accessor :file_name
 
         def initialize(text, &block)
           @value = text

@@ -2,12 +2,11 @@ module Sapphire
   module DSL
     module TestPlans
       class FileHandler
-        def Handle(item)
+        def Handle(item, reporter)
           x = AppConfig.Current.SpecsPath || ""
           require File.expand_path(x + item, __FILE__)
-          $stdout.puts item + ": "
-          Runner.instance.last_scenario.execute 1
-          $stdout.puts ""
+          Runner.instance.last_scenario.file_name = item
+          Runner.instance.last_scenario.execute reporter
         end
       end
     end

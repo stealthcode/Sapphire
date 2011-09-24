@@ -5,7 +5,7 @@ module Sapphire
       attr_accessor :results
       attr_accessor :type
       attr_accessor :text
-      attr_accessor :message
+      attr_accessor :messages
       attr_accessor :stack
       attr_accessor :time
       attr_accessor :parent
@@ -23,7 +23,7 @@ module Sapphire
           @iconCls = "error" if result.type == "pending"
           @time = result.execution_time
           @expanded = true
-          @message = result.message
+          @messages = result.messages
           @stack = result.stack
         end
         @text = text

@@ -13,12 +13,36 @@ module Sapphire
           $stdout.puts " ## Not Yet Implemented ##"
         else
           $stdout.puts result.text.red
-          Indent(depth+1)
-          $stdout.puts result.message
+          if result.messages.is_a? Array
+            result.messages.each do |message|
+              Indent(depth+1)
+              $stdout.puts message
+            end
+
+          else
+            Indent(depth+1)
+            $stdout.puts result.messages
+          end
+          $stdout.puts ""
+          result.stack.each do |line|
+            if (!line.include? "sapphire")
+              Indent(depth+1)
+              $stdout.puts line
+            end
+          end
+
         end
       end
 
       def PrintHeader()
+        $stdout.puts ""
+      end
+
+      def ScenarioStart(scenario)
+        $stdout.puts scenario.file_name + ": "
+      end
+
+      def ScenarioComplete(scenario)
         $stdout.puts ""
       end
 
@@ -48,6 +72,17 @@ module Sapphire
       def PostPrint
 
       end
+
+      def TestStarted(test)
+
+      end
+
+      def TestCompleted(test)
+        $stdout.print "*".yellow if test.type == "pending"
+        $stdout.print ".".green if test.type == "pass"
+        $stdout.print "F".red if test.type == "fail"
+      end
+
     end
   end
 end

@@ -21,7 +21,16 @@ module Sapphire
         end
 
         if(results.is_a? Evaluation)
-          results.left.should == results.right
+          if(results.left != results.right)
+            messages = []
+
+            messages << "expected: (nil)" if results.left == nil
+            messages << "expected: " + results.left.to_s if results.left != nil
+            messages << "got: (nil)" if results.right == nil
+            messages << "got: " + results.right.to_s if results.right != nil
+
+            raise ExpectationException.new(messages)
+          end
           return
         end
 
