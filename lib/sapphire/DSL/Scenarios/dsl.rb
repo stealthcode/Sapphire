@@ -20,7 +20,7 @@ module Sapphire
       def And(text, &block)
 
         if(Runner.instance.last_scenario.last_given == nil && Runner.instance.last_scenario.last_background != nil)
-          Runner.instance.last_scenario.add_background(Background.new(Runner.instance.last_scenario, "And ", text, &block))
+          Runner.instance.last_scenario.last_background.add_and("And ", text, &block)
           return
         end
 
@@ -51,7 +51,6 @@ module Sapphire
       def Scenario(text, &block)
         Runner.instance.add_scenario(Scenario.new(text, &block))
         Runner.instance.last_scenario.block.call
-        #Runner.instance.last_scenario.execute 1
       end
     end
   end

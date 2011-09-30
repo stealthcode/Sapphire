@@ -3,24 +3,24 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require 'sapphire'
 include Sapphire::Sapphire
 
-reporter = ConsoleReporter.new()
+reporter = TeamCityReporter.new()
 
 ARGV.each do |arg|
   if !arg.end_with? ".rb"
     next
   end
   require arg
-  Runner.instance.last_scenario.file_name = arg
+  Runner.instance.last_scenario.file_name = arg if Runner.instance.last_scenario and Runner.instance.last_scenario.file_name == ""
 end
 
+reporter.BeginTesting
+
 if Runner.instance.test_plans.count > 0
-  Runner.instance.last_test_plan.execute reporter
+  Runner.instance.last_test_plan.execute
 else
   Runner.instance.scenarios.each do |scenario|
     scenario.execute reporter
   end
 end
-
-
 
 reporter.OutputResults

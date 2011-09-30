@@ -83,6 +83,10 @@ module Sapphire
         $stdout.print "F".red if test.type == "fail"
       end
 
+      def BeginTesting
+
+      end
+
     end
   end
 end

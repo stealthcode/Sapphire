@@ -3,7 +3,7 @@ module Sapphire
     module Executable
       def execute(reporter)
         start = Time.now
-        reporter.TestStarted(self.text)
+        reporter.TestStarted(self)
         begin
           if(self.value.is_a? Pending)
             result = ResultTree.new(self.text, TestResult.new("pending", self, "Pending", "", Time.now - start))

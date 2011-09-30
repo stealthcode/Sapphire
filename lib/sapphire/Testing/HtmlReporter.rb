@@ -42,6 +42,9 @@ module Sapphire
 
       end
 
+      def BeginTesting
+
+      end
     end
   end
 end

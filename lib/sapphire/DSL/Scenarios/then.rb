@@ -19,10 +19,10 @@ class Then
 
   def add_and(pre, text, &block)
     if(!self.value.instance_of? Pending)
-      x = Then.new(self, pre, text, &block)
+      x = And.new(self, pre + text, &block)
       self.and << x
     else
-      self.and << Then.new(self, pre, Pending.new(pre + text), &block)
+      self.and << And.new(self, Pending.new(pre + text), &block)
     end
   end
 

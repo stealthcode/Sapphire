@@ -11,6 +11,7 @@ require 'colorize'
 require File.expand_path(File.dirname(__FILE__) +'/sapphire/Strategies/Strategy.rb', __FILE__)
 require File.expand_path(File.dirname(__FILE__) +'/sapphire/Testing/Reporter.rb', __FILE__)
 Dir[File.dirname(__FILE__) + '/sapphire/Testing/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/sapphire/TeamCity/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/Configuration/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/Base/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/*.rb'].each {|file| require file }
@@ -22,6 +23,7 @@ Dir[File.dirname(__FILE__) + '/sapphire/DSL/Configuration/*.rb'].each {|file| re
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Data/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/Scenarios/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/DSL/TestPlans/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/sapphire/UI/*.rb'].each {|file| require file }
 
 module Sapphire
   module Sapphire
@@ -37,5 +39,7 @@ module Sapphire
     include JobAbstractions
     include WebAbstractions
     include Testing
+    include Testing::TeamCity
+    include UI
   end
 end

@@ -19,6 +19,7 @@ module Sapphire
           @givens = []
           @backgrounds = []
           @result = Testing::ScenarioResult.new(text)
+          @file_name = ""
         end
 
         def add_given(given)

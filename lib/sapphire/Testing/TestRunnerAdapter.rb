@@ -4,18 +4,20 @@ module Sapphire
 
       def execute(reporter)
         reporter.ScenarioStart self
-        @failures = []
-        @pendings = []
-        @success = []
 
         self.backgrounds.each do |b|
 
           b.execute reporter
 
+          b.and.each do |g_a|
+
+            g_a.execute reporter
+
+          end
+
         end
 
         self.givens.each do |g|
-
           g.when.each do |w|
 
             g.execute reporter

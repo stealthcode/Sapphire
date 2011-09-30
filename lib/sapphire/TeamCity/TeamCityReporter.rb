@@ -2,7 +2,7 @@ require 'teamcity/utils/logger_util'
 require 'teamcity/rake_exceptions'
 require 'teamcity/rakerunner_consts'
 
-SPEC_FORMATTER_LOG = ::Rake::TeamCity::Utils::RSpecFileLogger.new
+SPEC_FORMATTER_LOG = ::Rake::TeamCity::Utils::RakeFileLogger.new
 SPEC_FORMATTER_LOG.log_msg("spec formatter.rb loaded.")
 
 require 'teamcity/runner_common'
@@ -50,13 +50,13 @@ module Sapphire
           # Initializes
           @groups_stack = []
 
-          @example_count = 100
           if ::Rake::TeamCity.is_in_idea_mode
-            log(@message_factory.create_tests_count(@example_count))
+            #log(@message_factory.create_tests_count(@example_count))
           elsif ::Rake::TeamCity.is_in_buildserver_mode
-            log(@message_factory.create_progress_message("Starting.. (#{@example_count} examples)"))
+            log(@message_factory.create_progress_message("Starting..."))
           end
 
+          @current = 0
         end
 
         def PrintItem(result, depth)
@@ -64,11 +64,13 @@ module Sapphire
         end
 
         def ScenarioStart(scenario)
-          @message_factory.create_suite_started(scenario.text, scenario.file_name)
+          log(@message_factory.create_suite_started("Scenario: " + scenario.text))
         end
 
         def ScenarioComplete(scenario)
-          @message_factory.create_suite_finished(scenario.text)
+          log(@message_factory.create_suite_finished("Finally"))
+          log(@message_factory.create_suite_finished("Assuming"))
+          log(@message_factory.create_suite_finished("Scenario: " + scenario.text))
         end
 
         def PrintHeader()
@@ -92,25 +94,65 @@ module Sapphire
         end
 
         def TestStarted(test)
-          @@RUNNING_EXAMPLES_STORAGE[test.object_id] = test
+
+          if test.is_a? Given and @current > 0
+            log(@message_factory.create_suite_finished("Then"))
+            log(@message_factory.create_suite_finished("When"))
+            log(@message_factory.create_suite_finished("Given"))
+          elsif test.is_a? Finally
+            log(@message_factory.create_suite_finished("Then"))
+            log(@message_factory.create_suite_finished("When"))
+            log(@message_factory.create_suite_finished("Given"))
+          end
+
+          @current = 1
+
+          if test.is_a? Given
+            log(@message_factory.create_suite_started("Given"))
+          elsif test.is_a? When
+            log(@message_factory.create_suite_started("When"))
+          elsif test.is_a? Then
+            log(@message_factory.create_suite_started("Then"))
+          elsif test.is_a? Background
+            log(@message_factory.create_suite_started("Assuming"))
+          elsif test.is_a? Finally
+            log(@message_factory.create_suite_started("Finally"))
+          end
+
+          @current = @current + 1
+
+          log(@message_factory.create_test_started(test.text))
         end
 
         def TestCompleted(test)
           if test.type == "pending"
-            @message_factory.create_test_output_message(test.text, true, "Pending: Not Yet Implemented")
-            @message_factory.create_test_ignored(test.text, "Pending: Not Yet Implemented")
-            return
+            log(@message_factory.create_test_ignored(test.text, "Pending: Not Yet Implemented"))
+          elsif test.type == "pass"
+            log(@message_factory.create_test_finished(test.text, test.time))
+          elsif test.type == "fail"
+
+            if test.messages.is_a? Array
+              messages = test.messages.join("\n")
+            else
+              messages = test.messages
+            end
+            stack = ""
+            test.stack.each do |line|
+            if (!line.include? "sapphire")
+              stack += line + "\n"
+            end
           end
-          if test.type == "pass"
-            @message_factory.create_test_finished(test.text, test.time)
-            return
-          end
-          if test.type == "fail"
-            @message_factory.create_test_output_message(test.text, true, "enter error here")
-            @message_factory.create_test_failed(test.text, test.message, "enter backtrace here")
+            log(@message_factory.create_test_failed(test.text, messages, stack))
           end
 
-          @@RUNNING_EXAMPLES_STORAGE.delete(test.object_id)
+          if test.item.is_a? Finally
+            log(@message_factory.create_suite_finished("Finally"))
+          end
+
+        end
+
+        def BeginTesting
+          log(@message_factory.create_test_reported_attached)
         end
       end
     end
