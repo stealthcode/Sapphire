@@ -154,6 +154,10 @@ module Sapphire
         def BeginTesting
           log(@message_factory.create_test_reported_attached)
         end
+
+        def OutputResults()
+
+        end
       end
     end
   end

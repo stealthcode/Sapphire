@@ -2,6 +2,28 @@ module Sapphire
   module Testing
     class ConsoleReporter < Reporter
 
+      def initialize
+        @not_passing = {}
+        @passing_count = 0
+        @failing_count = 0
+        @pending_count = 0
+        @test_count = 0
+      end
+
+      def ScenarioStart(scenario)
+        $stdout.puts scenario.file_name + ": "
+      end
+
+      def ScenarioComplete(scenario)
+        $stdout.puts ""
+      end
+
+      def Indent(depth)
+        (1..depth).each do
+          $stdout.print "\t"
+        end
+      end
+
       def PrintItem(result, depth)
         Indent(depth)
 
@@ -34,57 +56,96 @@ module Sapphire
         end
       end
 
-      def PrintHeader()
-        $stdout.puts ""
-      end
-
-      def ScenarioStart(scenario)
-        $stdout.puts scenario.file_name + ": "
-      end
-
-      def ScenarioComplete(scenario)
-        $stdout.puts ""
-      end
-
-      def PrintFooter()
-        $stdout.puts ""
-        $stdout.puts "Finished in " + self.time.round(2).to_s + " seconds."
-        $stdout.puts "Test Count: " + self.test_count.to_s
-        $stdout.puts "Passing: " + self.passing_count.to_s.green
-        $stdout.puts "Failing: " + self.failing_count.to_s.red
-        $stdout.puts "Pending: " + self.pending_count.to_s.yellow
-      end
-
-      def Indent(depth)
-        (1..depth).each do
-          $stdout.print "\t"
-        end
-      end
-
       def InsertLineBreak()
         $stdout.puts ""
       end
 
-      def PrePrint
-
-      end
-
-      def PostPrint
-
-      end
-
       def TestStarted(test)
+        @test_count = @test_count + 1
+      end
+
+      def TestPassed(test)
+        @passing_count = @passing_count + 1
+        $stdout.print ".".green
+      end
+
+      def TestFailed(test)
+        @failing_count = @failing_count + 1
+        Add test
+        $stdout.print "F".red
+      end
+
+      def TestPending(test)
+        @pending_count = @pending_count + 1
+        Add test
+        $stdout.print "*".yellow
+      end
+
+      def Add(r)
+        result_passes = r.type == "pass"
+
+        if !result_passes and (r.item.is_a? Given or r.item.is_a? When or r.item.is_a? Background)
+          @not_passing = @not_passing.merge({ r => r })
+        elsif !result_passes and (r.item.is_a? And or r.item.parent.is_a? Given)
+          @not_passing = @not_passing.merge({ r.parent => r.parent })
+        elsif !result_passes and (r.item.is_a? And and r.parent.item.is_a? When)
+          @not_passing = @not_passing.merge({ r.parent => r.parent })
+        elsif !result_passes and (r.item.is_a? Then)
+          @not_passing = @not_passing.merge({ r.parent => r.parent })
+        elsif !result_passes and (r.item.is_a? And and r.parent.item.is_a? Then)
+          @not_passing = @not_passing.merge({ r.parent.parent => r.parent.parent })
+        end
 
       end
 
-      def TestCompleted(test)
-        $stdout.print "*".yellow if test.type == "pending"
-        $stdout.print ".".green if test.type == "pass"
-        $stdout.print "F".red if test.type == "fail"
+      def OutputResults()
+        $stdout.puts ""
+
+        @not_passing.keys.each do |key|
+          self.PrintResult @not_passing[key]
+        end
+
+        $stdout.puts ""
+        $stdout.puts "Finished in " + (@end - @start).round(2).to_s + " seconds."
+        $stdout.puts "Test Count: " + @test_count.to_s
+        $stdout.puts "Passing: " + @passing_count.to_s.green
+        $stdout.puts "Failing: " + @failing_count.to_s.red
+        $stdout.puts "Pending: " + @pending_count.to_s.yellow
+      end
+
+      def Output(result, depth)
+
+        self.PrintItem(result, depth)
+
+        result.results.each do |sub_result|
+          self.Output(sub_result, depth+1)
+        end
+      end
+
+      def PrintResult(entry)
+        if entry.item.is_a? Background
+          self.InsertLineBreak
+          self.Output entry, 0
+          self.InsertLineBreak
+        elsif entry.item.is_a? Given
+          self.InsertLineBreak
+          self.Output entry, 1
+          self.InsertLineBreak
+        elsif entry.item.is_a? When
+          self.PrintItem entry.parent, 0
+          self.Output entry, 1
+          self.InsertLineBreak
+        else
+          self.PrintResult entry.parent
+        end
       end
 
       def BeginTesting
+        @start = DateTime.now
+      end
 
+      def TestingComplete
+        @end = DateTime.now
       end
 
     end

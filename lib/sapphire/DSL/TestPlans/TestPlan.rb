@@ -3,7 +3,7 @@ module Sapphire
     module TestPlans
 
       def TestPlan(text, &block)
-        reporter = TeamCityReporter.new()
+        reporter = ConsoleReporter.new()
         Runner.instance.add_test_plan(TestPlan.new(text, reporter, &block))
       end
 
@@ -51,6 +51,7 @@ module Sapphire
           @reporter.BeginTesting
           $stdout.puts ""
           @block.call
+          @reporter.TestingComplete
           @reporter.OutputResults
         end
       end

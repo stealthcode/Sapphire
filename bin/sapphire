@@ -3,7 +3,7 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require 'sapphire'
 include Sapphire::Sapphire
 
-reporter = TeamCityReporter.new()
+reporter = ConsoleReporter.new()
 
 ARGV.each do |arg|
   if !arg.end_with? ".rb"
@@ -20,7 +20,7 @@ if Runner.instance.test_plans.count > 0
 else
   Runner.instance.scenarios.each do |scenario|
     scenario.execute reporter
+    reporter.TestingComplete
+    reporter.OutputResults
   end
 end
-
-reporter.OutputResults

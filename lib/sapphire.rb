@@ -11,7 +11,7 @@ require 'colorize'
 require File.expand_path(File.dirname(__FILE__) +'/sapphire/Strategies/Strategy.rb', __FILE__)
 require File.expand_path(File.dirname(__FILE__) +'/sapphire/Testing/Reporter.rb', __FILE__)
 Dir[File.dirname(__FILE__) + '/sapphire/Testing/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/TeamCity/*.rb'].each {|file| require file }
+#Dir[File.dirname(__FILE__) + '/sapphire/TeamCity/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/Configuration/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/Base/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/*.rb'].each {|file| require file }
@@ -39,7 +39,7 @@ module Sapphire
     include JobAbstractions
     include WebAbstractions
     include Testing
-    include Testing::TeamCity
+    #include Testing::TeamCity
     include UI
   end
 end

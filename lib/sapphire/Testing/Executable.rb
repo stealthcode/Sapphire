@@ -8,20 +8,20 @@ module Sapphire
           if(self.value.is_a? Pending)
             result = ResultTree.new(self.text, TestResult.new("pending", self, "Pending", "", Time.now - start))
             self.AddResult(result)
-            reporter.TestCompleted result
+            reporter.TestPending result
             return
           end
           self.block.call
           result = ResultTree.new(self.text, TestResult.new("pass", self, "Success", "", Time.now - start))
           self.AddResult(result)
-          reporter.TestCompleted result
+          reporter.TestPassed result
         rescue => msg
           stack = msg.backtrace
           message = msg.messages if (msg.is_a? ExpectationException)
           message ||= msg.message
           result = ResultTree.new(self.text, TestResult.new("fail", self, message, stack, Time.now - start))
           self.AddResult(result)
-          reporter.TestCompleted result
+          reporter.TestFailed result
         end
       end
     end
