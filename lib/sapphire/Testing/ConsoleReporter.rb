@@ -141,11 +141,11 @@ module Sapphire
       end
 
       def BeginTesting
-        @start = DateTime.now
+        @start = Time.now
       end
 
       def TestingComplete
-        @end = DateTime.now
+        @end = Time.now
       end
 
     end
