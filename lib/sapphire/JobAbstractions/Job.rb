@@ -22,6 +22,10 @@ module Sapphire
         return ""
       end
 
+      def Arg
+        return nil
+      end
+
     end
   end
 end
