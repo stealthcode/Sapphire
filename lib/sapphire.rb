@@ -39,7 +39,7 @@ module Sapphire
     include JobAbstractions
     include WebAbstractions
     include Testing
-    #include Testing::TeamCity
+#    include Testing::TeamCity
     include UI
   end
 end

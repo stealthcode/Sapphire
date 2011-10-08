@@ -49,19 +49,17 @@ module Sapphire
           nav = page
         end
 
-        temp = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
-
-        #if you aren't on the expected page, check the alternate urls
-        if(temp == false)
-          nav.AlternateUrls.each do |url|
-            temp = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
-            if(temp)
-              temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase), true)
-              return temp, nav
+        wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+        found = wait.until {
+          x = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
+          if(x == false)
+            nav.AlternateUrls.each do |url|
+              x = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
             end
           end
-        end
-        temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase), true)
+          x
+        }
+        temp = Evaluation.new(found, true)
         return temp, nav
       end
 

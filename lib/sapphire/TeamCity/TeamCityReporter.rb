@@ -124,30 +124,33 @@ module Sapphire
           log(@message_factory.create_test_started(test.text))
         end
 
-        def TestCompleted(test)
-          if test.type == "pending"
-            log(@message_factory.create_test_ignored(test.text, "Pending: Not Yet Implemented"))
-          elsif test.type == "pass"
-            log(@message_factory.create_test_finished(test.text, test.time))
-          elsif test.type == "fail"
+        def TestPassed(test)
+          log(@message_factory.create_test_finished(test.text, test.time))
+          log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
+        end
 
-            if test.messages.is_a? Array
-              messages = test.messages.join("\n")
-            else
-              messages = test.messages
-            end
-            stack = ""
-            test.stack.each do |line|
-            if (!line.include? "sapphire")
+        def TestFailed(test)
+          if test.messages.is_a? Array
+            messages = test.messages.join("\n")
+          else
+            messages = test.messages
+          end
+          stack = ""
+          test.stack.each do |line|
+            #if (!line.include? "sapphire")
               stack += line + "\n"
-            end
+            #end
           end
-            log(@message_factory.create_test_failed(test.text, messages, stack))
-          end
+          log(@message_factory.create_test_failed(test.text, messages, stack))
+          log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
+        end
 
-          if test.item.is_a? Finally
-            log(@message_factory.create_suite_finished("Finally"))
-          end
+        def TestPending(test)
+          log(@message_factory.create_test_ignored(test.text, "Pending: Not Yet Implemented"))
+          log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
+        end
+
+        def TestingComplete()
 
         end
 

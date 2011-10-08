@@ -21,14 +21,13 @@ module Sapphire
           if(evaluation.left == evaluation.right)
             messages = []
 
-            messages << "expected NOT: (nil)" if evaluation.left == nil
-            messages << "expected NOT: " + evaluation.left.to_s if evaluation.left != nil
-            messages << "got: (nil)" if evaluation.right == nil
-            messages << "got: " + evaluation.right.to_s if evaluation.right != nil
+            messages << "expected NOT: (nil)" if evaluation.right == nil
+            messages << "expected NOT: " + evaluation.right.to_s if evaluation.right != nil
+            messages << "got: (nil)" if evaluation.left == nil
+            messages << "got: " + evaluation.left.to_s if evaluation.left != nil
 
             raise ExpectationException.new(messages)
           end
-          #evaluation.left.should_not == evaluation.right
         end
 
         def execute

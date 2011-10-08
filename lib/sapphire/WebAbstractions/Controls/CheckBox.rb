@@ -19,7 +19,7 @@ module Sapphire
       def IsChecked
 
         radio = self.Find
-        radio.attribute("checked");
+        radio.attribute("checked")
 
       end
     end
