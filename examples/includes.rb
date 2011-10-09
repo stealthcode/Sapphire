@@ -1,10 +1,8 @@
-require 'sapphire'
+require File.expand_path('../../lib/sapphire', __FILE__)
 
 include Sapphire::Sapphire
 
-Dir[File.dirname(__FILE__) + '/Google/Pages/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/GitHub/Pages/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/RefactorToSapphire/*.rb'].each {|file| require file }
 
 if(!$config)
    file = File.expand_path('../config.yaml', __FILE__)

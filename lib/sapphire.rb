@@ -1,29 +1,22 @@
-require "rubygems"
+$:.unshift File.expand_path("..", __FILE__)
+
+require 'rubygems'
+require 'Platform'
 require 'yaml'
 require 'selenium-webdriver'
 require 'delegate'
 require 'Forwardable'
-require 'win32ole'
-require 'win32console'
-require 'json'
 require 'colorize'
 
-require File.expand_path(File.dirname(__FILE__) +'/sapphire/Strategies/Strategy.rb', __FILE__)
-require File.expand_path(File.dirname(__FILE__) +'/sapphire/Testing/Reporter.rb', __FILE__)
-Dir[File.dirname(__FILE__) + '/sapphire/Testing/*.rb'].each {|file| require file }
-#Dir[File.dirname(__FILE__) + '/sapphire/TeamCity/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/Configuration/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/Base/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/WebAbstractions/Controls/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/DataAbstractions/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/JobAbstractions/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/Strategies/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/DSL/Browser/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/DSL/Configuration/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/DSL/Data/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/DSL/Scenarios/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/DSL/TestPlans/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/sapphire/UI/*.rb'].each {|file| require file }
+require 'sapphire/Strategies'
+require 'sapphire/Testing'
+require 'sapphire/Web'
+require 'sapphire/DSL'
+require 'sapphire/CommandLine'
+require 'sapphire/Configuration'
+require 'sapphire/Data'
+require 'sapphire/Virtualization'
+require 'sapphire/TeamCity'
 
 module Sapphire
   module Sapphire
@@ -39,7 +32,7 @@ module Sapphire
     include JobAbstractions
     include WebAbstractions
     include Testing
-#    include Testing::TeamCity
+    include Testing::TeamCity
     include UI
   end
 end
