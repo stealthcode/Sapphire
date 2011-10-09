@@ -10,7 +10,7 @@ module Sapphire
       attr_reader :browser
 
       def initialize()
-        @browser = Selenium::WebDriver.for(:chrome, :desired_capabilities => browser)
+        @browser = Selenium::WebDriver.for(:chrome)
         super @browser
         $browser = @browser
       end

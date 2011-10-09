@@ -3,10 +3,10 @@ require 'ostruct'
 
 module Sapphire
   module Configuration
-    class Config < OpenStruct
+    class AppConfig < OpenStruct
 
       def self.create(hash)
-        @@instance ||= AppConfig.new hash
+        @@instance ||= Config.new hash
         @@instance
       end
 
