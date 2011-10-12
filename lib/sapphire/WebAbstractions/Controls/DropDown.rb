@@ -18,8 +18,8 @@ module Sapphire
       def Set(value)
         text = self.Find
         options = text.find_elements(:tag_name, "option")
-        selection = options.find{|o| o.text == value}
-        raise "could not find the value " + value if selection.nil?
+        selection = options.find{|o| o.text == value.to_s}
+        raise "could not find the value " + value.to_s if selection.nil?
         selection.click
       end
     end

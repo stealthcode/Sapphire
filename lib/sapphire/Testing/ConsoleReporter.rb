@@ -47,10 +47,10 @@ module Sapphire
           end
           $stdout.puts ""
           result.stack.each do |line|
-            if (!line.include? "sapphire")
+            #if (!line.include? "sapphire")
               Indent(depth+1)
               $stdout.puts line
-            end
+            #end
           end
 
         end

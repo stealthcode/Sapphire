@@ -71,7 +71,7 @@ module Sapphire
 
       def Click
         control = self.Find
-        control.click
+        $browser.action.move_to(control).click().perform()
       end
 
       def MouseOver

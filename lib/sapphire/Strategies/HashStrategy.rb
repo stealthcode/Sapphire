@@ -6,7 +6,10 @@ module Sapphire
            ExecuteHashAgainstControl(item, @page) do |control, arg|
               wait = Selenium::WebDriver::Wait.new(:timeout => 10)
               text = wait.until { x = control
-                x unless (!x.Equals(arg) && x.Equals(""))
+                val = x.Equals(arg)
+                if (val.left == val.right)
+                  x
+                end
               }
 
               return text.Equals(arg)
