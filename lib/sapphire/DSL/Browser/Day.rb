@@ -1,11 +1,11 @@
 module Sapphire
   module DSL
     module Browser
-      def Month(value, compare1, compare2)
-        Month.new(value, compare1, compare2)
+      def Day(value, compare1, compare2)
+        Day.new(value, compare1, compare2)
       end
 
-      class Month
+      class Day
 
         def initialize(value, compare1, compare2)
           @value = value
@@ -14,7 +14,7 @@ module Sapphire
         end
 
         def Differ()
-          return (@compare1 >> @value) == @compare2
+          return (@compare1 + @value) == @compare2
         end
 
       end
