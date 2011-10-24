@@ -4,7 +4,7 @@ module Sapphire
       class HashStrategy < Strategy
         def Show(item, modifier)
            ExecuteHashAgainstControl(item, @page) do |control, arg|
-              wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+              wait = Selenium::WebDriver::Wait.new(:timeout => 30)
               text = wait.until { x = control
                 val = x.Equals(arg)
                 if (val.left == val.right)

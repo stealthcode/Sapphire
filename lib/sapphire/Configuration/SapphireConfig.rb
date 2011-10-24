@@ -2,6 +2,8 @@ module Sapphire
   module Configuration
     class SapphireConfig
 
+      attr_reader :wait_time
+
       def initialize
         @@config = {}
 
@@ -25,6 +27,7 @@ module Sapphire
 
         return DefaultStrategy
       end
+
     end
   end
 end
