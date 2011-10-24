@@ -53,6 +53,10 @@ module Sapphire
         @fields << { args.first => Date.new(@browser, args[1..args.length]) }
       end
 
+      def Date(*args)
+        @fields << { args.first => Date.new(@browser, args[1]) }
+      end
+
     end
   end
 end
