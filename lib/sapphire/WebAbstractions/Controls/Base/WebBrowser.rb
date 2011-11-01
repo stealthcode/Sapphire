@@ -30,7 +30,7 @@ module Sapphire
       end
 
       def CurrentUrl
-        wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 30)
         url = wait.until { x = self.current_url
             x unless x == nil
         }
@@ -49,7 +49,7 @@ module Sapphire
           nav = page
         end
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 30)
         found = wait.until {
           x = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
           if(x == false)

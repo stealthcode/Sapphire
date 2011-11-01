@@ -10,7 +10,7 @@ module Sapphire
                 x = field[field_key].Find
                 if(x)
                   begin
-                    wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+                    wait = Selenium::WebDriver::Wait.new(:timeout => 30)
                     result = wait.until { y = modifier.Modify(x.displayed?)
                       y unless y == false
                     }
@@ -34,7 +34,7 @@ module Sapphire
             field.keys.each do |field_key|
               if(field_key == item)
                 begin
-                  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+                  wait = Selenium::WebDriver::Wait.new(:timeout => 30)
                   element = wait.until { x = field[field_key].Find
                       x and modifier.Modify(!x.displayed?)
                   }
