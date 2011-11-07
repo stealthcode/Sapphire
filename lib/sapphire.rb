@@ -8,6 +8,7 @@ require 'delegate'
 require 'Forwardable'
 require 'colorize'
 
+require 'sapphire/Adapters'
 require 'sapphire/Strategies'
 require 'sapphire/Testing'
 require 'sapphire/Web'
@@ -17,7 +18,6 @@ require 'sapphire/Configuration'
 require 'sapphire/Data'
 require 'sapphire/Virtualization'
 require 'sapphire/TeamCity'
-require 'sapphire/Adapters'
 
 module Sapphire
   module Sapphire

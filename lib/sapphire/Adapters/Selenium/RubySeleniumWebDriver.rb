@@ -120,7 +120,7 @@ module Sapphire
         return temp
       end
 
-      def Find(hash)
+      def FindItem(hash)
         masterWait = Selenium::WebDriver::Wait.new(:timeout => 30)
 
         element = masterWait.until {
@@ -144,11 +144,11 @@ module Sapphire
         raise "Could not find control for symbol: " + @hash.to_s
       end
 
-      def FindAll(hash)
+      def FindAllItems(hash)
         masterWait = Selenium::WebDriver::Wait.new(:timeout => 30)
 
         element = masterWait.until {
-          @hash.each do |item|
+          hash.each do |item|
             wait = Selenium::WebDriver::Wait.new(:timeout => 1)
             begin
               y = wait.until {
@@ -159,9 +159,9 @@ module Sapphire
               return y if y != nil
             rescue
             end
-          end if @hash.is_a? Array
+          end if hash.is_a? Array
 
-          x = self.FindElements @hash.keys.first, @hash.fetch(@hash.keys.first) if @hash.is_a? Hash
+          x = self.FindElements hash.keys.first, hash.fetch(hash.keys.first) if hash.is_a? Hash
           return x if x != nil
           }
         return element if element != nil

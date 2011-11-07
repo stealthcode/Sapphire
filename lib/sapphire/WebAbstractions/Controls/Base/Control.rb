@@ -7,11 +7,11 @@ module Sapphire
       end
 
       def Find
-        @browser.Find(@hash)
+        @browser.FindItem(@hash)
       end
 
       def FindAll
-        @browser.FindAll(@hash)
+        @browser.FindAllItems(@hash)
       end
 
       def FindWithoutWait
