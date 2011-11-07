@@ -3,16 +3,11 @@ module Sapphire
     module Browser
       class AlertBox
         def Accept
-          alert = $browser.switch_to.alert
-          alert.accept()
-          $browser.switch_to.window($browser.window_handles[0])
+          $browser.AcceptAlert
         end
 
         def Set(text)
-          alert = $browser.switch_to.alert
-          alert.send_keys(text)
-          alert.accept()
-          $browser.switch_to.window($browser.window_handles[0])
+          $browser.SetAlert(text)
         end
       end
     end

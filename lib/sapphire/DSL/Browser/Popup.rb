@@ -3,13 +3,11 @@ module Sapphire
     module Browser
       class Popup
         def Close
-          $browser.switch_to.window($browser.window_handles.last)
-          $browser.close
-          $browser.switch_to.window($browser.window_handles[0])
+          $browser.ClosePopup
         end
 
         def Switch
-          $browser.switch_to.window($browser.window_handles.last)
+          $browser.SwitchToPopup
         end
       end
     end

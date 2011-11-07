@@ -1,14 +1,14 @@
 module Sapphire
   module WebAbstractions
-    class FireFoxBrowser < DelegateClass(Selenium::WebDriver::Firefox::Bridge)
-      include WebBrowser
+    class FireFoxBrowser
+      include RubySeleniumWebDriver
 
       attr_reader :browser
 
       def initialize()
-        @browser = Selenium::WebDriver.for :firefox
+        @browser = self.Create :firefox
         super(@browser)
-        $browser = @browser
+        $browser = self
       end
 
     end

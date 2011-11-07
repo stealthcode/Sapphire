@@ -5,15 +5,15 @@ module Sapphire
       driver
     end
 
-    class InternetExplorerBrowser < DelegateClass(Selenium::WebDriver::IE::Bridge)
-      include WebBrowser
+    class InternetExplorerBrowser
+      include RubySeleniumWebDriver
 
       attr_reader :browser
 
       def initialize
-        @browser = Selenium::WebDriver.for :ie
+        @browser = self.Create :ie
         super(@browser)
-        $browser = @browser
+        $browser = self
       end
     end
   end

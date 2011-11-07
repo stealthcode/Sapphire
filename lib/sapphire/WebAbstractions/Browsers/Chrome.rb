@@ -4,15 +4,15 @@ module Sapphire
       ChromeBrowser.new
     end
 
-    class ChromeBrowser < DelegateClass(Selenium::WebDriver::Chrome::Bridge)
-      include WebBrowser
+    class ChromeBrowser
+      include RubySeleniumWebDriver
 
       attr_reader :browser
 
       def initialize()
-        @browser = Selenium::WebDriver.for(:chrome)
+        @browser = self.Create :chrome
         super @browser
-        $browser = @browser
+        $browser = self
       end
     end
   end

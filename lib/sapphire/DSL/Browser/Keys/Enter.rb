@@ -3,7 +3,7 @@ module Sapphire
     module Browser
       class Enter
           def Press
-            $browser.action.send_keys("\n").perform()
+            $browser.Type("\n")
           end
       end
     end

@@ -17,6 +17,7 @@ require 'sapphire/Configuration'
 require 'sapphire/Data'
 require 'sapphire/Virtualization'
 require 'sapphire/TeamCity'
+require 'sapphire/Adapters'
 
 module Sapphire
   module Sapphire
