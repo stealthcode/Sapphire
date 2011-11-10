@@ -3,7 +3,7 @@ module Sapphire
     module Browser
       def Complete(page)
         if(page.is_a? Class)
-          x = page.new(@browser)
+          x = page.new
         else
           x = page
         end

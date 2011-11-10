@@ -3,7 +3,7 @@ module Sapphire
     class Title < Control
 
       def Text
-        @browser.title
+        $browser.title
       end
 
     end

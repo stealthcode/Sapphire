@@ -3,12 +3,12 @@ module Sapphire
     module Browser
       def Start(browser)
         if(browser == ConfigurationBrowser)
-          @browser = AppConfig.Current.Browser
+          AppConfig.Current.Browser
         else
-          @browser = browser
+          browser.new
         end
 
-        @browser.SetRootUrl(@rootUrl)
+        $browser.SetRootUrl(@rootUrl)
       end
     end
   end

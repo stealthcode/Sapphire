@@ -2,11 +2,11 @@ module Sapphire
   module DSL
     module Data
       def Exist(value)
-        Not(Exist.new(value, @page, @browser))
+        Not(Exist.new(value, @page))
       end
 
       class Exist
-        def initialize(item, page, browser)
+        def initialize(item, page)
           @item = item
           @page = page
           @browser = browser
@@ -17,7 +17,7 @@ module Sapphire
         end
 
         def execute
-          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page, @browser).Exists(@item), :modifier => @modifier }
+          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page).Exists(@item), :modifier => @modifier }
         end
       end
     end

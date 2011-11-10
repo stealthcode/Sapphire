@@ -54,7 +54,7 @@ module Sapphire
 
       def NavigateTo(page)
         if(page.is_a? Class)
-          nav = page.new self
+          nav = page.new
         else
           nav = page
         end
@@ -79,7 +79,7 @@ module Sapphire
 
       def ShouldNavigateTo(page)
         if(page.is_a? Class)
-          nav = page.new self
+          nav = page.new
         else
           nav = page
         end
@@ -99,7 +99,7 @@ module Sapphire
       end
 
       def Run(background)
-        scenario = background.new self
+        scenario = background.new
         scenario.Run
       end
 

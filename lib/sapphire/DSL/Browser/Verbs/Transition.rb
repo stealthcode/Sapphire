@@ -3,13 +3,12 @@ module Sapphire
     module Browser
 
       def Transition(url)
-        NullModifier.new(Transition.new(url, @browser))
+        NullModifier.new(Transition.new(url))
       end
 
       class Transition
-        def initialize(item, browser)
+        def initialize(item)
           @item = item
-          @browser = browser
         end
 
         def ModifyWith(item)
@@ -17,7 +16,7 @@ module Sapphire
         end
 
         def execute
-          @modifier.Modify(@browser.ShouldTransitionTo(@item))
+          @modifier.Modify($browser.ShouldTransitionTo(@item))
         end
       end
     end
