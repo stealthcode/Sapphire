@@ -2,9 +2,8 @@ module Sapphire
   module DSL
     module Strategies
       class Strategy
-        def initialize(page, browser)
+        def initialize(page)
           @page = page
-          @browser = browser
         end
       end
     end

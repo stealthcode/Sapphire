@@ -1,15 +1,14 @@
 module Sapphire
   module DSL
-    module Data
-      def Exist(value)
-        Not(Exist.new(value, @page))
+    module Browser
+      def Hide(args)
+        NullModifier.new(Hide.new(args, @page))
       end
 
-      class Exist
+      class Hide
         def initialize(item, page)
           @item = item
           @page = page
-          @browser = browser
         end
 
         def ModifyWith(item)
@@ -17,11 +16,10 @@ module Sapphire
         end
 
         def execute
-          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page).Exists(@item), :modifier => @modifier }
+          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page).Hide(@item, @modifier), :modifier => @modifier }
         end
       end
     end
   end
 end
-
 

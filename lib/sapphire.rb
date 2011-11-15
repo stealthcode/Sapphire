@@ -8,6 +8,7 @@ require 'delegate'
 require 'Forwardable'
 require 'colorize'
 
+require 'sapphire/Adapters'
 require 'sapphire/Strategies'
 require 'sapphire/Testing'
 require 'sapphire/Web'
