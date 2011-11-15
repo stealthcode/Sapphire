@@ -1,10 +1,9 @@
 module Sapphire
   module DSL
     module Browser
-      def Check(*args)
-        ExecuteAgainstControl(args) do |control, arg|
-          control.Check true
-        end
+      def Check(item)
+        item.With(:page => @page)
+        item.Check
       end
     end
   end

@@ -1,11 +1,9 @@
 module Sapphire
   module DSL
     module Browser
-
       def Press(item)
-         item.new().Press
+         item.Press
       end
-
     end
   end
 end

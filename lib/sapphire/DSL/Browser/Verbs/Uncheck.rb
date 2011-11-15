@@ -1,10 +1,9 @@
 module Sapphire
   module DSL
     module Browser
-      def Uncheck(*args)
-        ExecuteAgainstControl(args) do |control, arg|
-          control.Check false
-        end
+      def Uncheck(item)
+        item.With(:page => @page)
+        item.Uncheck
       end
     end
   end

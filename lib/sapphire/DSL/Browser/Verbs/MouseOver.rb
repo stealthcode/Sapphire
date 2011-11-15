@@ -1,10 +1,9 @@
 module Sapphire
   module DSL
     module Browser
-      def MouseOver(*args)
-        ExecuteAgainstControl(args) do |control, arg|
-          control.MouseOver
-        end
+      def MouseOver(item)
+        item.With(:page => @page)
+        item.MouseOver
       end
     end
   end
