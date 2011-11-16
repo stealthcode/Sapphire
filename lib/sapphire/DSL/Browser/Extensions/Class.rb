@@ -26,4 +26,9 @@ class Class < Module
     klass.Set text
   end
 
+  def Close
+    x = self.new
+    x.Close
+  end
+
 end
