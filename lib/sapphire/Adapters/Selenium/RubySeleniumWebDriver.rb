@@ -120,52 +120,60 @@ module Sapphire
         return temp
       end
 
-      def FindItem(hash)
+      def FindItem(array)
         masterWait = Selenium::WebDriver::Wait.new(:timeout => 30)
 
         element = masterWait.until {
-          hash.each do |item|
-            wait = Selenium::WebDriver::Wait.new(:timeout => 1)
-            begin
-              y = wait.until {
-                x = self.FindElement item.keys.first, item.fetch(item.keys.first) if item.is_a? Hash
-                x = self.FindElement item[0], item[1] if item.is_a? Array
-                return x if x != nil
-              }
-              return y if y != nil
-            rescue
-            end
-          end if hash.is_a? Array
+          x = nil
+          array.each do |item|
 
-          x = self.FindElement hash.keys.first, hash.fetch(hash.keys.first) if hash.is_a? Hash
+            if item.is_a? Hash
+                begin
+                  x = self.FindElement item.keys.first, item.fetch(item.keys.first)
+                rescue
+                  #do nothing, let it keep looping
+                end
+            end
+
+            x = self.FindElement item[0], item[1] if item.is_a? Array
+
+            return x if x != nil
+
+          end if array.is_a? Array
+
+          x = self.FindElement array.keys.first, array.fetch(hash.keys.first) if array.is_a? Hash
           return x if x != nil
-          }
+        }
         return element if element != nil
-        raise "Could not find control for symbol: " + @hash.to_s
+        raise "Could not find control for array: " + array.to_s
       end
 
-      def FindAllItems(hash)
+      def FindAllItems(array)
         masterWait = Selenium::WebDriver::Wait.new(:timeout => 30)
 
         element = masterWait.until {
-          hash.each do |item|
-            wait = Selenium::WebDriver::Wait.new(:timeout => 1)
-            begin
-              y = wait.until {
-                x = self.FindElements item.keys.first, item.fetch(item.keys.first) if item.is_a? Hash
-                x = self.FindElements item[0], item[1] if item.is_a? Array
-                return x if x != nil
-              }
-              return y if y != nil
-            rescue
-            end
-          end if hash.is_a? Array
+          x = nil
+          array.each do |item|
 
-          x = self.FindElements hash.keys.first, hash.fetch(hash.keys.first) if hash.is_a? Hash
+            if item.is_a? Hash
+                begin
+                  x = self.FindElements item.keys.first, item.fetch(item.keys.first)
+                rescue
+                  #do nothing, let it keep looping
+                end
+            end
+
+            x = self.FindElements item[0], item[1] if item.is_a? Array
+
+            return x if x != nil
+
+          end if array.is_a? Array
+
+          x = self.FindElement array.keys.first, array.fetch(hash.keys.first) if array.is_a? Hash
           return x if x != nil
-          }
+        }
         return element if element != nil
-        raise "Could not find control for symbol: " + @hash.to_s
+        raise "Could not find control for array: " + array.to_s
       end
 
       def FindElement(discriminator, selector)
