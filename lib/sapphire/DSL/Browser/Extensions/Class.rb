@@ -15,6 +15,11 @@ class Class < Module
     x.Complete
   end
 
+  def Fail(item)
+    x = item.new
+    x.Fail
+  end
+
   def Press(item)
     x = item.new
     x.Press
@@ -24,6 +29,11 @@ class Class < Module
     text = hash[hash.keys.first]
     klass = hash.keys.first.new
     klass.Set text
+  end
+
+  def Close
+    x = self.new
+    x.Close
   end
 
 end
