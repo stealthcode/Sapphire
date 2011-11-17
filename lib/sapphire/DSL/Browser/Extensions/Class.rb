@@ -15,6 +15,11 @@ class Class < Module
     x.Complete
   end
 
+  def Fail(item)
+    x = item.new
+    x.Fail
+  end
+
   def Press(item)
     x = item.new
     x.Press
