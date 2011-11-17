@@ -9,7 +9,6 @@ module Sapphire
         def initialize(item, page)
           @item = item
           @page = page
-          @browser = browser
         end
 
         def ModifyWith(item)
