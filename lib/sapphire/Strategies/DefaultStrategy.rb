@@ -3,9 +3,9 @@ module Sapphire
     module Strategies
       class DefaultStrategy < Strategy
         def Show(item, modifier)
-          @page = item
+          evaluation, @page = $browser.ShouldNavigateTo item
           @page.Init
-          {:page => @page, :value => Evaluation.new(true, true)}
+          {:page => @page, :value => evaluation }
         end
 
         def Exists(item)
