@@ -33,6 +33,7 @@ module Sapphire
     include JobAbstractions
     include WebAbstractions
     include Testing
+    include Testing::Coverage
     include Testing::TeamCity
     include UI
   end
