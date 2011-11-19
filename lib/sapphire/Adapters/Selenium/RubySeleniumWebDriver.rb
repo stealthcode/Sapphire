@@ -141,7 +141,7 @@ module Sapphire
 
           end if array.is_a? Array
 
-          x = self.FindElement array.keys.first, array.fetch(hash.keys.first) if array.is_a? Hash
+          x = self.FindElement array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
           return x if x != nil
         }
         return element if element != nil
@@ -169,7 +169,7 @@ module Sapphire
 
           end if array.is_a? Array
 
-          x = self.FindElement array.keys.first, array.fetch(hash.keys.first) if array.is_a? Hash
+          x = self.FindElement array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
           return x if x != nil
         }
         return element if element != nil
