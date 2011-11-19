@@ -158,13 +158,14 @@ module Sapphire
             if item.is_a? Hash
                 begin
                   x = self.FindElements item.keys.first, item.fetch(item.keys.first)
+                  x = nil if x.is_a? Array and x.empty?
                 rescue
                   #do nothing, let it keep looping
                 end
             end
 
             x = self.FindElements item[0], item[1] if item.is_a? Array
-
+            x = nil if x.is_a? Array and x.empty?
             return x if x != nil
 
           end if array.is_a? Array

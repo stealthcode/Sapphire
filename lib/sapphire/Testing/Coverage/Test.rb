@@ -7,8 +7,10 @@ module Sapphire
 
       class Test
 
-        attr_reader :token
-        attr_reader :type
+        attr_reader   :token
+        attr_reader   :type
+        attr_accessor :is_covered
+        attr_accessor :covered_by
 
         def initialize(token, hash)
           @token = token

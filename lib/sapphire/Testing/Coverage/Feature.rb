@@ -9,24 +9,23 @@ module Sapphire
 
       class Feature
 
-        attr_reader :business_rules
+        attr_reader :requirements
         attr_reader :token
 
         def initialize(token)
           @token = token
-          @business_rules = []
+          @requirements = []
         end
 
-        def AddRule(business_rule)
-          @business_rules << business_rule
+        def AddRequirement(requirement)
+          @requirements << requirement
         end
 
         def AddTest(test)
-          @business_rules.last().AddTest test
+          @requirements.last().AddTest test
         end
 
       end
-
     end
   end
 end

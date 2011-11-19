@@ -1,21 +1,21 @@
 module Sapphire
   module Testing
     module Coverage
-      def BusinessRule(hash, &block)
-        $features.last.AddRule(BusinessRule.new(hash, block))
+      def Requirement(hash, &block)
+        $features.last.AddRequirement(Requirement.new(hash))
+        block.call
       end
 
-      class BusinessRule
+      class Requirement
 
         attr_reader :token
         attr_reader :priority
         attr_reader :tests
 
-        def initialize(hash, block)
+        def initialize(hash)
           @token = hash.keys.first
           @priority = hash[hash.keys.first]
           @tests = []
-          block.call
         end
 
         def AddTest(test)
