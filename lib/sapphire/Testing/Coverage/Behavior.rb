@@ -1,11 +1,11 @@
 module Sapphire
   module Testing
     module Coverage
-      def Test(token, hash)
-        $features.last().AddTest(Test.new(token, hash))
+      def Behavior(token, hash)
+        $features.last().AddBehavior(Behavior.new(token, hash))
       end
 
-      class Test
+      class Behavior
 
         attr_reader   :token
         attr_reader   :type

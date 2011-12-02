@@ -14,15 +14,15 @@ module Sapphire
 
         def initialize(token)
           @token = token
-          @requirements = []
+          @behaviors = []
         end
 
         def AddRequirement(requirement)
           @requirements << requirement
         end
 
-        def AddTest(test)
-          @requirements.last().AddTest test
+        def AddBehavior(behavior)
+          @requirements.last().AddBehavior behavior
         end
 
       end
