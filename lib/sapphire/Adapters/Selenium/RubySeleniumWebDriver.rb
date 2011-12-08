@@ -43,6 +43,10 @@ module Sapphire
         self.browser.switch_to.window(self.browser.window_handles.last)
       end
 
+      def SwitchToIFrame(frame)
+        self.browser.switch_to.frame(frame)
+      end
+
       def SetRootUrl(url)
         if(url.instance_of?(String))
           self.Init(url)
@@ -197,5 +201,3 @@ module Sapphire
     end
   end
 end
-
-
