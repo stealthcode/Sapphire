@@ -89,17 +89,23 @@ module Sapphire
         end
 
         wait = Selenium::WebDriver::Wait.new(:timeout => 30)
-        found = wait.until {
-          x = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
-          if(x == false)
-            nav.AlternateUrls.each do |url|
-              if( x == false)
-                x = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
+        begin
+          found = wait.until {
+            x = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
+            if(x == false)
+              nav.AlternateUrls.each do |url|
+                if( x == false)
+                  x = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
+                end
               end
             end
-          end
-          x
-        }
+            x
+          }
+        rescue
+          temp = Evaluation.new(self.CurrentUrl, nav.Url)
+          return temp, nav
+        end
+
         temp = Evaluation.new(found, true)
         return temp, nav
       end
