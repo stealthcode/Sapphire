@@ -4,24 +4,45 @@ require 'rubygems'
 require 'sapphire'
 include Sapphire::Sapphire
 
-reporter = ConsoleReporter.new()
+$reporters = []
 
 ARGV.each do |arg|
+
+  #if arg.start_with? "reporter="
+  #  item = arg.split "reporter="
+  #  $reporters << Object.const_get(item.last).new()
+  #  next
+  #end
+
   if !arg.end_with? ".rb"
     next
   end
+
   require arg
   Runner.instance.last_scenario.file_name = arg if Runner.instance.last_scenario and Runner.instance.last_scenario.file_name == ""
 end
 
-reporter.BeginTesting
+if $reporters.empty?
+  $reporters << ConsoleReporter.new()
+end
+
 
 if Runner.instance.test_plans.count > 0
   Runner.instance.last_test_plan.execute
 else
+
+  Report do |x| x.BeginTesting end
+
   Runner.instance.scenarios.each do |scenario|
-    scenario.execute reporter
-    reporter.TestingComplete
-    reporter.OutputResults
+    scenario.execute
+  end
+
+  Report do |x| x.TestingComplete end
+  Report do |x| x.OutputResults end
+end
+
+def Report(&block)
+  $reporters.each do |reporter|
+    block.call reporter
   end
 end

@@ -14,7 +14,7 @@ module Sapphire
 
         def initialize(token)
           @token = token
-          @behaviors = []
+          @requirements = []
         end
 
         def AddRequirement(requirement)

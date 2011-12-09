@@ -3,8 +3,7 @@ module Sapphire
     module TestPlans
 
       def TestPlan(text, &block)
-        reporter = ConsoleReporter.new()
-        Runner.instance.add_test_plan(TestPlan.new(text, reporter, &block))
+        Runner.instance.add_test_plan(TestPlan.new(text, &block))
       end
 
       class TestPlan
@@ -13,11 +12,10 @@ module Sapphire
         attr_reader :value
         attr_reader :text
 
-        def initialize(text, reporter, &block)
+        def initialize(text, &block)
           @value = text
           @text = text.to_s
           @block = block
-          @reporter = reporter
 
           @items = []
           @handlers = []
@@ -36,7 +34,7 @@ module Sapphire
             @handlers.each do |handler|
               handler.keys.each do |handler_key|
                 if(handler_key == key)
-                  handler[handler_key].Handle item[key], @reporter
+                  handler[handler_key].Handle item[key]
                 end
               end
             end
@@ -48,11 +46,17 @@ module Sapphire
         end
 
         def execute
-          @reporter.BeginTesting
+          Report do |x| x.BeginTesting end
           $stdout.puts ""
           @block.call
-          @reporter.TestingComplete
-          @reporter.OutputResults
+          Report do |x| x.TestingComplete end
+          Report do |x| x.OutputResults end
+        end
+
+        def Report(&block)
+          $reporters.each do |reporter|
+            block.call reporter
+          end
         end
       end
     end

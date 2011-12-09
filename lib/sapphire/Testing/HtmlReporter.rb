@@ -9,6 +9,7 @@ module Sapphire
         @failing_count = 0
         @pending_count = 0
         @test_count = 0
+        @output = $stdout
       end
 
       def TestStarted(test)
@@ -17,44 +18,44 @@ module Sapphire
 
       def TestPassed(test)
         @passing_count = @passing_count + 1
-        $stdout.puts "    <dd class=\"spec passed\"><span class=\"passed_spec_name\">#{test.text}</span></dd>"
+        @output.puts "    <dd class=\"spec passed\"><span class=\"passed_spec_name\">#{test.text}</span></dd>"
       end
 
       def TestFailed(test)
 
         failure_style = 'failed'
-        $stdout.puts "    <script type=\"text/javascript\">makeRed('rspec-header');</script>" unless @header_red
+        @output.puts "    <script type=\"text/javascript\">makeRed('rspec-header');</script>" unless @header_red
         @header_red = true
-        $stdout.puts "    <script type=\"text/javascript\">makeRed('example_group_#{@example_group_number}');</script>" unless @example_group_red
+        @output.puts "    <script type=\"text/javascript\">makeRed('example_group_#{@example_group_number}');</script>" unless @example_group_red
         @example_group_red = true
-        $stdout.puts "    <dd class=\"spec #{failure_style}\">"
-        $stdout.puts "      <span class=\"failed_spec_name\">#{test.text}</span>"
-        $stdout.puts "      <div class=\"failure\" id=\"failure_#{@test_count}\">"
+        @output.puts "    <dd class=\"spec #{failure_style}\">"
+        @output.puts "      <span class=\"failed_spec_name\">#{test.text}</span>"
+        @output.puts "      <div class=\"failure\" id=\"failure_#{@test_count}\">"
 
         if test.messages.is_a? Array
           message_block = ""
           test.messages.each do |message|
             message_block += message + "<br>"
           end
-          $stdout.puts "        <div class=\"message\"><pre>#{message_block}</pre></div>"
+          @output.puts "        <div class=\"message\"><pre>#{message_block}</pre></div>"
         else
-          $stdout.puts "        <div class=\"message\"><pre>#{test.messages}</pre></div>"
+          @output.puts "        <div class=\"message\"><pre>#{test.messages}</pre></div>"
         end
 
         test.stack.each do |line|
           if (!line.include? "sapphire")
-            $stdout.puts "        <div class=\"backtrace\"><pre>#{line}</pre></div>"
+            @output.puts "        <div class=\"backtrace\"><pre>#{line}</pre></div>"
           end
         end
 
-        $stdout.puts "      </div>"
-        $stdout.puts "    </dd>"
+        @output.puts "      </div>"
+        @output.puts "    </dd>"
       end
 
       def TestPending(test)
-        $stdout.puts "    <script type=\"text/javascript\">makeYellow('rspec-header');</script>" unless @header_red
-        $stdout.puts "    <script type=\"text/javascript\">makeYellow('example_group_#{@example_group_number}');</script>" unless @example_group_red
-        $stdout.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{test.text} (PENDING: ### Not Yet Implemented ###)</span></dd>"
+        @output.puts "    <script type=\"text/javascript\">makeYellow('rspec-header');</script>" unless @header_red
+        @output.puts "    <script type=\"text/javascript\">makeYellow('example_group_#{@example_group_number}');</script>" unless @example_group_red
+        @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{test.text} (PENDING: ### Not Yet Implemented ###)</span></dd>"
       end
 
       def TestingComplete
@@ -63,30 +64,30 @@ module Sapphire
         totals = "#{@test_count} example#{'s' unless @test_count == 1}, #{@failure_count} failure#{'s' unless @failure_count == 1}"
         totals << ", #{@pending_count} pending" if @pending_count > 0
 
-        $stdout.puts "<script type=\"text/javascript\">document.getElementById('duration').innerHTML = \"Finished in <strong>#{(@end - @start).round(2).to_s} seconds</strong>\";</script>"
-        $stdout.puts "<script type=\"text/javascript\">document.getElementById('totals').innerHTML = \"#{totals}\";</script>"
-        $stdout.puts "</div>"
-        $stdout.puts "</div>"
-        $stdout.puts "</body>"
-        $stdout.puts "</html>"
+        @output.puts "<script type=\"text/javascript\">document.getElementById('duration').innerHTML = \"Finished in <strong>#{(@end - @start).round(2).to_s} seconds</strong>\";</script>"
+        @output.puts "<script type=\"text/javascript\">document.getElementById('totals').innerHTML = \"#{totals}\";</script>"
+        @output.puts "</div>"
+        @output.puts "</div>"
+        @output.puts "</body>"
+        @output.puts "</html>"
       end
 
       def BeginTesting
         @start = Time.now
-        $stdout.puts html_header
-        $stdout.puts report_header
+        @output.puts html_header
+        @output.puts report_header
       end
 
       def ScenarioStart(scenario)
         @example_group_red = false
         @example_group_number += 1
         unless @example_group_number == 1
-          $stdout.puts "  </dl>"
-          $stdout.puts "</div>"
+          @output.puts "  </dl>"
+          @output.puts "</div>"
         end
-        $stdout.puts "<div class=\"example_group\">"
-        $stdout.puts "  <dl>"
-        $stdout.puts "  <dt id=\"example_group_#{@example_group_number}\">#{scenario.text}</dt>"
+        @output.puts "<div class=\"example_group\">"
+        @output.puts "  <dl>"
+        @output.puts "  <dt id=\"example_group_#{@example_group_number}\">#{scenario.text}</dt>"
       end
 
       def OutputResults()

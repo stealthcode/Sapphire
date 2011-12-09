@@ -8,19 +8,20 @@ module Sapphire
         @failing_count = 0
         @pending_count = 0
         @test_count = 0
+        @output = $stdout
       end
 
       def ScenarioStart(scenario)
-        $stdout.puts scenario.file_name + ": "
+        @output.puts scenario.file_name + ": "
       end
 
       def ScenarioComplete(scenario)
-        $stdout.puts ""
+        @output.puts ""
       end
 
       def Indent(depth)
         (1..depth).each do
-          $stdout.print "\t"
+          @output.print "\t"
         end
       end
 
@@ -28,28 +29,28 @@ module Sapphire
         Indent(depth)
 
         if result.type == 'pass'
-          $stdout.puts result.text.colorize :green
+          @output.puts result.text.colorize :green
         elsif result.type == 'pending'
-          $stdout.puts result.text.colorize :yellow
+          @output.puts result.text.colorize :yellow
           Indent(depth+1)
-          $stdout.puts " ## Not Yet Implemented ##"
+          @output.puts " ## Not Yet Implemented ##"
         else
-          $stdout.puts result.text.colorize :red
+          @output.puts result.text.colorize :red
           if result.messages.is_a? Array
             result.messages.each do |message|
               Indent(depth+1)
-              $stdout.puts message
+              @output.puts message
             end
 
           else
             Indent(depth+1)
-            $stdout.puts result.messages
+            @output.puts result.messages
           end
-          $stdout.puts ""
+          @output.puts ""
           result.stack.each do |line|
             #if (!line.include? "sapphire")
               Indent(depth+1)
-              $stdout.puts line
+              @output.puts line
             #end
           end
 
@@ -57,7 +58,7 @@ module Sapphire
       end
 
       def InsertLineBreak()
-        $stdout.puts ""
+        @output.puts ""
       end
 
       def TestStarted(test)
@@ -66,19 +67,19 @@ module Sapphire
 
       def TestPassed(test)
         @passing_count = @passing_count + 1
-        $stdout.print ".".colorize :green
+        @output.print ".".colorize :green
       end
 
       def TestFailed(test)
         @failing_count = @failing_count + 1
         Add test
-        $stdout.print "F".colorize :red
+        @output.print "F".colorize :red
       end
 
       def TestPending(test)
         @pending_count = @pending_count + 1
         Add test
-        $stdout.print "*".colorize :yellow
+        @output.print "*".colorize :yellow
       end
 
       def Add(r)
@@ -99,18 +100,18 @@ module Sapphire
       end
 
       def OutputResults()
-        $stdout.puts ""
+        @output.puts ""
 
         @not_passing.keys.each do |key|
           self.PrintResult @not_passing[key]
         end
 
-        $stdout.puts ""
-        $stdout.puts "Finished in " + (@end - @start).round().to_s + " seconds."
-        $stdout.puts "Test Count: " + @test_count.to_s
-        $stdout.puts "Passing: " + @passing_count.to_s.colorize(:green)
-        $stdout.puts "Failing: " + @failing_count.to_s.colorize(:red)
-        $stdout.puts "Pending: " + @pending_count.to_s.colorize(:yellow)
+        @output.puts ""
+        @output.puts "Finished in " + (@end - @start).round().to_s + " seconds."
+        @output.puts "Test Count: " + @test_count.to_s
+        @output.puts "Passing: " + @passing_count.to_s.colorize(:green)
+        @output.puts "Failing: " + @failing_count.to_s.colorize(:red)
+        @output.puts "Pending: " + @pending_count.to_s.colorize(:yellow)
       end
 
       def Output(result, depth)
