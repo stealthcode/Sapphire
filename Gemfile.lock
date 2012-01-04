@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sapphire (0.6.0)
+    sapphire (0.6.1)
       Platform
       colorize
       selenium-webdriver
