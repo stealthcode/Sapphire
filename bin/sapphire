@@ -26,11 +26,15 @@ if $reporters.empty?
   $reporters << ConsoleReporter.new()
 end
 
+def Report(&block)
+  $reporters.each do |reporter|
+    block.call reporter
+  end
+end
 
 if Runner.instance.test_plans.count > 0
   Runner.instance.last_test_plan.execute
 else
-
   Report do |x| x.BeginTesting end
 
   Runner.instance.scenarios.each do |scenario|
@@ -39,10 +43,4 @@ else
 
   Report do |x| x.TestingComplete end
   Report do |x| x.OutputResults end
-end
-
-def Report(&block)
-  $reporters.each do |reporter|
-    block.call reporter
-  end
 end
