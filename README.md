@@ -3,15 +3,18 @@ sapphire
 
 * http://github.com/MarcusTheBold/Sapphire
 
-== DESCRIPTION:
+DESCRIPTION:
+============
 
 Web Automated Acceptance Testing Framework for non-techies
 
-== FEATURES/PROBLEMS:
+FEATURES/PROBLEMS:
+==================
 
 * FIX (list of features or problems)
 
-== SYNOPSIS:
+SYNOPSIS:
+=========
 `Scenario` -- Description of the contained tests `Scenario "Homepage | Searching" do`
 `Background` -- Sets up a test, rune one time before one or more Given/When/Then pairs `Background "User is on homepage" do ... end`
 `Given` -- Sets up a test, run before EVERY when/then `Given "user is on home page" do ... end`
@@ -20,15 +23,18 @@ Web Automated Acceptance Testing Framework for non-techies
 `Use` -- Let the script know what user to run with `Use ConfiguredUser`
 
 
-== REQUIREMENTS:
+REQUIREMENTS:
+=============
 
 * FIX (list of requirements)
 
-== INSTALL:
+INSTALL:
+========
 
   gem install sapphire
 
-== LICENSE:
+LICENSE:
+========
 
 (The MIT License)
 
