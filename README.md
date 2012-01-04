@@ -16,10 +16,15 @@ FEATURES/PROBLEMS:
 SYNOPSIS:
 =========
 `Scenario` -- Description of the contained tests `Scenario "Homepage | Searching" do`
+
 `Background` -- Sets up a test, rune one time before one or more Given/When/Then pairs `Background "User is on homepage" do ... end`
+
 `Given` -- Sets up a test, run before EVERY when/then `Given "user is on home page" do ... end`
+
 `When` -- Sets up a test, run only for that one test `When "user clicks save button" do ... end`
+
 `Then` -- The assertion for a Given/When combo, test to make sure the results of the When are correct `Then "users data is saved" do ... end`
+
 `Use` -- Let the script know what user to run with `Use ConfiguredUser`
 
 
