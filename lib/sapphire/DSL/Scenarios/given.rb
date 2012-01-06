@@ -23,6 +23,8 @@ class Given
   def add_when(pre, text, &block)
     if(self.value.is_a? Pending)
       @when << When.new(self, pre, Pending.new(text), &block)
+    elsif(self.value.is_a? Problematic)
+      @when << When.new(self, pre, Problematic.new(text), &block)
     else
       x = When.new(self, pre, text, &block)
       @when << x
@@ -36,6 +38,8 @@ class Given
   def add_finally(finally)
     if(self.value.is_a? Pending)
       @finally = Finally.new(self, Pending.new(finally.text), &block)
+    elsif(self.value.is_a? Problematic)
+      @finally = Finally.new(self, Problematic.new(finally.text), &block)
     else
       @finally = finally
     end
@@ -44,6 +48,8 @@ class Given
   def add_and(pre, text, &block)
     if(self.value.is_a? Pending)
       self.and << And.new(self, Pending.new(pre + text), &block)
+    elsif(self.value.is_a? Problematic)
+      self.and << And.new(self, Problematic.new(pre + text), &block)
     else
       self.and << And.new(self, pre + text, &block)
     end

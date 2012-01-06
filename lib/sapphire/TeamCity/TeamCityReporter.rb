@@ -150,6 +150,11 @@ module Sapphire
           log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
         end
 
+        def TestProblematic(test)
+          log(@message_factory.create_test_ignored(test.text, "Problematic"))
+          log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
+        end
+
         def TestingComplete()
 
         end
