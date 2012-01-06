@@ -7,6 +7,7 @@ module Sapphire
         @passing_count = 0
         @failing_count = 0
         @pending_count = 0
+        @problematic_count = 0
         @test_count = 0
         @output = $stdout
       end
@@ -34,6 +35,10 @@ module Sapphire
           @output.puts result.text.colorize :yellow
           Indent(depth+1)
           @output.puts " ## Not Yet Implemented ##"
+        elsif result.type == 'problematic'
+          @output.puts result.text.colorize :orange
+          Indent(depth+1)
+          @output.puts " ## Problematic ##"
         else
           @output.puts result.text.colorize :red
           if result.messages.is_a? Array
@@ -82,6 +87,12 @@ module Sapphire
         @output.print "*".colorize :yellow
       end
 
+      def TestProblematic(test)
+        @problematic_count = @problematic_count + 1
+        Add test
+        @output.print "P".colorize :orange
+      end
+
       def Add(r)
         result_passes = r.type == "pass"
 
@@ -112,6 +123,7 @@ module Sapphire
         @output.puts "Passing: " + @passing_count.to_s.colorize(:green)
         @output.puts "Failing: " + @failing_count.to_s.colorize(:red)
         @output.puts "Pending: " + @pending_count.to_s.colorize(:yellow)
+        @output.puts "Problematic: " + @problematic_count.to_s.colorize(:orange)
       end
 
       def Output(result, depth)

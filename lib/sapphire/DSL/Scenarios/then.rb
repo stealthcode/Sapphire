@@ -18,11 +18,13 @@ class Then
   end
 
   def add_and(pre, text, &block)
-    if(!self.value.instance_of? Pending)
+    if(self.value.instance_of? Pending)
+      self.and << And.new(self, Pending.new(pre + text), &block)
+    elsif(self.value.instance_of? Problematic)
+      self.and << And.new(self, Problematic.new(pre + text), &block)
+    else
       x = And.new(self, text, &block)
       self.and << x
-    else
-      self.and << And.new(self, Pending.new(pre + text), &block)
     end
   end
 

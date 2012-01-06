@@ -8,6 +8,7 @@ module Sapphire
         @passing_count = 0
         @failing_count = 0
         @pending_count = 0
+        @problematic_count = 0
         @test_count = 0
         @output = $stdout
       end
@@ -58,11 +59,18 @@ module Sapphire
         @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{test.text} (PENDING: ### Not Yet Implemented ###)</span></dd>"
       end
 
+      def TestProblematic(test)
+        @output.puts "    <script type=\"text/javascript\">makeOrange('rspec-header');</script>" unless @header_red
+        @output.puts "    <script type=\"text/javascript\">makeOrange('example_group_#{@example_group_number}');</script>" unless @example_group_red
+        @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{test.text} (PROBLEMATIC: ### Problematic ###)</span></dd>"
+      end
+
       def TestingComplete
         @end = Time.now
 
         totals = "#{@test_count} example#{'s' unless @test_count == 1}, #{@failure_count} failure#{'s' unless @failure_count == 1}"
         totals << ", #{@pending_count} pending" if @pending_count > 0
+        totals << ", #{@problematic_count} problematic" if @problematic_count > 0
 
         @output.puts "<script type=\"text/javascript\">document.getElementById('duration').innerHTML = \"Finished in <strong>#{(@end - @start).round(2).to_s} seconds</strong>\";</script>"
         @output.puts "<script type=\"text/javascript\">document.getElementById('totals').innerHTML = \"#{totals}\";</script>"
