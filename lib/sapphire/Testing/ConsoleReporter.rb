@@ -90,7 +90,7 @@ module Sapphire
       def TestProblematic(test)
         @problematic_count = @problematic_count + 1
         Add test
-        @output.print "P".colorize :orange
+        @output.print "ಠ_ಠ".colorize :orange
       end
 
       def Add(r)
