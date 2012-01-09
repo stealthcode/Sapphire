@@ -69,7 +69,7 @@ module Sapphire
       end
 
       def CurrentUrl
-        wait = Selenium::WebDriver::Wait.new(:timeout => 30)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         url = wait.until { x = self.browser.current_url
             x unless x == nil
         }
@@ -88,7 +88,7 @@ module Sapphire
           nav = page
         end
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 30)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         begin
           found = wait.until {
             x = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
@@ -133,7 +133,7 @@ module Sapphire
       end
 
       def FindItem(array)
-        masterWait = Selenium::WebDriver::Wait.new(:timeout => 30)
+        masterWait = Selenium::WebDriver::Wait.new(:timeout => 5)
 
         element = masterWait.until {
           x = nil
@@ -161,7 +161,7 @@ module Sapphire
       end
 
       def FindAllItems(array)
-        masterWait = Selenium::WebDriver::Wait.new(:timeout => 30)
+        masterWait = Selenium::WebDriver::Wait.new(:timeout => 5)
 
         element = masterWait.until {
           x = nil
