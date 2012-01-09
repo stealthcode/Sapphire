@@ -5,9 +5,9 @@ module Sapphire
         if(item.is_a? Job)
           job = item
           if(job.Arg)
-            system(job.PsExecPath + " " + job.Server + " -u " + job.User + " -p " + job.Password + " " + job.Path + " " + job.Arg.to_s)
+            system(job.PsExecPath + " " + job.Server + " " + job.Path + " " + job.Arg.to_s)
           else
-            system(job.PsExecPath + " " + job.Server + " -u " + job.User + " -p " + job.Password + " " + job.Path)
+            system(job.PsExecPath + " " + job.Server + " " + job.Path)
           end
         else
           Runner.instance.last_test_plan.Add(item)
