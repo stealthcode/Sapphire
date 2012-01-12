@@ -11,6 +11,13 @@ module Sapphire
         end
         return Evaluation.new("Value not found in list", value)
       end
+
+      def Click
+        items = self.FindAll
+        if items.empty? == false
+          items.first.click
+        end
+      end
     end
   end
 end
