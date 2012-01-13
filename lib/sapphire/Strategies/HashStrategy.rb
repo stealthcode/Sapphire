@@ -20,6 +20,16 @@ module Sapphire
            end
         end
 
+        def Count(item, modifier)
+          ExecuteHashAgainstControl(item, @page) do |control, arg|
+            wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+            evaluation = wait.until { x = control
+              return x.Count(arg)
+            }
+            return evaluation
+          end
+        end
+
         def Validate(hash)
           Evaluation.new(hash.keys.first.to_s, hash[hash.keys.first].to_s)
         end

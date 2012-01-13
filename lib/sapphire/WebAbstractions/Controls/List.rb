@@ -18,6 +18,11 @@ module Sapphire
           items.first.click
         end
       end
+
+      def Count(count)
+        items = self.FindAll
+        return Evaluation.new(items.count, count)
+      end
     end
   end
 end
