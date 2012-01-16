@@ -23,9 +23,18 @@ module Sapphire
         def Count(item, modifier)
           ExecuteHashAgainstControl(item, @page) do |control, arg|
             wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-            evaluation = wait.until { x = control
-              return x.Count(arg)
-            }
+            count = 0
+            begin
+              evaluation = wait.until { x = control
+                count = x.Count
+                if x.Count == arg
+                  return Evaluation.new(count, arg)
+                end
+              }
+            rescue
+              return Evaluation.new(count, arg)
+            end
+
             return evaluation
           end
         end
