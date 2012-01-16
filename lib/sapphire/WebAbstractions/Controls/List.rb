@@ -13,15 +13,25 @@ module Sapphire
       end
 
       def Click
-        items = self.FindAll
-        if items.empty? == false
-          items.first.click
+        wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+        begin
+          clicked = wait.until { items = self.FindAll
+            if items.empty? == false
+              if items.first.displayed? == true
+                items.first.click
+                return true
+              end
+            end
+          }
+          return nil
+        rescue
+          return nil
         end
       end
 
-      def Count(count)
+      def Count
         items = self.FindAll
-        return Evaluation.new(items.count, count)
+        return items.count
       end
     end
   end
