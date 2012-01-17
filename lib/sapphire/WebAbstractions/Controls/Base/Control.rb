@@ -50,7 +50,11 @@ module Sapphire
       end
 
       def Equals(value)
-         Evaluation.new(self.Text, value)
+         return Evaluation.new(self.Text, value)
+      end
+
+      def Contain(value)
+         return ContainsEvaluation.new(self.Text, value)
       end
     end
   end

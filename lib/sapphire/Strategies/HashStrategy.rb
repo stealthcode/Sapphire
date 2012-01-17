@@ -20,6 +20,24 @@ module Sapphire
            end
         end
 
+        def Contain(item, modifier)
+           ExecuteHashAgainstControl(item, @page) do |control, arg|
+              wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+              begin
+                evaluation = wait.until { x = control
+                  val = x.Contain(arg)
+                  if (val.left.include? val.right)
+                    return val
+                  end
+                }
+              rescue
+                return ContainsEvaluation.new(control.Text, arg)
+              end
+
+              return evaluation
+           end
+        end
+
         def Count(item, modifier)
           ExecuteHashAgainstControl(item, @page) do |control, arg|
             wait = Selenium::WebDriver::Wait.new(:timeout => 5)
