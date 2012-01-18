@@ -2,6 +2,11 @@ module Sapphire
   module WebAbstractions
     class List < Control
 
+      def initialize(hash)
+        @hash = hash
+        @retryAttempts = 0
+      end
+
       def Equals(value)
         x = self.FindAll
         x.each do |item|
@@ -13,7 +18,7 @@ module Sapphire
       end
 
       def Click
-        wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 3)
         begin
           clicked = wait.until { items = self.FindAll
             if items.empty? == false
@@ -25,7 +30,14 @@ module Sapphire
           }
           return nil
         rescue
-          return nil
+          #retry a few times because in strange events from finding all the elements to trying to click one, it can become
+          #unavailable
+          if(@retryAttempts < 2)
+            @retryAttempts = @retryAttempts + 1
+            self.Click
+          else
+            return nil
+          end
         end
       end
 
