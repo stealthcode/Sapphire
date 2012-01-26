@@ -56,6 +56,10 @@ module Sapphire
         @fields << { args.first => Date.new(args[1]) }
       end
 
+      def Contains(item)
+        @fields.has_key? item
+      end
+
     end
   end
 end

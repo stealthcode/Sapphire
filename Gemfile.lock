@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sapphire (0.6.3)
+    sapphire (0.6.6)
       Platform
       colorize
       selenium-webdriver
@@ -10,7 +10,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     Platform (0.4.0)
-    childprocess (0.2.1)
+    childprocess (0.2.8)
       ffi (~> 1.0.6)
     colorize (0.5.8)
     ffi (1.0.9-x86-mingw32)
