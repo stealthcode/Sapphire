@@ -13,7 +13,11 @@ module Sapphire
                   end
                 }
               rescue
-                return Evaluation.new(control.Text, arg)
+                begin
+                  return Evaluation.new(control.Text, arg)
+                rescue
+                  return Evaluation.new("Control Not Found", arg)
+                end
               end
 
               return evaluation
