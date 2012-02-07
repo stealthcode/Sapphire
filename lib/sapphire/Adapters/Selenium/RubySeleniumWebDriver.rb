@@ -63,7 +63,7 @@ module Sapphire
           nav = page
         end
 
-        self.browser.get "https://" + nav.Url
+        self.browser.get nav.Url
         nav.Init
         nav
       end
@@ -91,11 +91,11 @@ module Sapphire
         wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         begin
           found = wait.until {
-            x = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
+            x = self.CurrentUrl.upcase.start_with?(nav.Url.upcase)
             if(x == false)
               nav.AlternateUrls.each do |url|
                 if( x == false)
-                  x = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
+                  x = self.CurrentUrl.upcase.start_with?(url.upcase)
                 end
               end
             end
@@ -121,11 +121,11 @@ module Sapphire
 
       def ShouldTransitionTo(url)
         if(url.instance_of?(String))
-          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase), true)
+          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(url.upcase), true)
           @rootUrl = url
         else
           x = url.new().Url
-          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + x.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + x.upcase), true)
+          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(x.upcase), true)
           @rootUrl = x
         end
 
