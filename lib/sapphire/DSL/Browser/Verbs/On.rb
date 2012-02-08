@@ -2,11 +2,11 @@ module Sapphire
   module DSL
     module Browser
       def On(page)
-        found = $browser.CurrentUrl.upcase.start_with?("HTTP://" + page.Url.upcase) || $browser.CurrentUrl.upcase.start_with?("HTTPS://" + page.Url.upcase)
+        found = $browser.CurrentUrl.upcase.start_with?(page.Url.upcase)
         if(found == false)
           page.AlternateUrls.each do |url|
             if( found == false)
-              found = $browser.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || $browser.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
+              found = $browser.CurrentUrl.upcase.start_with?(url.upcase)
             end
           end
         end
