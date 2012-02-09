@@ -42,6 +42,21 @@ module Sapphire
            end
         end
 
+        def In(item, modifier)
+           ExecuteHashAgainstControl(item, @page) do |control, arg|
+              wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+              begin
+                evaluation = wait.until { x = control
+                  return x.In(arg)
+                }
+              rescue
+                return Evaluation.new(control.Text, arg)
+              end
+
+              return evaluation
+           end
+        end
+
         def Count(item, modifier)
           ExecuteHashAgainstControl(item, @page) do |control, arg|
             wait = Selenium::WebDriver::Wait.new(:timeout => 5)
