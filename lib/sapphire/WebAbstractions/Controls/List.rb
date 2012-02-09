@@ -17,6 +17,35 @@ module Sapphire
         return Evaluation.new("Value not found in list", value)
       end
 
+      def In(values)
+        x = self.FindAll
+        x.each do |item|
+          values.each do |value|
+            if item.text == value
+              return Evaluation.new(item.text, value)
+            end
+          end
+        end
+
+        #if here then it couldnt make a match, build up the list of values
+        alltext = []
+        x.each do |item|
+          alltext << item.text
+        end
+
+        return Evaluation.new(values, alltext)
+      end
+
+      def Contain(value)
+        x = self.FindAll
+        x.each do |item|
+          if item.text.include? value
+            return ContainsEvaluation.new(item.text, value)
+          end
+        end
+        return ContainsEvaluation.new("Value not found in list", value)
+      end
+
       def Click
         wait = Selenium::WebDriver::Wait.new(:timeout => 3)
         begin
@@ -45,6 +74,17 @@ module Sapphire
         items = self.FindAll
         return items.count
       end
+
+      def Text
+        values = []
+        x = self.FindAll
+        x.each do |item|
+          values << item.text
+        end
+
+        return values
+      end
+
     end
   end
 end
