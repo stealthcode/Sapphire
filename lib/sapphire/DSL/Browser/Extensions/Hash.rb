@@ -38,7 +38,11 @@ class Hash < Object
             end
           }
         rescue
-          return ContainsEvaluation.new(control.Text, arg)
+          begin
+            return Evaluation.new(control.Text, arg)
+          rescue
+            return Evaluation.new("Control Not Found", arg)
+          end
         end
 
         return evaluation
@@ -63,6 +67,22 @@ class Hash < Object
       return evaluation
     end
   end
+
+  def In(item)
+     ExecuteHashAgainstControl(item) do |control, arg|
+        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+        begin
+          evaluation = wait.until { x = control
+            return x.In(arg)
+          }
+        rescue
+          return Evaluation.new(control.Text, arg)
+        end
+
+        return evaluation
+     end
+  end
+
 
   def Validate(hash)
     Evaluation.new(hash.keys.first.to_s, hash[hash.keys.first].to_s)

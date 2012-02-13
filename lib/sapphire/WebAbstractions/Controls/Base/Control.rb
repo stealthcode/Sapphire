@@ -56,6 +56,18 @@ module Sapphire
       def Contain(value)
          return ContainsEvaluation.new(self.Text, value)
       end
+
+      def In(values)
+        text = self.Text
+        values.each do |value|
+          if text == value
+            return Evaluation.new(text, value)
+          end
+        end
+
+        #error land
+        return Evaluation.new(text, values)
+      end
     end
   end
 end
