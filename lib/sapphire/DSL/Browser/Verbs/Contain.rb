@@ -2,13 +2,12 @@ module Sapphire
   module DSL
     module Browser
       def Contain(item)
-        ContainsNullModifier.new(Contain.new(item, @page))
+        ContainsNullModifier.new(Contain.new(item))
       end
 
       class Contain
-        def initialize(item, page)
+        def initialize(item)
           @item = item
-          @page = page
         end
 
         def ModifyWith(item)
@@ -16,7 +15,7 @@ module Sapphire
         end
 
         def execute
-          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page).Contain(@item, @modifier), :modifier => @modifier }
+          return { :value => @item.Contain(@item, @modifier), :modifier => @modifier }
         end
       end
     end

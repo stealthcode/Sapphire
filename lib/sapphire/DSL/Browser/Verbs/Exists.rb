@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def Exists(symbol)
-        @page.fields.each do |field|
+        $page.fields.each do |field|
           field.keys.each do |field_key|
             if(field_key == symbol)
               begin

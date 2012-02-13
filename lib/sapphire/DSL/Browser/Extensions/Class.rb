@@ -36,4 +36,10 @@ class Class < Module
     x.Close
   end
 
+  def Show(item)
+    evaluation = $browser.ShouldNavigateTo item
+    $page.Init
+    {:page => $page, :value => evaluation }
+  end
+
 end

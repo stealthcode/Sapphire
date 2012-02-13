@@ -2,13 +2,12 @@ module Sapphire
   module DSL
     module Browser
       def Count(item)
-        NullModifier.new(Count.new(item, @page))
+        NullModifier.new(Count.new(item))
       end
 
       class Count
-        def initialize(item, page)
+        def initialize(item)
           @item = item
-          @page = page
         end
 
         def ModifyWith(item)
@@ -16,7 +15,7 @@ module Sapphire
         end
 
         def execute
-          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page).Count(@item, @modifier), :modifier => @modifier }
+          return { :value => @item.Count(@item), :modifier => @modifier }
         end
       end
     end

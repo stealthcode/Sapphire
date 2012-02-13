@@ -2,13 +2,12 @@ module Sapphire
   module DSL
     module Data
       def Validate(hash)
-        NullModifier.new(Validate.new(hash, @page))
+        NullModifier.new(Validate.new(hash))
       end
 
       class Validate
-        def initialize(item, page)
+        def initialize(item)
           @item = item
-          @page = page
         end
 
         def ModifyWith(item)
@@ -16,7 +15,7 @@ module Sapphire
         end
 
         def execute
-          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page).Validate(@item), :modifier => @modifier }
+          return { :value => @item.Validate(@item), :modifier => @modifier }
         end
       end
     end

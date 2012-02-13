@@ -5,12 +5,12 @@ module Sapphire
         results = item.execute()
 
         if results.is_a? Hash
-          @page = results[:page] if results[:page] != nil
+          $page = results[:page] if results[:page] != nil
           value = results[:value]
           modifier = results[:modifier]
 
           if value.is_a? Hash
-            @page = value[:page] if value[:page] != nil
+            $page = value[:page] if value[:page] != nil
             sub_value = value[:value]
             modifier.Evaluate(sub_value)
             return
@@ -48,7 +48,7 @@ module Sapphire
           return
         end
 
-        raise "Cannot act upon result " + results.to_s + " for page " + @page.to_s
+        raise "Cannot act upon result " + results.to_s + " for page " + $page.to_s
       end
     end
   end

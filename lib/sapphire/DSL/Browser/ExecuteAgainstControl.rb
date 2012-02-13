@@ -1,9 +1,9 @@
 module Sapphire
   module DSL
     module Browser
-      def ExecuteHashAgainstControl(hash, page, &block)
+      def ExecuteHashAgainstControl(hash, &block)
         hash.keys.each do |key|
-          page.fields.each do |field|
+          $page.fields.each do |field|
             field.keys.each do |field_key|
               if(field_key == key)
                 block.call(field[field_key], hash[key])
@@ -13,11 +13,11 @@ module Sapphire
           end
         end
 
-        raise "cannot find control matching " + hash.to_s + " for page " + @page.to_s
+        raise "cannot find control matching " + hash.to_s + " for page " + $page.to_s
       end
 
-      def ExecuteAgainstControl(item, page, &block)
-        page.fields.each do |field|
+      def ExecuteAgainstControl(item, &block)
+        $page.fields.each do |field|
           field.keys.each do |field_key|
             if(field_key == item)
               block.call(field[field_key], item)
@@ -26,7 +26,7 @@ module Sapphire
           end
         end
 
-        raise "Cannot find controls matching: " + item + "for page " + @page.to_s
+        raise "Cannot find controls matching: " + item + "for page " + $page.to_s
       end
     end
   end

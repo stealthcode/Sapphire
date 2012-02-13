@@ -58,14 +58,13 @@ module Sapphire
 
       def NavigateTo(page)
         if(page.is_a? Class)
-          nav = page.new
+          $page = page.new
         else
-          nav = page
+          $page = page
         end
 
-        self.browser.get "https://" + nav.Url
-        nav.Init
-        nav
+        self.browser.get $page.Url
+        $page.Init
       end
 
       def CurrentUrl
@@ -83,31 +82,31 @@ module Sapphire
 
       def ShouldNavigateTo(page)
         if(page.is_a? Class)
-          nav = page.new
+          $page = page.new
         else
-          nav = page
+          $page = page
         end
 
         wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         begin
           found = wait.until {
-            x = self.CurrentUrl.upcase.start_with?("HTTP://" + nav.Url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + nav.Url.upcase)
+            x = self.CurrentUrl.upcase.start_with?($page.Url.upcase) || self.CurrentUrl.upcase.start_with?($page.Url.upcase)
             if(x == false)
-              nav.AlternateUrls.each do |url|
+              $page.AlternateUrls.each do |url|
                 if( x == false)
-                  x = self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase)
+                  x = self.CurrentUrl.upcase.start_with?(url.upcase) || self.CurrentUrl.upcase.start_with?(url.upcase)
                 end
               end
             end
             x
           }
         rescue
-          temp = Evaluation.new(self.CurrentUrl, nav.Url)
-          return temp, nav
+          temp = Evaluation.new(self.CurrentUrl, $page.Url)
+          return temp
         end
 
         temp = Evaluation.new(found, true)
-        return temp, nav
+        return temp
       end
 
       def Run(background)
@@ -121,11 +120,11 @@ module Sapphire
 
       def ShouldTransitionTo(url)
         if(url.instance_of?(String))
-          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + url.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + url.upcase), true)
+          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(url.upcase) || self.CurrentUrl.upcase.start_with?(url.upcase), true)
           @rootUrl = url
         else
           x = url.new().Url
-          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?("HTTP://" + x.upcase) || self.CurrentUrl.upcase.start_with?("HTTPS://" + x.upcase), true)
+          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(x.upcase) || self.CurrentUrl.upcase.start_with?(x.upcase), true)
           @rootUrl = x
         end
 

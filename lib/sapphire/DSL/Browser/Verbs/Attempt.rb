@@ -4,9 +4,9 @@ module Sapphire
       def Attempt(page)
         if(page.is_a? Class)
           temp = page.new
-          @page = temp.Attempt
+          $page = temp.Attempt
         else
-          @page = page.Attempt
+          $page = page.Attempt
         end
       end
     end

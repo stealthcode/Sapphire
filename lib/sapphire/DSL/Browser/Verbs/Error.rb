@@ -2,13 +2,12 @@ module Sapphire
   module DSL
     module Browser
       def Error(hash)
-        NullModifier.new(Error.new(hash, @page))
+        NullModifier.new(Error.new(hash))
       end
 
       class Error
-        def initialize(item, page)
+        def initialize(item)
           @item = item
-          @page = page
         end
 
         def ModifyWith(item)
@@ -16,7 +15,7 @@ module Sapphire
         end
 
         def execute
-           return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page).Error(@item), :modifier => @modifier }
+           return { :value => @item.Error(@item), :modifier => @modifier }
         end
       end
     end

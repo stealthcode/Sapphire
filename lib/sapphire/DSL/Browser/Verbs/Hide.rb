@@ -2,13 +2,12 @@ module Sapphire
   module DSL
     module Browser
       def Hide(args)
-        NullModifier.new(Hide.new(args, @page))
+        NullModifier.new(Hide.new(args))
       end
 
       class Hide
-        def initialize(item, page)
+        def initialize(item)
           @item = item
-          @page = page
         end
 
         def ModifyWith(item)
@@ -16,7 +15,7 @@ module Sapphire
         end
 
         def execute
-          return { :value => SapphireConfig.Current.GetBy(@item.class).new(@page).Hide(@item, @modifier), :modifier => @modifier }
+          return { :value => @item.Hide(@item, @modifier), :modifier => @modifier }
         end
       end
     end

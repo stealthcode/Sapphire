@@ -3,7 +3,7 @@ module Sapphire
     module Strategies
       class Strategy
         def initialize(page)
-          @page = page
+          $page = page
         end
       end
     end
