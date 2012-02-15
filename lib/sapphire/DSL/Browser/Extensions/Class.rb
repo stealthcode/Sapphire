@@ -38,8 +38,7 @@ class Class < Module
 
   def Show(item)
     evaluation = $browser.ShouldNavigateTo item
-    $page.Init
-    {:page => $page, :value => evaluation }
+    {:value => evaluation }
   end
 
 end

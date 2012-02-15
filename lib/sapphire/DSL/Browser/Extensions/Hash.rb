@@ -1,11 +1,6 @@
 class Hash < Object
 
-  def With(options = {})
-    $page = options.fetch(:page) if options.has_key? :page
-  end
-
   def Set(hash)
-    hash.keys.first.With(:page => $page)
     hash.keys.first.Set(hash)
   end
 
@@ -20,7 +15,7 @@ class Hash < Object
             end
           }
         rescue
-          return Evaluation.new(control.Text, arg)
+          return Evaluation.new(arg, control.Text)
         end
 
         return evaluation
@@ -39,7 +34,7 @@ class Hash < Object
           }
         rescue
           begin
-            return Evaluation.new(control.Text, arg)
+            return Evaluation.new(arg, control.Text)
           rescue
             return Evaluation.new("Control Not Found", arg)
           end
@@ -57,11 +52,11 @@ class Hash < Object
         evaluation = wait.until { x = control
           count = x.Count
           if x.Count == arg
-            return Evaluation.new(count, arg)
+            return Evaluation.new(arg, count)
           end
         }
       rescue
-        return Evaluation.new(count, arg)
+        return Evaluation.new(arg, count)
       end
 
       return evaluation
@@ -76,7 +71,7 @@ class Hash < Object
             return x.In(arg)
           }
         rescue
-          return Evaluation.new(control.Text, arg)
+          return Evaluation.new(arg, control.Text)
         end
 
         return evaluation

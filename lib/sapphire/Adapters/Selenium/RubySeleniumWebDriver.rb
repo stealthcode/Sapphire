@@ -63,7 +63,7 @@ module Sapphire
           $page = page
         end
 
-        self.browser.get "https://" + $page.Url
+        self.browser.get $page.Url
         $page.Init
       end
 
@@ -86,6 +86,8 @@ module Sapphire
         else
           $page = page
         end
+
+        $page.Init
 
         wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         begin
@@ -120,11 +122,11 @@ module Sapphire
 
       def ShouldTransitionTo(url)
         if(url.instance_of?(String))
-          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(url.upcase))
+          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(url.upcase), true)
           @rootUrl = url
         else
           x = url.new().Url
-          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(x.upcase))
+          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(x.upcase), true)
           @rootUrl = x
         end
 

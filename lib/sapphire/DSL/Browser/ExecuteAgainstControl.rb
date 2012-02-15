@@ -3,30 +3,16 @@ module Sapphire
     module Browser
       def ExecuteHashAgainstControl(hash, &block)
         hash.keys.each do |key|
-          $page.fields.each do |field|
-            field.keys.each do |field_key|
-              if(field_key == key)
-                block.call(field[field_key], hash[key])
-                return
-              end
-            end
-          end
+          return block.call($page.Get(key), hash[key]) if($page.Contains key)
         end
 
-        raise "cannot find control matching " + hash.to_s + " for page " + $page.to_s
+        raise "Cannot find control matching " + hash.to_s + " for page " + $page.to_s
       end
 
       def ExecuteAgainstControl(item, &block)
-        $page.fields.each do |field|
-          field.keys.each do |field_key|
-            if(field_key == item)
-              block.call(field[field_key], item)
-              return
-            end
-          end
-        end
+        return block.call($page.Get(item), item) if($page.Contains item)
 
-        raise "Cannot find controls matching: " + item + "for page " + $page.to_s
+        raise "Cannot find controls matching: " + item.to_s + "for page " + $page.to_s
       end
     end
   end

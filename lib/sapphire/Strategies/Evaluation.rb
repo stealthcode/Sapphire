@@ -10,6 +10,20 @@ module Sapphire
           @left = left
           @right = right
         end
+
+        def Evaluate()
+          if(@left != @right)
+            messages = []
+
+            messages << "expected: (nil)" if @left == nil
+            messages << "expected: " + @left.to_s if @left != nil
+            messages << "got: (nil)" if @right == nil
+            messages << "got: " + @right.to_s if @right != nil
+
+            raise ExpectationException.new(messages)
+          end
+
+        end
       end
     end
   end

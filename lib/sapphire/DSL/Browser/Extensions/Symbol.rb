@@ -1,9 +1,5 @@
 class Symbol
 
-  def With(options = {})
-    $page = options.fetch(:page) if options.has_key? :page
-  end
-
   def Check
     ExecuteAgainstControl(self) do |control, arg|
       control.Check true
@@ -35,51 +31,49 @@ class Symbol
   end
 
   def Show(item)
-    $page.fields.each do |field|
-      field.keys.each do |field_key|
-        if(field_key == item)
-          begin
-            x = field[field_key].Find
-            if(x)
-              begin
-                wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-                result = wait.until { y = modifier.Modify(x.displayed?)
-                  y unless y == false
-                }
-                return Evaluation.new(modifier.Modify(x.displayed?), modifier.Modify(true))
-              rescue
-                return Evaluation.new(true, "An error occurred.")
-              end
-            end
-          rescue
-           return Evaluation.new(true, "An error occurred.")
-          end
-        end
+
+    return FieldNotDefinedEvaluation.new(item, $page) if !$page.Contains item
+
+    begin
+      x = $page.Get(item).Find
+
+      return FieldNotFoundEvaluation.new(item, $page) if x == nil
+
+      return Evaluation.new(x.displayed?, true) if x.displayed?
+
+      begin
+        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+        result = wait.until { y = x.displayed?
+          y unless y == false
+        }
+        return Evaluation.new(x.displayed?, modifier.Modify(true))
+      rescue
+        return FieldNotFoundEvaluation.new(item, $page)
       end
+
+    rescue
+      return FieldNotFoundEvaluation.new(item, $page)
     end
 
-    raise "cannot find control matching " + item.to_s + " for page " + $page.to_s
   end
 
   def Hide(item, modifier)
-    $page.fields.each do |field|
-      field.keys.each do |field_key|
-        if(field_key == item)
-          begin
-            wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-            element = wait.until { x = field[field_key].Find
-                x and modifier.Modify(!x.displayed?)
-            }
-            if(element)
-              return Evaluation.new(modifier.Modify(element.displayed?), modifier.Modify(true))
-            end
-          rescue
-           return Evaluation.new(true, true)
-          end
-        end
+
+    return FieldNotDefinedEvaluation.new(item, $page) if !$page.Contains item
+
+    begin
+      wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+      element = wait.until { x = field[field_key].Find
+          x and modifier.Modify(!x.displayed?)
+      }
+      if(element)
+        return Evaluation.new(modifier.Modify(element.displayed?), modifier.Modify(true))
       end
+    rescue
+     return Evaluation.new(true, true)
     end
-    raise "cannot find control matching " + item.to_s + " for page " + $page.to_s
+
+    return FieldNotDefinedEvaluation.new(item, $page)
   end
 
   def Validate(hash)

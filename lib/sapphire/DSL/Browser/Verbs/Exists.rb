@@ -2,19 +2,14 @@ module Sapphire
   module DSL
     module Browser
       def Exists(symbol)
-        $page.fields.each do |field|
-          field.keys.each do |field_key|
-            if(field_key == symbol)
-              begin
-                x = field[field_key].FindWithoutWait
-                return x.displayed?
-              rescue
-                return false
-              end
-            end
+        if($page.Contains symbol)
+          begin
+            x = $page.Get(symbol).FindWithoutWait
+            return x.displayed?
+          rescue
+            return false
           end
         end
-        false
       end
     end
   end
