@@ -16,7 +16,7 @@ module Sapphire
         end
 
         def execute
-          $browser.ShouldTransitionTo(@item, modifier)
+          $browser.ShouldTransitionTo(@item, @modifier)
         end
       end
     end

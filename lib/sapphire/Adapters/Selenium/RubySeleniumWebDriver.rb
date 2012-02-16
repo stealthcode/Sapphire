@@ -93,9 +93,9 @@ module Sapphire
         begin
           found = wait.until {
             x = self.CurrentUrl.upcase.start_with?($page.Url.upcase)
-            if(x == false)
+            if(modifier.Modify(x == false, true))
               $page.AlternateUrls.each do |url|
-                if( x == false)
+                if(modifier.Modify(x == false, true))
                   x = self.CurrentUrl.upcase.start_with?(url.upcase)
                 end
               end
@@ -118,7 +118,7 @@ module Sapphire
       end
 
       def ShouldTransitionTo(url, modifier)
-        if(url.instance_of?(String))
+        if(modifier.Modify(url.instance_of?(String), true))
           temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(url.upcase), true)
           @rootUrl = url
         else
