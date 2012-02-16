@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def In(item)
-        NullModifier.new(In.new(item, @page))
+        EqualsModifier.new(In.new(item, @page))
       end
 
       class In
@@ -16,7 +16,7 @@ module Sapphire
         end
 
         def execute
-          return { :value => @item.In(@item), :modifier => @modifier }
+          return { :value => @item.In(@item, modifier), :modifier => @modifier }
         end
       end
     end

@@ -7,21 +7,21 @@ module Sapphire
         @retryAttempts = 0
       end
 
-      def Equals(value)
+      def Equals(value, modifier)
         x = self.FindAll
         x.each do |item|
-          if item.text == value
+          if modifier.Modify(item.text, value)
             return Evaluation.new(item.text, value)
           end
         end
         return Evaluation.new("Value not found in list", value)
       end
 
-      def In(values)
+      def In(values, modifier)
         x = self.FindAll
         x.each do |item|
           values.each do |value|
-            if item.text == value
+            if modifier.Modify(item.text, value)
               return Evaluation.new(item.text, value)
             end
           end
@@ -36,14 +36,15 @@ module Sapphire
         return Evaluation.new(values, alltext)
       end
 
-      def Contain(value)
+      def Contain(value, modifier)
         x = self.FindAll
         x.each do |item|
-          if item.text.include? value
-            return ContainsEvaluation.new(item.text, value)
+          if modifier.Modify(item.text, value)
+            return Evaluation.new(item.text, value)
           end
         end
-        return ContainsEvaluation.new("Value not found in list", value)
+
+        return Evaluation.new("Value not found in list", value)
       end
 
       def Click

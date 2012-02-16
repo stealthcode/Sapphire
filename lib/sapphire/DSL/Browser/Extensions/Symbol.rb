@@ -30,7 +30,7 @@ class Symbol
     end
   end
 
-  def Show(item)
+  def Show(item, modifier)
 
     return FieldNotDefinedEvaluation.new(item, $page) if !$page.Contains item
 
@@ -39,14 +39,16 @@ class Symbol
 
       return FieldNotFoundEvaluation.new(item, $page) if x == nil
 
-      return Evaluation.new(x.displayed?, true) if x.displayed?
+      return Evaluation.new(x.displayed?, true) if modifier.Modify(x.displayed?, true)
 
       begin
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        result = wait.until { y = x.displayed?
+        result = wait.until { y = modifier.Modify(x.displayed?, true)
           y unless y == false
         }
-        return Evaluation.new(x.displayed?, modifier.Modify(true))
+        z = Evaluation.new(x.displayed?, true)
+        z.ModifyWith(modifier)
+        return z
       rescue
         return FieldNotFoundEvaluation.new(item, $page)
       end
@@ -64,13 +66,17 @@ class Symbol
     begin
       wait = Selenium::WebDriver::Wait.new(:timeout => 5)
       element = wait.until { x = field[field_key].Find
-          x and modifier.Modify(!x.displayed?)
+          x and modifier.Modify(!x.displayed?, true)
       }
       if(element)
-        return Evaluation.new(modifier.Modify(element.displayed?), modifier.Modify(true))
+        x = Evaluation.new(element.displayed?, true)
+        x.ModifyWith(modifier)
+        return x
       end
     rescue
-     return Evaluation.new(true, true)
+      z = Evaluation.new(true, true)
+      z.ModifyWith(modifier)
+      return z
     end
 
     return FieldNotDefinedEvaluation.new(item, $page)

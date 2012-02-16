@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Data
       def Validate(hash)
-        NullModifier.new(Validate.new(hash))
+        EqualsModifier.new(Validate.new(hash))
       end
 
       class Validate

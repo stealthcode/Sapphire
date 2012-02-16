@@ -11,12 +11,22 @@ module Sapphire
           @right = right
         end
 
+        def Modify(left, right)
+          return @modifier.Modify(left, right) if @modifier != nil
+          EqualsModifier.new(self).Modify(left, right) if @modifier == nil
+        end
+
+        def ModifyWith(item)
+          @modifier = item
+        end
+
         def Evaluate()
-          if(@left != @right)
+
+          if(!Modify(@left, @right))
             messages = []
 
-            messages << "expected: (nil)" if @left == nil
-            messages << "expected: " + @left.to_s if @left != nil
+            messages << "expected" + @modifier.Text + ": (nil)" if @left == nil
+            messages << "expected" + @modifier.Text + ": " + @left.to_s if @left != nil
             messages << "got: (nil)" if @right == nil
             messages << "got: " + @right.to_s if @right != nil
 

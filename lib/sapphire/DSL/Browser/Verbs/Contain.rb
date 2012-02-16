@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def Contain(item)
-        ContainsNullModifier.new(Contain.new(item))
+        ContainsModifier.new(Contain.new(item))
       end
 
       class Contain

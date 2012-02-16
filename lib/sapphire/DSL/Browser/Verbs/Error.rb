@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def Error(hash)
-        NullModifier.new(Error.new(hash))
+        EqualsModifier.new(Error.new(hash))
       end
 
       class Error
@@ -15,7 +15,7 @@ module Sapphire
         end
 
         def execute
-           return { :value => @item.Error(@item), :modifier => @modifier }
+           return { :value => @item.Error(@item, @modifier), :modifier => @modifier }
         end
       end
     end

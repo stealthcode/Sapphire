@@ -1,30 +1,29 @@
 module Sapphire
   module DSL
-    module Browser
-      def Not(item)
-        Not.new(item)
-      end
-
-      class Not
-
+    module Strategies
+      class EqualsModifier
         def initialize(item)
           @item = item
           @item.ModifyWith self
         end
 
+        def ModifyWith(item)
+          @modifier = item
+        end
+
         def Modify(left, right)
-          return @modifier.Modify(left != right, true) if @modifier != nil
-          left != right
+          return @modifier.Modify(left, right) if @modifier != nil
+          left == right
         end
 
         def Text
-          return @modifier.Text + " NOT" if @modifier != nil
-          " NOT"
+          ""
         end
 
         def Evaluate(evaluation)
           return @modifier.Evaluate(evaluation) if @modifier != nil
-          return evaluation.Evaluate()
+
+          evaluation.Evaluate()
         end
 
         def execute

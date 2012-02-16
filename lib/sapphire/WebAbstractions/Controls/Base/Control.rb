@@ -49,18 +49,18 @@ module Sapphire
         sleep(1)
       end
 
-      def Equals(value)
+      def Equals(value, modifier)
          return Evaluation.new(self.Text, value)
       end
 
-      def Contain(value)
+      def Contain(value, modifier)
          return ContainsEvaluation.new(self.Text, value)
       end
 
-      def In(values)
+      def In(values, modifier)
         text = self.Text
         values.each do |value|
-          if text == value
+          if modifier.Modify(text, value)
             return Evaluation.new(text, value)
           end
         end

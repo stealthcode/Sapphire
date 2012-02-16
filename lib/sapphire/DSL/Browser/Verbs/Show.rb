@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def Show(item)
-        NullModifier.new(Show.new(item))
+        EqualsModifier.new(Show.new(item))
       end
 
       class Show
@@ -15,7 +15,7 @@ module Sapphire
         end
 
         def execute
-          return { :value => @item.Show(@item), :modifier => @modifier }
+          return { :value => @item.Show(@item, @modifier), :modifier => @modifier }
         end
       end
     end

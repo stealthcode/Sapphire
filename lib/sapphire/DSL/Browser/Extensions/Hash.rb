@@ -4,39 +4,45 @@ class Hash < Object
     hash.keys.first.Set(hash)
   end
 
-  def Show(item)
+  def Show(item, modifier)
      ExecuteHashAgainstControl(item) do |control, arg|
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
         begin
           evaluation = wait.until { x = control
             val = x.Equals(arg)
-            if (val.left == val.right)
+            val.ModifyWith(modifier)
+            if (modifier.Modify(val.left, val.right))
               val
             end
           }
         rescue
-          return Evaluation.new(arg, control.Text)
+          x = Evaluation.new(arg, control.Text)
+          x.ModifyWith(modifier)
+          return x
         end
 
         return evaluation
      end
   end
 
-  def Contain(item)
+  def Contain(item, modifier)
      ExecuteHashAgainstControl(item) do |control, arg|
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
         begin
           evaluation = wait.until { x = control
             val = x.Contain(arg)
-            if (val.left.include? val.right)
+            if modifier.Modify(val.left, val.right)
+              val.ModifyWith(modifier)
               return val
             end
           }
         rescue
           begin
-            return Evaluation.new(arg, control.Text)
+            x = Evaluation.new(arg, control.Text)
+            x.ModifyWith(modifier)
+            return x
           rescue
-            return Evaluation.new("Control Not Found", arg)
+            return FieldNotFoundEvaluation.new(item, $page)
           end
         end
 
@@ -44,34 +50,40 @@ class Hash < Object
      end
   end
 
-  def Count(item)
+  def Count(item, modifier)
     ExecuteHashAgainstControl(item) do |control, arg|
       wait = Selenium::WebDriver::Wait.new(:timeout => 5)
       count = 0
       begin
         evaluation = wait.until { x = control
           count = x.Count
-          if x.Count == arg
-            return Evaluation.new(arg, count)
+          if modifier.Modify(x.Count, arg)
+            x = Evaluation.new(arg, count)
+            x.ModifyWith(modifier)
+            return x
           end
         }
       rescue
-        return Evaluation.new(arg, count)
+        x = Evaluation.new(arg, count)
+        x.ModifyWith(modifier)
+        return x
       end
 
       return evaluation
     end
   end
 
-  def In(item)
+  def In(item, modifier)
      ExecuteHashAgainstControl(item) do |control, arg|
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
         begin
           evaluation = wait.until { x = control
-            return x.In(arg)
+            return x.In(arg, modifier)
           }
         rescue
-          return Evaluation.new(arg, control.Text)
+          x = Evaluation.new(arg, control.Text)
+          x.ModifyWith(modifier)
+          return x
         end
 
         return evaluation
@@ -83,9 +95,9 @@ class Hash < Object
     Evaluation.new(hash.keys.first.to_s, hash[hash.keys.first].to_s)
   end
 
-  def Error(item)
+  def Error(item, modifier)
     ExecuteHashAgainstControl(item) do |control, arg|
-       return control.Equals(arg)
+       return control.Equals(arg, modifier)
      end
   end
 end

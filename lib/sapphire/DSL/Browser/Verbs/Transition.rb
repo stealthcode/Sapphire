@@ -3,7 +3,7 @@ module Sapphire
     module Browser
 
       def Transition(url)
-        NullModifier.new(Transition.new(url))
+        EqualsModifier.new(Transition.new(url))
       end
 
       class Transition
@@ -16,7 +16,7 @@ module Sapphire
         end
 
         def execute
-          @modifier.Modify($browser.ShouldTransitionTo(@item))
+          $browser.ShouldTransitionTo(@item, modifier)
         end
       end
     end

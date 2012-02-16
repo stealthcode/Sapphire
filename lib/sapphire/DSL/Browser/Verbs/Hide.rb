@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def Hide(args)
-        NullModifier.new(Hide.new(args))
+        EqualsModifier.new(Hide.new(args))
       end
 
       class Hide

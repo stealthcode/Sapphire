@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def Count(item)
-        NullModifier.new(Count.new(item))
+        EqualsModifier.new(Count.new(item))
       end
 
       class Count
@@ -15,7 +15,7 @@ module Sapphire
         end
 
         def execute
-          return { :value => @item.Count(@item), :modifier => @modifier }
+          return { :value => @item.Count(@item, modifier), :modifier => @modifier }
         end
       end
     end

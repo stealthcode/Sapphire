@@ -80,7 +80,7 @@ module Sapphire
         self.browser.get self.CurrentUrl
       end
 
-      def ShouldNavigateTo(page)
+      def ShouldNavigateTo(page, modifier)
         if(page.is_a? Class)
           $page = page.new
         else
@@ -104,6 +104,7 @@ module Sapphire
           }
         rescue
           temp = Evaluation.new(self.CurrentUrl, $page.Url)
+          temp.ModifyWith(modifier)
           return temp
         end
 
@@ -116,11 +117,7 @@ module Sapphire
         scenario.Run
       end
 
-      def ShouldShow(page)
-        self.ShouldNavigateTo page
-      end
-
-      def ShouldTransitionTo(url)
+      def ShouldTransitionTo(url, modifier)
         if(url.instance_of?(String))
           temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(url.upcase), true)
           @rootUrl = url
@@ -130,6 +127,7 @@ module Sapphire
           @rootUrl = x
         end
 
+        temp.ModifyWith(modifier)
         return temp
       end
 
