@@ -3,6 +3,8 @@ module Sapphire
     module Strategies
       class Modifier
 
+        attr_reader :item
+
         def initialize(item)
           @item = item
           @item.ModifyWith(self) if @item.is_a? Evaluation or @item.is_a? Verb
