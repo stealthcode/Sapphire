@@ -105,12 +105,10 @@ module Sapphire
           }
         rescue
           temp = StartsWithModifier.new(Evaluation.new(self.CurrentUrl, $page.Url))
-          temp = temp.Create(modifier)
           return temp
         end
 
         temp = item
-        temp = temp.Create(modifier)
         return temp
       end
 
@@ -129,7 +127,6 @@ module Sapphire
           @rootUrl = x
         end
 
-        temp = temp.Create(modifier)
         return temp
       end
 

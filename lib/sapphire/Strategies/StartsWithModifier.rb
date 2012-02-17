@@ -4,8 +4,8 @@ module Sapphire
       class StartsWithModifier < Modifier
 
         def Modify(left, right)
-          return @modifier.Modify((left.starts_with? right), true) if @modifier != nil
-          left.starts_with? right
+          return @modifier.Modify((left.start_with? right), true) if @modifier != nil
+          left.start_with? right
         end
 
         def Text
