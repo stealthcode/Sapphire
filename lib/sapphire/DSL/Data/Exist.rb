@@ -5,17 +5,9 @@ module Sapphire
         Not(Exist.new(value))
       end
 
-      class Exist
-        def initialize(item)
-          @item = item
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
+      class Exist < Verb
         def execute
-          return { :value => @item.Exist(@item), :modifier => @modifier }
+          return { :value => @item.Exist(@item) }
         end
       end
     end

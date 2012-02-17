@@ -10,14 +10,12 @@ class Hash < Object
         begin
           evaluation = wait.until { x = control
             val = x.Equals(arg)
-            val.ModifyWith(modifier)
             if (modifier.Modify(val.left, val.right))
               val
             end
           }
         rescue
           x = Evaluation.new(arg, control.Text)
-          x.ModifyWith(modifier)
           return x
         end
 
@@ -32,14 +30,12 @@ class Hash < Object
           evaluation = wait.until { x = control
             val = x.Contain(arg)
             if modifier.Modify(val.left, val.right)
-              val.ModifyWith(modifier)
               return val
             end
           }
         rescue
           begin
             x = Evaluation.new(arg, control.Text)
-            x.ModifyWith(modifier)
             return x
           rescue
             return FieldNotFoundEvaluation.new(item, $page)
@@ -59,13 +55,11 @@ class Hash < Object
           count = x.Count
           if modifier.Modify(x.Count, arg)
             x = Evaluation.new(arg, count)
-            x.ModifyWith(modifier)
             return x
           end
         }
       rescue
         x = Evaluation.new(arg, count)
-        x.ModifyWith(modifier)
         return x
       end
 
@@ -82,7 +76,6 @@ class Hash < Object
           }
         rescue
           x = Evaluation.new(arg, control.Text)
-          x.ModifyWith(modifier)
           return x
         end
 

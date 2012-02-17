@@ -6,15 +6,7 @@ module Sapphire
         EqualsModifier.new(Transition.new(url))
       end
 
-      class Transition
-        def initialize(item)
-          @item = item
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
+      class Transition < Verb
         def execute
           $browser.ShouldTransitionTo(@item, @modifier)
         end

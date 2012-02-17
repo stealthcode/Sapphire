@@ -6,14 +6,14 @@ module Sapphire
 
         if results.is_a? Hash
           value = results[:value]
-          modifier = results[:modifier]
 
           if value.is_a? Hash
             sub_value = value[:value]
-            modifier.Evaluate(sub_value)
+            puts sub_value.inspect
+            sub_value.Evaluate()
             return
           end
-          modifier.Evaluate(value)
+          value.Evaluate()
 
           return
         end

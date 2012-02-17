@@ -5,17 +5,9 @@ module Sapphire
         ContainsModifier.new(Contain.new(item))
       end
 
-      class Contain
-        def initialize(item)
-          @item = item
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
+      class Contain < Verb
         def execute
-          return { :value => @item.Contain(@item, @modifier), :modifier => @modifier }
+          return { :value => @item.Contain(@item, @modifier) }
         end
       end
     end

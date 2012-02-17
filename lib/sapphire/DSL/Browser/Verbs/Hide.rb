@@ -5,17 +5,9 @@ module Sapphire
         EqualsModifier.new(Hide.new(args))
       end
 
-      class Hide
-        def initialize(item)
-          @item = item
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
+      class Hide < Verb
         def execute
-          return { :value => @item.Hide(@item, @modifier), :modifier => @modifier }
+          return { :value => @item.Hide(@item, @modifier) }
         end
       end
     end

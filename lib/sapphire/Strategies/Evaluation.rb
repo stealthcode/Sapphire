@@ -20,6 +20,10 @@ module Sapphire
           @modifier = item
         end
 
+        def execute()
+          self.Evaluate()
+        end
+
         def Evaluate()
 
           if(!Modify(@left, @right))

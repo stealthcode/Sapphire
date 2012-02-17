@@ -1,3 +1,4 @@
+require File.expand_path(File.dirname(__FILE__) +'/DSL/Verb.rb', __FILE__)
 Dir[File.dirname(__FILE__) + '/DSL/TestPlans/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/DSL/Browser/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/DSL/Browser/Fluff/*.rb'].each {|file| require file }

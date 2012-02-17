@@ -1,16 +1,11 @@
 module Sapphire
   module DSL
-    module Browser
+    module Strategies
       def Not(item)
         Not.new(item)
       end
 
-      class Not
-
-        def initialize(item)
-          @item = item
-          @item.ModifyWith self
-        end
+      class Not < Modifier
 
         def Modify(left, right)
           return @modifier.Modify(left != right, true) if @modifier != nil
@@ -22,14 +17,6 @@ module Sapphire
           " NOT"
         end
 
-        def Evaluate(evaluation)
-          return @modifier.Evaluate(evaluation) if @modifier != nil
-          return evaluation.Evaluate()
-        end
-
-        def execute
-          @item.execute
-        end
       end
     end
   end
