@@ -9,7 +9,6 @@ module Sapphire
 
           if value.is_a? Hash
             sub_value = value[:value]
-            puts sub_value.inspect
             sub_value.Evaluate()
             return
           end
