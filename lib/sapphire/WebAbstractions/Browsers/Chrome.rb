@@ -1,6 +1,7 @@
 module Sapphire
   module WebAbstractions
     def Chrome(url)
+      @rootUrl = url
       ChromeBrowser.new
     end
 
