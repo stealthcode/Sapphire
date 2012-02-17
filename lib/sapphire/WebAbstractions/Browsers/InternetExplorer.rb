@@ -1,6 +1,7 @@
 module Sapphire
   module WebAbstractions
     def InternetExplorer(url)
+      @rootUrl = url
       driver = InternetExplorerBrowser.new
       driver
     end
