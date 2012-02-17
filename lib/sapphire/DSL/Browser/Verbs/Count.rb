@@ -5,17 +5,9 @@ module Sapphire
         EqualsModifier.new(Count.new(item))
       end
 
-      class Count
-        def initialize(item)
-          @item = item
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
+      class Count < Verb
         def execute
-          return { :value => @item.Count(@item, modifier), :modifier => @modifier }
+          return { :value => @item.Count(@item, modifier) }
         end
       end
     end

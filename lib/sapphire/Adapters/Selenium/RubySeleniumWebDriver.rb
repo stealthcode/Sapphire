@@ -91,24 +91,26 @@ module Sapphire
 
         wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         begin
-          found = wait.until {
+          item = wait.until {
             x = self.CurrentUrl.upcase.start_with?($page.Url.upcase)
+            y = StartsWithModifier.new(Evaluation.new(self.CurrentUrl.upcase, $page.Url.upcase))
             if(modifier.Modify(x == false, true))
               $page.AlternateUrls.each do |url|
                 if(modifier.Modify(x == false, true))
-                  x = self.CurrentUrl.upcase.start_with?(url.upcase)
+                  y = StartsWithModifier.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
                 end
               end
             end
-            x
+            y
           }
         rescue
-          temp = Evaluation.new(self.CurrentUrl, $page.Url)
-          temp.ModifyWith(modifier)
+          temp = StartsWithModifier.new(Evaluation.new(self.CurrentUrl, $page.Url))
+          temp = temp.Create(modifier)
           return temp
         end
 
-        temp = Evaluation.new(found, true)
+        temp = item
+        temp = temp.Create(modifier)
         return temp
       end
 
@@ -119,15 +121,15 @@ module Sapphire
 
       def ShouldTransitionTo(url, modifier)
         if(modifier.Modify(url.instance_of?(String), true))
-          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(url.upcase), true)
+          temp = StartsWithModifier.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
           @rootUrl = url
         else
           x = url.new().Url
-          temp = Evaluation.new(self.CurrentUrl.upcase.start_with?(x.upcase), true)
+          temp = StartsWithModifier.new(Evaluation.new(self.CurrentUrl.upcase, x.upcase))
           @rootUrl = x
         end
 
-        temp.ModifyWith(modifier)
+        temp = temp.Create(modifier)
         return temp
       end
 

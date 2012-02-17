@@ -2,21 +2,12 @@ module Sapphire
   module DSL
     module Browser
       def In(item)
-        EqualsModifier.new(In.new(item, @page))
+        EqualsModifier.new(In.new(item))
       end
 
-      class In
-        def initialize(item, page)
-          @item = item
-          @page = page
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
+      class In < Verb
         def execute
-          return { :value => @item.In(@item, modifier), :modifier => @modifier }
+          return { :value => @item.In(@item, modifier) }
         end
       end
     end

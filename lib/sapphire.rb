@@ -21,6 +21,7 @@ require 'sapphire/TeamCity'
 
 module Sapphire
   module Sapphire
+    include DSL
     include DSL::Strategies
     include DSL::Scenarios
     include DSL::Browser

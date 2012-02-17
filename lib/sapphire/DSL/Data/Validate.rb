@@ -5,17 +5,9 @@ module Sapphire
         EqualsModifier.new(Validate.new(hash))
       end
 
-      class Validate
-        def initialize(item)
-          @item = item
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
-        def execute
-          return { :value => @item.Validate(@item), :modifier => @modifier }
+      class Validate < Verb
+       def execute
+          return { :value => @item.Validate(@item) }
         end
       end
     end

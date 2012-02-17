@@ -37,8 +37,9 @@ class Class < Module
   end
 
   def Show(item, modifier)
-    evaluation = $browser.ShouldNavigateTo item, modifier
-    {:value => evaluation, :modifier => modifier }
+    evaluation = $browser.ShouldNavigateTo(item, modifier)
+    modifier = modifier.Create(evaluation)
+    {:value => modifier }
   end
 
 end

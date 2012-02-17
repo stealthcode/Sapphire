@@ -2,20 +2,12 @@ module Sapphire
   module DSL
     module Browser
       def Show(item)
-        EqualsModifier.new(Show.new(item))
+        Show.new(item)
       end
 
-      class Show
-        def initialize(item)
-          @item = item
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
+      class Show < Verb
         def execute
-          return { :value => @item.Show(@item, @modifier), :modifier => @modifier }
+          return { :value => @item.Show(@item, @modifier) }
         end
       end
     end

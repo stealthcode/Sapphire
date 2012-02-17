@@ -5,17 +5,9 @@ module Sapphire
         EqualsModifier.new(Error.new(hash))
       end
 
-      class Error
-        def initialize(item)
-          @item = item
-        end
-
-        def ModifyWith(item)
-          @modifier = item
-        end
-
+      class Error < Verb
         def execute
-           return { :value => @item.Error(@item, @modifier), :modifier => @modifier }
+           return { :value => @item.Error(@item, @modifier) }
         end
       end
     end
