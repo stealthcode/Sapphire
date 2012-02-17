@@ -14,7 +14,8 @@ module Sapphire
     end
 
     def FireFox(url)
-      FireFoxBrowser.new
+      @rootUrl = url
+      return FireFoxBrowser.new
     end
   end
 end
