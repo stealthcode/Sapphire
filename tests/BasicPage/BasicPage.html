@@ -1,0 +1,26 @@
+<html>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<body>
+
+<h1 id="welcome">Welcome</h1>
+
+<input id="firstName" value="John">
+<input id="lastName" value="Doe">
+
+<br>
+<br>
+<label id="ajax">ajax not loaded</label>
+
+<br>
+<br>
+<label id="slowAjax">slow ajax not loaded</label>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        setTimeout(function() {$("#ajax").html("ajax loaded");}, 2000)
+        setTimeout(function() {$("#slowAjax").html("slow ajax loaded");}, 6000) //works because current sapphire timeout for controls is 5 seconds
+    });
+</script>
+
+</body>
+</html>

@@ -96,4 +96,9 @@ class Symbol
     GetPageField(hash[hash.keys.first]).Equals(hash.keys.first.to_s)
   end
 
+  def +(item)
+    return Parameter(self) + item if Sapphire::DSL::TestPlans::Parameters.instance.Contains(self)
+    raise "No Parameter defined for: " << self.to_s
+  end
+
 end

@@ -4,6 +4,10 @@ class Hash < Object
     hash.keys.first.Set(hash)
   end
 
+  def For(item)
+    {item => GetPageField(item).Text}
+  end
+
   def Show(item, modifier)
      ExecuteHashAgainstControl(item) do |control, arg|
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)

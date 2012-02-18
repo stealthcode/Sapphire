@@ -17,4 +17,8 @@ class String
     plus(item)
   end
 
+  def For(item)
+    item
+  end
+
 end

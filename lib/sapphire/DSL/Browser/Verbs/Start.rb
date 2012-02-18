@@ -3,7 +3,8 @@ module Sapphire
     module Browser
       def Start(browser)
         if(browser == ConfigurationBrowser)
-          AppConfig.Current.Browser
+          return AppConfig.Current.Browser if AppConfig.Current
+          raise "No App Config defined!"
         end
 
         $browser.SetRootUrl(@rootUrl)

@@ -11,7 +11,7 @@ module Sapphire
       end
 
       def self.Current
-        @@instance
+        @@instance if $config
       end
 
       def Browser

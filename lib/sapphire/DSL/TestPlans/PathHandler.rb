@@ -3,7 +3,8 @@ module Sapphire
     module TestPlans
       class PathHandler
         def Handle(item)
-          x = AppConfig.Current.SpecsPath || ""
+          x = ""
+          x = AppConfig.Current.SpecsPath if AppConfig.Current
           Dir[x + item + '*.rb'].each  do |file|
             require file
             Runner.instance.last_scenario.file_name = file
