@@ -12,9 +12,8 @@ module Sapphire
         end
 
         def Modify(left, right)
-          puts "modify " + self.class.to_s
-          return @item.Modify(left, right) if @item != nil
-          EqualsModifier.new(self).Modify(left, right) if @item == nil
+          return @modifier.Modify(left, right) if @modifier != nil
+          EqualsModifier.new(self).Modify(left, right) if @modifier == nil
         end
 
         def ModifyWith(item)

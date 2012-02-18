@@ -130,7 +130,7 @@ module Sapphire
         return temp
       end
 
-      def FindItem(array)
+      def FindItem(array, modifier = nil)
         masterWait = Selenium::WebDriver::Wait.new(:timeout => 5)
 
         element = masterWait.until {
@@ -148,13 +148,16 @@ module Sapphire
             x = self.FindElement item[0], item[1] if item.is_a? Array
 
             return x if x != nil
+            return x if modifier.Modify(x != nil, true) if modifier != nil
 
           end if array.is_a? Array
 
           x = self.FindElement array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
           return x if x != nil
+          return x if modifier.Modify(x != nil, true) if modifier != nil
         }
         return element if element != nil
+        return element if modifier.Modify(element != nil, true) if modifier != nil
         raise "Could not find control for array: " + array.to_s
       end
 

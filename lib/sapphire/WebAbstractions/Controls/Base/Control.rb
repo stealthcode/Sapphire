@@ -5,8 +5,8 @@ module Sapphire
           @hash = hash
       end
 
-      def Find
-        $browser.FindItem(@hash)
+      def Find(modifier = nil)
+        $browser.FindItem(@hash, modifier)
       end
 
       def FindAll
@@ -50,11 +50,11 @@ module Sapphire
       end
 
       def Equals(value, modifier)
-         return Evaluation.new(self.Text, value)
+        return Evaluation.new(self.Text, value)
       end
 
       def Contain(value, modifier)
-         return ContainsEvaluation.new(self.Text, value)
+        return ContainsEvaluation.new(self.Text, value)
       end
 
       def In(values, modifier)

@@ -35,18 +35,21 @@ class Symbol
     return FieldNotDefinedEvaluation.new(item, $page) if !$page.Contains item
 
     begin
-      x = $page.Get(item).Find
+      x = $page.Get(item).Find(modifier)
+
+      return Evaluation.new(true, true) if x.nil? and modifier.Modify(true, false)
 
       return FieldNotFoundEvaluation.new(item, $page) if x == nil
 
-      return Evaluation.new(x.displayed?, true) if modifier.Modify(x.displayed?, true)
+      return Evaluation.new(x.displayed?, true) if modifier != nil and modifier.Modify(x.displayed?, true)
 
       begin
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        result = wait.until { y = modifier.Modify(x.displayed?, true)
+        result = wait.until { y = x.displayed?, true
           y unless y == false
         }
-        z = Evaluation.new(x.displayed?, true)
+
+        z = VisibleModifier.new(Evaluation.new(x, x))
         z.ModifyWith(modifier)
         return z
       rescue
@@ -57,6 +60,13 @@ class Symbol
       return FieldNotFoundEvaluation.new(item, $page)
     end
 
+  end
+
+  def Fix(evaluation, modifier)
+    modifier = EqualsModifier.new(evaluation) if modifier == nil
+    modifier = modifier.Create(evaluation)
+
+    modifier
   end
 
   def Hide(item, modifier)

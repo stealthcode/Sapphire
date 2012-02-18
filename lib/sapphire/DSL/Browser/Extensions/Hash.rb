@@ -9,17 +9,18 @@ class Hash < Object
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
         begin
           evaluation = wait.until { x = control
-            val = x.Equals(arg)
+            val = x.Equals(arg, modifier)
             if (modifier.Modify(val.left, val.right))
               val
             end
+
           }
         rescue
-          x = Evaluation.new(arg, control.Text)
-          return x
+          evaluation =  Evaluation.new(arg, control.Text)
+          return Fix(evaluation, modifier)
         end
 
-        return evaluation
+        return Fix(evaluation, modifier)
      end
   end
 
@@ -92,5 +93,12 @@ class Hash < Object
     ExecuteHashAgainstControl(item) do |control, arg|
        return control.Equals(arg, modifier)
      end
+  end
+
+  def Fix(evaluation, modifier)
+    modifier = EqualsModifier.new(evaluation) if modifier == nil
+    modifier = modifier.Create(evaluation)
+
+    modifier
   end
 end

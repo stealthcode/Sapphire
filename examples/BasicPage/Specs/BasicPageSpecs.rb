@@ -7,13 +7,13 @@ Scenario "On the GitHub Home Page" do
     Navigate To BasicPage
   end
 
-  Given "A user is on GitHub" do
+  Given "A user is on the page" do
     Reload BasicPage
-    Should Show BasicPage
   end
   #-------------------------------------------------------------------------------
     When "the user is on the page" do
-
+      Should Not Show IncorrectPage
+      Should Show BasicPage
     end
     Then "it should show the welcome h1" do
       Should Show :welcome => "Welcome"
@@ -22,11 +22,17 @@ Scenario "On the GitHub Home Page" do
     When "the user is on the page" do
 
     end
-    Then "John should be in the first name box" do
+    Then "the last name text box should be visible" do
+      Should Show :last_name
+    end
+    And "John should be in the first name box" do
       Should Show :first_name => "John"
     end
     And "Doe in the last name box" do
       Should Show :last_name => "Doe"
+    end
+    And "Should not show a bogus field" do
+      Should Not Show :bogus_field
     end
   #-------------------------------------------------------------------------------
     When "first name is cleared" do
@@ -40,6 +46,7 @@ Scenario "On the GitHub Home Page" do
     end
     And "Doe in the last name box" do
       Should Show :last_name => "Doe"
+      Should Not Show :last_name => "Doe1"
     end
   #-------------------------------------------------------------------------------
     When "an ajax call is being made" do

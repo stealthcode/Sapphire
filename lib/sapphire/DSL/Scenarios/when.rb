@@ -31,7 +31,7 @@ class When
 
   def add_and(pre, text, &block)
     if(self.value.is_a? Pending)
-      self.and << And.new(self, Pending.new(pre + text), &block)
+      self.and << And.new(self, Pending.new(text), &block)
     elsif(self.value.is_a? Problematic)
       self.and << And.new(self, Problematic.new(pre + text), &block)
     else

@@ -38,11 +38,15 @@ class Class < Module
 
   def Show(item, modifier)
     evaluation = $browser.ShouldNavigateTo(item, modifier)
+
+    {:value => Fix(evaluation, modifier) }
+  end
+
+  def Fix(evaluation, modifier)
     modifier = EqualsModifier.new(evaluation) if modifier == nil
     modifier = modifier.Create(evaluation)
 
-    #puts modifier.inspect
-    {:value => modifier }
+    modifier
   end
 
 end

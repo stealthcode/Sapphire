@@ -12,6 +12,7 @@ module Sapphire
             sub_value.Evaluate()
             return
           end
+
           value.Evaluate()
 
           return
