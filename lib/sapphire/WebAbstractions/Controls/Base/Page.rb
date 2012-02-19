@@ -54,10 +54,6 @@ module Sapphire
       end
 
       def Date(*args)
-        @fields = @fields.merge! args.first => Date.new(args[1..args.length])
-      end
-
-      def Date(*args)
         @fields = @fields.merge! args.first => Date.new(args[1])
       end
 
