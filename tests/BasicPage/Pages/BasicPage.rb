@@ -12,6 +12,7 @@ class BasicPage < Page
     Label   :ajax, :id => "ajax"
     Label   :slow_ajax, :id => "slowAjax"
     TextBox :bogus_field, :id => "bogus"
+    List    :value_list, :xpath => "id('value_list')/td"
 
   end
 

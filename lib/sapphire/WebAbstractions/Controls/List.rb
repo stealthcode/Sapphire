@@ -37,10 +37,10 @@ module Sapphire
         return Evaluation.new(values, alltext)
       end
 
-      def Contain(value, modifier)
+      def Contain(value)
         x = self.FindAll
         x.each do |item|
-          if modifier.Modify(item.text, value)
+          if item.text.include? value
             return Evaluation.new(item.text, value)
           end
         end

@@ -2,10 +2,6 @@ require File.expand_path('../../../includes', File.dirname(__FILE__))
 
 Scenario "Testing the TextBox control" do
 
-  Background "Open the browser" do
-    Start FireFox With BasicPage
-    Navigate To BasicPage
-  end
   Given "A user is on the page" do
     Reload BasicPage
   end
@@ -34,7 +30,4 @@ Scenario "Testing the TextBox control" do
         Should Show :first_name => "Jane"
       end
   #-------------------------------------------------------------------------------
-  Finally "Close the browser" do
-    Exit Browser
-  end
 end

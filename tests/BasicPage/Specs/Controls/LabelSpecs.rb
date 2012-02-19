@@ -2,10 +2,6 @@ require File.expand_path('../../../includes', File.dirname(__FILE__))
 
 Scenario "Testing the Label control" do
 
-  Background "Open the browser" do
-    Start FireFox With BasicPage
-    Navigate To BasicPage
-  end
   Given "A user is on the page" do
     Reload BasicPage
   end
@@ -14,6 +10,9 @@ Scenario "Testing the Label control" do
       Should Show BasicPage
     end
       Then "it should show the welcome h1" do
+        Should Show :welcome
+      end
+      And "the value should be welcome" do
         Should Show :welcome => "Welcome"
       end
   #-------------------------------------------------------------------------------
@@ -38,7 +37,4 @@ Scenario "Testing the Label control" do
         Should Not Show :welcome => "Welcome1"
       end
   #-------------------------------------------------------------------------------
-  Finally "Close the browser" do
-    Exit Browser
-  end
 end

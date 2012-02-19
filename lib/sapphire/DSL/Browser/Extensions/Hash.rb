@@ -23,7 +23,7 @@ class Hash < Object
         end
       }
     rescue
-      evaluation =  Evaluation.new(arg, control.Text)
+      evaluation = Evaluation.new(arg, control.Text)
       return Fix(evaluation, modifier)
     end
 
@@ -31,26 +31,29 @@ class Hash < Object
   end
 
   def Contain(item, modifier)
-     ExecuteHashAgainstControl(item) do |control, arg|
-        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        begin
-          evaluation = wait.until { x = control
-            val = x.Contain(arg)
-            if modifier.Modify(val.left, val.right)
-              return val
-            end
-          }
-        rescue
-          begin
-            x = Evaluation.new(arg, control.Text)
-            return x
-          rescue
-            return FieldNotFoundEvaluation.new(item, $page)
-          end
-        end
 
-        return evaluation
-     end
+    key = item.keys.first
+    control = GetPageField(key)
+    arg = item[key]
+
+    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+    begin
+      evaluation = wait.until { x = control
+        val = x.Contain(arg)
+        modifier = EqualsModifier.new(val) if modifier == nil
+        if modifier.Modify(val.left, val.right)
+          val
+        end
+      }
+    rescue
+      begin
+        return Fix(Evaluation.new(arg, control.Text), modifier)
+      rescue
+        return FieldNotFoundEvaluation.new(item, $page)
+      end
+    end
+
+    return Fix(evaluation, modifier)
   end
 
   def Count(item, modifier)
@@ -104,7 +107,6 @@ class Hash < Object
   def Fix(evaluation, modifier)
     modifier = EqualsModifier.new(evaluation) if modifier == nil
     modifier = modifier.Create(evaluation)
-
     modifier
   end
 end

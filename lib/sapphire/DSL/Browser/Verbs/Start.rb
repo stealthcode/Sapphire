@@ -6,7 +6,6 @@ module Sapphire
           return AppConfig.Current.Browser if AppConfig.Current
           raise "No App Config defined!"
         end
-
         $browser.SetRootUrl(@rootUrl)
       end
     end

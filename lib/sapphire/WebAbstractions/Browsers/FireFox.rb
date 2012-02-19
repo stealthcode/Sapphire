@@ -17,6 +17,7 @@ module Sapphire
       @rootUrl = url
       return FireFoxBrowser.new
     end
+
   end
 end
 
