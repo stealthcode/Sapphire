@@ -38,8 +38,6 @@ VERBS:
 
 `Track` Stores a piece of information to be used later in a test `Track For :customer_id`
 
-`Hide` Checks that an html element is no longer shown on the screen `Should Hide :error_image`
-
 `Write` Executes a sql statement to write to the database `Write NewProduct With :id => Tracker(:product_id)`
 
 `Set` Set the value of an html element `Set :name_textbox => "Bob"`
