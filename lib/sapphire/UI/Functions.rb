@@ -3,7 +3,8 @@ module ChildProcess
     module Lib
 
       def self.create_proc(cmd, opts = {})
-        cmd_ptr = FFI::MemoryPointer.from_string cmd
+        puts "1"
+        cmd_ptr = F.from_string cmd
 
         flags   = 0
         inherit = !!opts[:inherit]

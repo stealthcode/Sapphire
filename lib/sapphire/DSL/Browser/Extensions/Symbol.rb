@@ -1,5 +1,11 @@
 class Symbol
 
+  def Clear
+    ExecuteAgainstControl(self) do |control, arg|
+      control.Set ""
+    end
+  end
+
   def Check
     ExecuteAgainstControl(self) do |control, arg|
       control.Check true
