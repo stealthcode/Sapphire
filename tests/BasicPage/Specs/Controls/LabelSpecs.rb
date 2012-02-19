@@ -16,6 +16,13 @@ Scenario "Testing the Label control" do
         Should Show :welcome => "Welcome"
       end
   #-------------------------------------------------------------------------------
+    When "the user is on the page" do
+      Should Show BasicPage
+    end
+      Then "it should not show the bogus field" do
+        Should Not Show :bogus_field
+      end
+  #-------------------------------------------------------------------------------
     When "an ajax call is being made" do
       Should Show :ajax => "ajax not loaded"
     end
