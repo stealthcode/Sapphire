@@ -9,10 +9,10 @@ require 'Forwardable'
 require 'colorize'
 
 require 'sapphire/Adapters'
-require 'sapphire/Strategies'
 require 'sapphire/Testing'
 require 'sapphire/Web'
 require 'sapphire/DSL'
+require 'sapphire/Extensions'
 require 'sapphire/CommandLine'
 require 'sapphire/Configuration'
 require 'sapphire/Data'
@@ -22,7 +22,6 @@ require 'sapphire/TeamCity'
 module Sapphire
   module Sapphire
     include DSL
-    include DSL::Strategies
     include DSL::Scenarios
     include DSL::Browser
     include DSL::Configuration

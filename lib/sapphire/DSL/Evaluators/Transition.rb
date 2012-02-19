@@ -3,12 +3,12 @@ module Sapphire
     module Browser
 
       def Transition(url)
-        EqualsModifier.new(Transition.new(url))
+        EqualsComparison.new(Transition.new(url))
       end
 
-      class Transition < Verb
+      class Transition < Evaluator
         def execute
-          $browser.ShouldTransitionTo(@item, @modifier)
+          $browser.ShouldTransitionTo(@item, @comparator)
         end
       end
     end

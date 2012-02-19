@@ -80,7 +80,7 @@ module Sapphire
         self.browser.get self.CurrentUrl
       end
 
-      def ShouldNavigateTo(page, modifier)
+      def ShouldNavigateTo(page, comparator)
         if(page.is_a? Class)
           $page = page.new
         else
@@ -93,18 +93,18 @@ module Sapphire
         begin
           item = wait.until {
             x = self.CurrentUrl.upcase.start_with?($page.Url.upcase)
-            y = StartsWithModifier.new(Evaluation.new(self.CurrentUrl.upcase, $page.Url.upcase))
-            if(modifier.Modify(x == false, true))
+            y = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, $page.Url.upcase))
+            if(comparator.Compare(x == false, true))
               $page.AlternateUrls.each do |url|
-                if(modifier.Modify(x == false, true))
-                  y = StartsWithModifier.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
+                if(comparator.Compare(x == false, true))
+                  y = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
                 end
               end
             end
             y
           }
         rescue
-          temp = StartsWithModifier.new(Evaluation.new(self.CurrentUrl, $page.Url))
+          temp = StartsWithComparison.new(Evaluation.new(self.CurrentUrl, $page.Url))
           return temp
         end
 
@@ -117,20 +117,20 @@ module Sapphire
         scenario.Run
       end
 
-      def ShouldTransitionTo(url, modifier)
-        if(modifier.Modify(url.instance_of?(String), true))
-          temp = StartsWithModifier.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
+      def ShouldTransitionTo(url, comparator)
+        if(comparator.Compare(url.instance_of?(String), true))
+          temp = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
           @rootUrl = url
         else
           x = url.new().Url
-          temp = StartsWithModifier.new(Evaluation.new(self.CurrentUrl.upcase, x.upcase))
+          temp = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, x.upcase))
           @rootUrl = x
         end
 
         return temp
       end
 
-      def FindItem(array, modifier = nil)
+      def FindItem(array, comparator = nil)
         masterWait = Selenium::WebDriver::Wait.new(:timeout => 5)
 
         element = masterWait.until {
@@ -148,16 +148,16 @@ module Sapphire
             x = self.FindElement item[0], item[1] if item.is_a? Array
 
             return x if x != nil
-            return x if modifier.Modify(x != nil, true) if modifier != nil
+            return x if comparator.Compare(x != nil, true) if comparator != nil
 
           end if array.is_a? Array
 
           x = self.FindElement array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
           return x if x != nil
-          return x if modifier.Modify(x != nil, true) if modifier != nil
+          return x if comparator.Compare(x != nil, true) if comparator != nil
         }
         return element if element != nil
-        return element if modifier.Modify(element != nil, true) if modifier != nil
+        return element if comparator.Compare(element != nil, true) if comparator != nil
         raise "Could not find control for array: " + array.to_s
       end
 

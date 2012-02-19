@@ -2,12 +2,12 @@ module Sapphire
   module DSL
     module Browser
       def Error(hash)
-        EqualsModifier.new(Error.new(hash))
+        EqualsComparison.new(Error.new(hash))
       end
 
-      class Error < Verb
+      class Error < Evaluator
         def execute
-           @item.Error(@item, @modifier)
+           @item.Error(@item, @comparator)
         end
       end
     end

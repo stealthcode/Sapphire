@@ -7,22 +7,22 @@ module Sapphire
         @retryAttempts = 0
       end
 
-      def Equals(value, modifier)
-        modifier = EqualsModifier.new(value) if modifier == nil
+      def Equals(value, comparator)
+        comparator = EqualsComparison.new(value) if comparator == nil
         x = self.FindAll
         x.each do |item|
-          if modifier.Modify(item.text, value)
-            return  EqualsModifier.new(Evaluation.new(item.text, value))
+          if comparator.Compare(item.text, value)
+            return  EqualsComparison.new(Evaluation.new(item.text, value))
           end
         end
-        return  EqualsModifier.new(Evaluation.new("Value not found in list", value))
+        return  EqualsComparison.new(Evaluation.new("Value not found in list", value))
       end
 
-      def In(values, modifier)
+      def In(values, comparator)
         x = self.FindAll
         x.each do |item|
           values.each do |value|
-            if modifier.Modify(item.text, value)
+            if comparator.Compare(item.text, value)
               return Evaluation.new(item.text, value)
             end
           end

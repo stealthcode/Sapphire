@@ -5,9 +5,9 @@ module Sapphire
         Show.new(item)
       end
 
-      class Show < Verb
+      class Show < Evaluator
         def execute
-          @item.Show(@item, @modifier)
+          @item.Show(@item, @comparator)
         end
       end
     end
