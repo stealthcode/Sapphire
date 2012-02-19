@@ -9,23 +9,25 @@ class Hash < Object
   end
 
   def Show(item, modifier)
-     ExecuteHashAgainstControl(item) do |control, arg|
-        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        begin
-          evaluation = wait.until { x = control
-            val = x.Equals(arg, modifier)
-            if (modifier.Modify(val.left, val.right))
-              val
-            end
+    key = item.keys.first
+    control = GetPageField(key)
+    arg = item[key]
 
-          }
-        rescue
-          evaluation =  Evaluation.new(arg, control.Text)
-          return Fix(evaluation, modifier)
+    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+    begin
+      evaluation = wait.until { x = control
+        val = x.Equals(arg, modifier)
+        modifier = EqualsModifier.new(val) if modifier == nil
+        if (modifier.Modify(val.left, val.right))
+          val
         end
+      }
+    rescue
+      evaluation =  Evaluation.new(arg, control.Text)
+      return Fix(evaluation, modifier)
+    end
 
-        return Fix(evaluation, modifier)
-     end
+    return Fix(evaluation, modifier)
   end
 
   def Contain(item, modifier)
