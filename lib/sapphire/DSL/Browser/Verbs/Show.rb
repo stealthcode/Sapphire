@@ -7,7 +7,7 @@ module Sapphire
 
       class Show < Verb
         def execute
-          return { :value => @item.Show(@item, @modifier) }
+          @item.Show(@item, @modifier)
         end
       end
     end

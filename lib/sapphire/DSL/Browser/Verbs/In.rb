@@ -7,7 +7,7 @@ module Sapphire
 
       class In < Verb
         def execute
-          return { :value => @item.In(@item, modifier) }
+         @item.In(@item, modifier)
         end
       end
     end

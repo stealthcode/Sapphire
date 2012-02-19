@@ -7,7 +7,7 @@ module Sapphire
 
       class Error < Verb
         def execute
-           return { :value => @item.Error(@item, @modifier) }
+           @item.Error(@item, @modifier)
         end
       end
     end

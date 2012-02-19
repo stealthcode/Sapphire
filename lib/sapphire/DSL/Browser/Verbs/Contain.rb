@@ -7,7 +7,7 @@ module Sapphire
 
       class Contain < Verb
         def execute
-          return { :value => @item.Contain(@item, @modifier) }
+           @item.Contain(@item, @modifier)
         end
       end
     end

@@ -7,7 +7,7 @@ module Sapphire
 
       class Count < Verb
         def execute
-          return { :value => @item.Count(@item, modifier) }
+          @item.Count(@item, modifier)
         end
       end
     end

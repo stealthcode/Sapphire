@@ -7,7 +7,7 @@ module Sapphire
 
       class Validate < Verb
        def execute
-          return { :value => @item.Validate(@item) }
+          @item.Validate(@item)
         end
       end
     end

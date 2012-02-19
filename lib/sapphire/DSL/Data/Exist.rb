@@ -7,7 +7,7 @@ module Sapphire
 
       class Exist < Verb
         def execute
-          return { :value => @item.Exist(@item) }
+         @item.Exist(@item)
         end
       end
     end
