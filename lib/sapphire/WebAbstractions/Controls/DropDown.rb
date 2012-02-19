@@ -12,7 +12,10 @@ module Sapphire
 
       def Text
         text = self.Find
-        text.attribute("value")
+        val = text.attribute("value")
+        options = text.find_elements(:tag_name, "option")
+        selection = options.find{|o| o.attribute("value") == val.to_s}
+        selection.text
       end
 
       def Set(value)
@@ -22,6 +25,23 @@ module Sapphire
         raise "could not find the value " + value.to_s if selection.nil?
         selection.click
       end
+
+      def Contain(value)
+        ddl = self.Find
+        x = ddl.find_elements(:tag_name, "option")
+        x.each do |item|
+          if item.text == value
+            return Evaluation.new(item.text, value)
+          end
+        end
+
+        return Evaluation.new("Value not found in list", value)
+      end
+
+      def Equals(value, comparator)
+        return Evaluation.new(self.Text, value)
+      end
+
     end
   end
 end

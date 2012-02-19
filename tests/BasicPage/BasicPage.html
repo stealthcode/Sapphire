@@ -26,6 +26,22 @@
     </tr>
 </table>
 
+<br>
+<br>
+
+<select id="item_list">
+    <option value="1">Item 1</option>
+    <option value="2">Item 2</option>
+    <option value="3">Item 3</option>
+    <option value="4">Item 4</option>
+</select>
+
+<br>
+<br>
+<input type="button" id="button" value="Click Me!" onclick="javascript:document.getElementById('button_clicked').innerHTML = 'button clicked';"/>
+<div id="button_clicked">button not clicked</div>
+
+
 <script type="text/javascript">
     $(document).ready(function() {
         setTimeout(function() {$("#ajax").html("ajax loaded");}, 2000)

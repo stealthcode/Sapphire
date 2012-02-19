@@ -14,6 +14,8 @@ TestPlan "Sapphire Regression" do
     Run :file => :path + "/Controls/LabelSpecs.rb"
     Run :file => :path + "/Controls/TextBoxSpecs.rb"
     Run :file => :path + "/Controls/ListSpecs.rb"
+    Run :file => :path + "/Controls/DropDownSpecs.rb"
+    Run :file => :path + "/Controls/ButtonSpecs.rb"
 
     Exit Browser
   end
