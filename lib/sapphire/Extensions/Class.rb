@@ -37,7 +37,7 @@ class Class < Module
   end
 
   def Show(item, comparator)
-    evaluation = $browser.ShouldNavigateTo(item, comparator)
+    evaluation = $driver.ShouldNavigateTo(item, comparator)
 
     Fix(evaluation, comparator)
   end

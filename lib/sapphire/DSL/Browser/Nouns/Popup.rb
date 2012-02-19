@@ -3,11 +3,11 @@ module Sapphire
     module Browser
       class Popup
         def Close
-          $browser.ClosePopup
+          $driver.ClosePopup
         end
 
         def Switch
-          $browser.SwitchToPopup
+          $driver.SwitchToPopup
         end
       end
     end

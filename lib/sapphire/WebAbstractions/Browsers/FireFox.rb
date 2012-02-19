@@ -8,7 +8,7 @@ module Sapphire
       def initialize()
         @browser = self.Create :firefox
         super(@browser)
-        $browser = self
+        $driver = self
       end
 
     end

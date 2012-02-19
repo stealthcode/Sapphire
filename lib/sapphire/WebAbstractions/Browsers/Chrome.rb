@@ -13,7 +13,7 @@ module Sapphire
       def initialize()
         @browser = self.Create :chrome
         super @browser
-        $browser = self
+        $driver = self
       end
     end
   end

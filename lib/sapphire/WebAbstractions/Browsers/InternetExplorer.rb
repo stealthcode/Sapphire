@@ -14,7 +14,7 @@ module Sapphire
       def initialize
         @browser = self.Create :ie
         super(@browser)
-        $browser = self
+        $driver = self
       end
     end
   end

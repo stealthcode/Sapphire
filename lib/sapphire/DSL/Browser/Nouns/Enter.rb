@@ -3,7 +3,7 @@ module Sapphire
     module Browser
       class Enter
           def Press
-            $browser.Type("\n")
+            $driver.Type("\n")
           end
       end
     end

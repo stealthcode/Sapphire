@@ -1,53 +1,62 @@
 <html>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<body>
+    <head>
+        <title>Sapphire Testing Page</title>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    </head>
 
-<h1 id="welcome">Welcome</h1>
+    <body>
 
-<input id="firstName" value="John">
-<input id="lastName" value="Doe">
+    <h1 id="welcome">Welcome</h1>
 
-<br>
-<br>
-<label id="ajax">ajax not loaded</label>
+    <input id="firstName" value="John">
+    <input id="lastName" value="Doe">
 
-<br>
-<br>
-<label id="slowAjax">slow ajax not loaded</label>
+    <br>
+    <br>
+    <label id="ajax">ajax not loaded</label>
 
-<br>
-<br>
-<table>
-    <tr id="value_list">
-        <td>Value 1</td>
-        <td>Value 2</td>
-        <td>Value 3</td>
-        <td>Value 4</td>
-    </tr>
-</table>
+    <br>
+    <br>
+    <label id="slowAjax">slow ajax not loaded</label>
 
-<br>
-<br>
+    <br>
+    <br>
+    <table>
+        <tr id="value_list">
+            <td>Value 1</td>
+            <td>Value 2</td>
+            <td>Value 3</td>
+            <td>Value 4</td>
+        </tr>
+    </table>
 
-<select id="item_list">
-    <option value="1">Item 1</option>
-    <option value="2">Item 2</option>
-    <option value="3">Item 3</option>
-    <option value="4">Item 4</option>
-</select>
+    <br>
+    <br>
 
-<br>
-<br>
-<input type="button" id="button" value="Click Me!" onclick="javascript:document.getElementById('button_clicked').innerHTML = 'button clicked';"/>
-<div id="button_clicked">button not clicked</div>
+    <select id="item_list">
+        <option value="1">Item 1</option>
+        <option value="2">Item 2</option>
+        <option value="3">Item 3</option>
+        <option value="4">Item 4</option>
+    </select>
+
+    <br>
+    <br>
+    <input type="button" id="button" value="Click Me!" onclick="javascript:document.getElementById('button_clicked').innerHTML = 'button clicked';"/>
+    <div id="button_clicked">button not clicked</div>
+
+    <br>
+    <br>
+    <a href="#" id="hyperlink" onclick="javascript:document.getElementById('link_clicked').innerHTML = 'link clicked';">Click Me!</a>
+    <div id="link_clicked">link not clicked</div>
 
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        setTimeout(function() {$("#ajax").html("ajax loaded");}, 2000)
-        setTimeout(function() {$("#slowAjax").html("slow ajax loaded");}, 6000) //works because current sapphire timeout for controls is 5 seconds
-    });
-</script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            setTimeout(function() {$("#ajax").html("ajax loaded");}, 2000)
+            setTimeout(function() {$("#slowAjax").html("slow ajax loaded");}, 6000) //works because current sapphire timeout for controls is 5 seconds
+        });
+    </script>
 
-</body>
+    </body>
 </html>

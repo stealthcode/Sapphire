@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def Reload(item)
-        $browser.Reload
+        $driver.Reload
         Should Show item
       end
     end

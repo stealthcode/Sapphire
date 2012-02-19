@@ -8,7 +8,7 @@ module Sapphire
 
       class Transition < Evaluator
         def execute
-          $browser.ShouldTransitionTo(@item, @comparator)
+          $driver.ShouldTransitionTo(@item, @comparator)
         end
       end
     end

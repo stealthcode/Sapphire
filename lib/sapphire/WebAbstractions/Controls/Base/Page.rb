@@ -13,6 +13,10 @@ module Sapphire
         self.Init()
       end
 
+      def Title(*args)
+        @fields = @fields.merge! args.first => Title.new(nil)
+      end
+
       def DropDown(*args)
         @fields = @fields.merge! args.first => DropDown.new(args[1..args.length])
       end

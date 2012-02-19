@@ -4,11 +4,11 @@ module Sapphire
       class Browser
         def Close
           sleep(2)
-          $browser.Close
+          $driver.Close
         end
 
         def Switch
-          $browser.Switch
+          $driver.Switch
         end
       end
     end

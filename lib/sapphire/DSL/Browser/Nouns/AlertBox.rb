@@ -3,11 +3,11 @@ module Sapphire
     module Browser
       class AlertBox
         def Accept
-          $browser.AcceptAlert
+          $driver.AcceptAlert
         end
 
         def Set(text)
-          $browser.SetAlert(text)
+          $driver.SetAlert(text)
         end
       end
     end
