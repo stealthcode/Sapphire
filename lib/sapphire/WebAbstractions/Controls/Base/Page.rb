@@ -57,12 +57,20 @@ module Sapphire
         @fields = @fields.merge! args.first => Date.new(args[1])
       end
 
+      def AlertBox(*args)
+        @fields = @fields.merge! args.first => AlertBox.new(nil)
+      end
+
       def Contains(item)
         @fields.has_key? item
       end
 
       def Get(item)
         @fields[item]
+      end
+
+      def Show(item, comparator)
+        return $driver.ShouldNavigateTo(item, comparator)
       end
 
     end

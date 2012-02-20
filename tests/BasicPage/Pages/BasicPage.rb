@@ -22,6 +22,23 @@ class BasicPage < Page
     RadioButton :radio1, :id => "radio1"
     RadioButton :radio2, :id => "radio2"
     CheckBox    :checkbox, :id => "checkbox"
+    Hyperlink   :alert_me, :id => "alert"
+    AlertBox    :alert
+
+  end
+
+  def Complete
+
+    Clear :first_name
+    Clear :last_name
+
+    Set :first_name => "Completed"
+    Set :last_name => "Completed"
+    Set :item_list => "Item 3"
+    Click :click_me!
+    Click :link_click_me!
+    Click :radio2
+    Check :checkbox
 
   end
 

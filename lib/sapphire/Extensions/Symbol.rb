@@ -18,6 +18,12 @@ class Symbol
     end
   end
 
+  def Accept
+    ExecuteAgainstControl(self) do |control, arg|
+      control.Accept
+    end
+  end
+
   def MouseOver
     ExecuteAgainstControl(self) do |control, arg|
       control.MouseOver

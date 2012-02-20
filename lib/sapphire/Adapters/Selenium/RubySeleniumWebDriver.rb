@@ -33,6 +33,19 @@ module Sapphire
         self.browser.switch_to.window(self.browser.window_handles[0])
       end
 
+      def FindAlert()
+        begin
+          return self.browser.switch_to.alert
+        rescue
+          return nil
+        end
+      end
+
+      def AlertShown()
+        alert = self.browser.switch_to.alert
+        return alert != nil
+      end
+
       def ClosePopup
         self.browser.switch_to.window(self.browser.window_handles.last)
         self.browser.close
