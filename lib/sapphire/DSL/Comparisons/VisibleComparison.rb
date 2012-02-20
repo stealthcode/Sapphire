@@ -3,8 +3,8 @@ module Sapphire
     class VisibleComparison < Comparison
 
       def Compare(left, right)
-        return @comparator.Compare(left.displayed?, true) if @comparator != nil
-        left.displayed?
+        return @comparator.Compare(left.Visible, true) if @comparator != nil
+        left.Visible
       end
 
       def Text

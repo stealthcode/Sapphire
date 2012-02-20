@@ -12,6 +12,12 @@ module Sapphire
         radio.click
 
       end
+
+      def Selected
+        radio = self.Find
+        val = radio.attribute("selected")
+        return val != nil
+      end
     end
   end
 end

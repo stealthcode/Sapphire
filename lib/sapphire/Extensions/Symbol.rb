@@ -36,26 +36,44 @@ class Symbol
     end
   end
 
-  def Show(item, comparator)
+  def Selected(item, comparator)
+    Examine(item, comparator, SelectedComparison) do |field|
+      field.Selected
+    end
+  end
 
+  def Checked(item, comparator)
+    Examine(item, comparator, CheckedComparison) do |field|
+      field.Checked
+    end
+  end
+
+  def Show(item, comparator)
+    Examine(item, comparator, VisibleComparison) do |field|
+      field.Visible
+    end
+  end
+
+  def Examine(item, comparator, comparison, &block)
     return FieldNotDefinedEvaluation.new(item, $page) if !$page.Contains item
 
     begin
-      x = $page.Get(item).Find(comparator)
 
-      return Evaluation.new(true, true) if x.nil? and comparator.Compare(true, false)
-      return FieldNotFoundEvaluation.new(item, $page) if x == nil
-      return Evaluation.new(x.displayed?, true) if comparator != nil and comparator.Compare(x.displayed?, true)
+      field = $page.Get(item)
+      element = field.Find(comparator)
+
+      return Evaluation.new(true, true) if element.nil? and comparator.Compare(true, false)
+      return FieldNotFoundEvaluation.new(item, $page) if field == nil
+      return Fix(comparison.new(Evaluation.new(field, field)), comparator) if comparator != nil and comparator.Compare(block.call(field), true)
 
       begin
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        result = wait.until { y = x.displayed?, true
-          y unless y == false
+        result = wait.until { y = block.call(field)
+        y unless y == false
         }
 
-        z = VisibleComparison.new(Evaluation.new(x, x))
-        z.CompareWith(comparator)
-        return z
+
+        return Fix(Evaluation.new(field, field), comparator)
       rescue
         return FieldNotFoundEvaluation.new(item, $page)
       end
@@ -63,7 +81,6 @@ class Symbol
     rescue
       return FieldNotFoundEvaluation.new(item, $page)
     end
-
   end
 
   def Fix(evaluation, comparator)

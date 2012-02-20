@@ -49,6 +49,11 @@ module Sapphire
         sleep(1)
       end
 
+      def Visible
+        control = self.Find
+        control.displayed?
+      end
+
       def Equals(value, comparator)
         return Evaluation.new(self.Text, value)
       end

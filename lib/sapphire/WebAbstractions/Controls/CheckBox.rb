@@ -2,21 +2,21 @@ module Sapphire
   module WebAbstractions
     class CheckBox < Control
        def Check (value)
+        checked = self.Checked
 
-        if value && self.IsChecked
+        if value && checked
           return;
         end
 
-        if !value && !self.IsChecked
+        if !value && !checked
           return;
         end
 
-        radio = self.Find
-        radio.click
+        self.Click
 
       end
 
-      def IsChecked
+      def Checked
 
         radio = self.Find
         radio.attribute("checked")
