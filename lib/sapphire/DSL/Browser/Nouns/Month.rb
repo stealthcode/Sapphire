@@ -30,7 +30,6 @@ module Sapphire
         end
 
         def Fix(evaluation, comparator)
-          comparator = EqualsComparison.new(evaluation) if comparator == nil
           comparator = comparator.Create(evaluation)
 
           comparator

@@ -17,7 +17,6 @@ class Hash < Object
     begin
       evaluation = wait.until { x = control
         val = x.Equals(arg, comparator)
-        comparator = EqualsComparison.new(val) if comparator == nil
         if (comparator.Compare(val.left, val.right))
           val
         end
@@ -40,7 +39,6 @@ class Hash < Object
     begin
       evaluation = wait.until { x = control
         val = x.Contain(arg)
-        comparator = EqualsComparison.new(val) if comparator == nil
         if comparator.Compare(val.left, val.right)
           val
         end
@@ -104,37 +102,7 @@ class Hash < Object
      end
   end
 
-  def Examine(item, comparator, comparison, &block)
-    return FieldNotDefinedEvaluation.new(item, $page) if !$page.Contains item
-
-    begin
-
-      field = $page.Get(item)
-      element = field.Find(comparator)
-
-      return Evaluation.new(true, true) if element.nil? and comparator.Compare(true, false)
-      return FieldNotFoundEvaluation.new(item, $page) if field == nil
-      return Fix(comparison.new(Evaluation.new(field, field)), comparator) if comparator != nil and comparator.Compare(block.call(field), true)
-
-      begin
-        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        result = wait.until { y = block.call(field)
-        y unless y == false
-        }
-
-
-        return Fix(Evaluation.new(field, field), comparator)
-      rescue
-        return FieldNotFoundEvaluation.new(item, $page)
-      end
-
-    rescue
-      return FieldNotFoundEvaluation.new(item, $page)
-    end
-  end
-
   def Fix(evaluation, comparator)
-    comparator = EqualsComparison.new(evaluation) if comparator == nil
     comparator = comparator.Create(evaluation)
     comparator
   end

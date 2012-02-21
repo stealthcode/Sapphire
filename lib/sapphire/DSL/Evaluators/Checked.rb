@@ -7,6 +7,7 @@ module Sapphire
 
       class Checked < Evaluator
         def execute
+          @comparator = EqualsComparison.new(@item) if @comparator == nil
           @item.Checked(@item, @comparator)
         end
       end

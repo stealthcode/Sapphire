@@ -12,6 +12,7 @@ module Sapphire
       end
 
       def execute
+        @comparator = EqualsComparison.new(@item) if @comparator == nil
         @block.call(@item, @comparator)
       end
     end
