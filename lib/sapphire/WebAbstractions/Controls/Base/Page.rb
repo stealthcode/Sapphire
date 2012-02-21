@@ -69,10 +69,6 @@ module Sapphire
         @fields[item]
       end
 
-      def Show(item, comparator)
-        return $driver.ShouldNavigateTo(item, comparator)
-      end
-
     end
   end
 end

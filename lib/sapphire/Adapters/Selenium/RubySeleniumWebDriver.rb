@@ -131,7 +131,7 @@ module Sapphire
       end
 
       def ShouldTransitionTo(url, comparator)
-        if(comparator.Compare(url.instance_of?(String), true))
+        if(url.instance_of?(String))
           temp = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
           @rootUrl = url
         else

@@ -8,7 +8,6 @@ module Sapphire
       end
 
       def Equals(value, comparator)
-        comparator = EqualsComparison.new(value) if comparator == nil
         x = self.FindAll
         x.each do |item|
           if comparator.Compare(item.text, value)
