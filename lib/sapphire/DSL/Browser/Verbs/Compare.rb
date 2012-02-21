@@ -3,16 +3,16 @@ module Sapphire
     module Browser
       def Compare(control1, control2, &block)
         if(control1.is_a? Symbol)
-          control1text = GetPageField(control1).Text
+          $compare1 = GetPageField(control1).Text
         else
-          control1text = control1
+          $compare1 = control1
         end
         if(control2.is_a? Symbol)
-          control2text = GetPageField(control2).Text
+          $compare2 = GetPageField(control2).Text
         else
-          control2text = control2
+          $compare2 = control2
         end
-        block.call(control1text, control2text)
+        block.call()
       end
     end
   end

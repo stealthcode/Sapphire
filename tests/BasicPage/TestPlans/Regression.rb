@@ -23,6 +23,7 @@ TestPlan "Sapphire Regression" do
     Run :file => :path + "/Controls/AlertBoxSpecs.rb"
 
     Run :file => :path + "/Verbs/CompleteSpecs.rb"
+    Run :file => :path + "/Verbs/CompareSpecs.rb"
     #Run :file => :path + "/Verbs/AcceptSpecs.rb"
 
     Exit Browser
