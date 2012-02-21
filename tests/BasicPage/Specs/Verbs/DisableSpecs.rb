@@ -7,7 +7,7 @@ Scenario "Testing the Disable keyword with a radio button" do
   end
   #-------------------------------------------------------------------------------
     When "the disable radio button has not been clicked" do
-
+      Should Show BasicPage
     end
       Then "the radio button should be enabled" do
         Should Show :radio3

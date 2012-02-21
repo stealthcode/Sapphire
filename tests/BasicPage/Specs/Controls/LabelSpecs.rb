@@ -3,7 +3,7 @@ require File.expand_path('../../../includes', File.dirname(__FILE__))
 Scenario "Testing the Label control" do
 
   Given "A user is on the page" do
-    Reload BasicPage
+    Navigate To BasicPage
   end
   #-------------------------------------------------------------------------------
     When "the user is on the page" do

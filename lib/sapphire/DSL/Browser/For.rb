@@ -7,4 +7,3 @@ module Sapphire
     end
   end
 end
-
