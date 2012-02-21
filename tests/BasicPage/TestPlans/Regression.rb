@@ -6,11 +6,12 @@ TestPlan "Sapphire Regression" do
 
     Parameter :path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
 
-    Run :file => :path + "/BrowserSpecs.rb"
+    #Run :file => :path + "/BrowserSpecs.rb"
 
     Start FireFox With ""
     Navigate To BasicPage
 
+=begin
     Run :file => :path + "/Controls/TitleSpecs.rb"
     Run :file => :path + "/Controls/LabelSpecs.rb"
     Run :file => :path + "/Controls/TextBoxSpecs.rb"
@@ -24,9 +25,11 @@ TestPlan "Sapphire Regression" do
 
     Run :file => :path + "/Verbs/CompleteSpecs.rb"
     Run :file => :path + "/Verbs/CompareSpecs.rb"
-    Run :file => :path + "/Verbs/AcceptSpecs.rb"
-    Run :file => :path + "/Verbs/CheckSpecs.rb"
-    Run :file => :path + "/Verbs/ClearSpecs.rb"
+=end
+    Run :file => :path + "/Verbs/DifferSpecs.rb"
+    #Run :file => :path + "/Verbs/AcceptSpecs.rb"
+    #Run :file => :path + "/Verbs/CheckSpecs.rb"
+    #Run :file => :path + "/Verbs/ClearSpecs.rb"
 
     Exit Browser
 
