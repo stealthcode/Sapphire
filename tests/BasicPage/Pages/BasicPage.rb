@@ -28,6 +28,7 @@ class BasicPage < Page
     TextBox     :date_2, :id => "date_2"
     Button      :click_me_to_disable_radio!, :id => "disable_radio"
     RadioButton :radio3, :id => "radio3"
+    Label       :enter, :id => "enter"
 
   end
 
