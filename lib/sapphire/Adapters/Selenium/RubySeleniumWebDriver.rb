@@ -110,11 +110,13 @@ module Sapphire
             if(comparator.Compare(x == false, true))
               $page.AlternateUrls.each do |url|
                 if(comparator.Compare(x == false, true))
+                  x = self.CurrentUrl.upcase.start_with?(url.upcase)
                   y = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
                 end
               end
             end
-            y
+
+            return y if x == true
           }
         rescue
           temp = StartsWithComparison.new(Evaluation.new(self.CurrentUrl, $page.Url))
