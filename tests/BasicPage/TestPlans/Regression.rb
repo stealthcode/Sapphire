@@ -6,7 +6,7 @@ TestPlan "Sapphire Regression" do
 
     Parameter :path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
 
-    #Run :file => :path + "/BrowserSpecs.rb"
+    Run :file => :path + "/BrowserSpecs.rb"
 
     Start FireFox With ""
     Navigate To BasicPage
@@ -16,6 +16,7 @@ TestPlan "Sapphire Regression" do
     Run :file => :path + "/Controls/CheckBoxSpecs.rb"
     Run :file => :path + "/Controls/DropDownSpecs.rb"
     Run :file => :path + "/Controls/HyperlinkSpecs.rb"
+    #todo - Image
     Run :file => :path + "/Controls/LabelSpecs.rb"
     Run :file => :path + "/Controls/ListSpecs.rb"
     Run :file => :path + "/Controls/RadioButtonSpecs.rb"
@@ -30,10 +31,28 @@ TestPlan "Sapphire Regression" do
     Run :file => :path + "/Verbs/CompleteSpecs.rb"
     Run :file => :path + "/Verbs/DisableSpecs.rb"
     Run :file => :path + "/Verbs/ExistsSpecs.rb"
-
+    #todo - Has
+    #todo - MouseOver
     Run :file => :path + "/Verbs/NavigateSpecs.rb"
+    Run :file => :path + "/Verbs/OnSpecs.rb"
+    Run :file => :path + "/Verbs/PressSpecs.rb"
+    #todo - Remove
+    Run :file => :path + "/Verbs/SetSpecs.rb"
+    #todo - Switch
+    Run :file => :path + "/Verbs/UncheckSpecs.rb"
+    #todo - Wait
 
+    #todo - Checked
+    #todo - Contain
+    #todo - Count
     Run :file => :path + "/Evaluators/DifferSpecs.rb"
+    #todo - Error
+    #todo - Exist
+    #todo - In
+    #todo - Selected
+    #todo - Show
+    #todo - Transition
+    #todo - Validate
 
     Exit Browser
 
