@@ -37,11 +37,11 @@ class Class < Module
   end
 
   def Show(item, comparator)
-    Fix(item.new().Show(item, comparator), comparator)
+    evaluation = $driver.ShouldNavigateTo(item, comparator)
+    Fix(evaluation, comparator)
   end
 
   def Fix(evaluation, comparator)
-    comparator = EqualsComparison.new(evaluation) if comparator == nil
     comparator = comparator.Create(evaluation)
 
     comparator

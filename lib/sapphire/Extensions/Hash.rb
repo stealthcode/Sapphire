@@ -17,7 +17,6 @@ class Hash < Object
     begin
       evaluation = wait.until { x = control
         val = x.Equals(arg, comparator)
-        comparator = EqualsComparison.new(val) if comparator == nil
         if (comparator.Compare(val.left, val.right))
           val
         end
@@ -40,7 +39,6 @@ class Hash < Object
     begin
       evaluation = wait.until { x = control
         val = x.Contain(arg)
-        comparator = EqualsComparison.new(val) if comparator == nil
         if comparator.Compare(val.left, val.right)
           val
         end
@@ -105,7 +103,6 @@ class Hash < Object
   end
 
   def Fix(evaluation, comparator)
-    comparator = EqualsComparison.new(evaluation) if comparator == nil
     comparator = comparator.Create(evaluation)
     comparator
   end
