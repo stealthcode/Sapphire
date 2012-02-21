@@ -17,6 +17,12 @@ module Sapphire
         return val != nil
       end
 
+      def Visible
+        radio = self.Find
+        val = radio.attribute("disabled")
+        return val
+      end
+
     end
   end
 end
