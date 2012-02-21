@@ -116,7 +116,7 @@ module Sapphire
               end
             end
 
-            return y if x == true
+            return y if comparator.Compare(x == true, true)
           }
         rescue
           temp = StartsWithComparison.new(Evaluation.new(self.CurrentUrl, $page.Url))
