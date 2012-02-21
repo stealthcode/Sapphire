@@ -71,6 +71,12 @@
     <br>
     <input id="date_2">
 
+    <br>
+    <br>
+    <input type="button" id="disable_radio" value="Click Me!" onclick="javascript:jQuery('#radio3').attr('disabled',true)"/>
+    <br>
+    <input type="radio" name="radio" value="radio3" id="radio3" /> Radio 3<br />
+
     <script type="text/javascript">
         $(document).ready(function() {
             setTimeout(function() {$("#ajax").html("ajax loaded");}, 2000)
