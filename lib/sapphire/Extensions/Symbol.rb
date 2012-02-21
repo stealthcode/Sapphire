@@ -2,7 +2,7 @@ class Symbol
 
   def Clear
     ExecuteAgainstControl(self) do |control, arg|
-      control.Set ""
+      control.Clear
     end
   end
 

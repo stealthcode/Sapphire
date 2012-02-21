@@ -42,6 +42,17 @@ module Sapphire
         return Evaluation.new(self.Text, value)
       end
 
+      def Clear
+        @hash.each do |item|
+          if item.has_key? :default
+            self.Set(item[:default])
+            return
+          end
+        end
+
+        raise "no :default set for DropDown"
+      end
+
     end
   end
 end

@@ -2,7 +2,7 @@ require File.expand_path('../../includes', File.dirname(__FILE__))
 
 TestPlan "Sapphire Regression" do
 
-  #Virtually do
+  Virtually do
 
     Parameter :path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
 
@@ -24,10 +24,12 @@ TestPlan "Sapphire Regression" do
 
     Run :file => :path + "/Verbs/CompleteSpecs.rb"
     Run :file => :path + "/Verbs/CompareSpecs.rb"
-    #Run :file => :path + "/Verbs/AcceptSpecs.rb"
+    Run :file => :path + "/Verbs/AcceptSpecs.rb"
+    Run :file => :path + "/Verbs/CheckSpecs.rb"
+    Run :file => :path + "/Verbs/ClearSpecs.rb"
 
     Exit Browser
 
-  #end
+  end
 
 end

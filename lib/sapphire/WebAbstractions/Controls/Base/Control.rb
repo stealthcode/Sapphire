@@ -2,7 +2,7 @@ module Sapphire
   module WebAbstractions
     class Control
       def initialize(hash)
-          @hash = hash
+        @hash = hash
       end
 
       def Find(comparator = nil)

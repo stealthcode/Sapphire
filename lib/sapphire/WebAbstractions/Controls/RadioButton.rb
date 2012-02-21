@@ -7,10 +7,8 @@ module Sapphire
       end
 
       def Check (value)
-
         radio = self.Find
         radio.click
-
       end
 
       def Selected
@@ -18,6 +16,7 @@ module Sapphire
         val = radio.attribute("selected")
         return val != nil
       end
+
     end
   end
 end
