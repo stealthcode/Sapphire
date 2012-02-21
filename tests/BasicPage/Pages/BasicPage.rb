@@ -24,6 +24,8 @@ class BasicPage < Page
     CheckBox    :checkbox, :id => "checkbox"
     Hyperlink   :alert_me, :id => "alert"
     AlertBox    :alert
+    TextBox     :date_1, :id => "date_1"
+    TextBox     :date_2, :id => "date_2"
 
   end
 
