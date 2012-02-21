@@ -26,6 +26,7 @@ TestPlan "Sapphire Regression" do
     Run :file => :path + "/Verbs/CompareSpecs.rb"
     Run :file => :path + "/Verbs/DifferSpecs.rb"
     Run :file => :path + "/Verbs/DisableSpecs.rb"
+    Run :file => :path + "/Verbs/ExistsSpecs.rb"
     Run :file => :path + "/Verbs/AcceptSpecs.rb"
     Run :file => :path + "/Verbs/CheckSpecs.rb"
     Run :file => :path + "/Verbs/ClearSpecs.rb"
