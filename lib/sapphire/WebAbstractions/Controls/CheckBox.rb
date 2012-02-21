@@ -13,14 +13,15 @@ module Sapphire
         end
 
         self.Click
-
       end
 
       def Checked
-
         radio = self.Find
         radio.attribute("checked")
+      end
 
+      def Clear
+        self.Check false
       end
     end
   end

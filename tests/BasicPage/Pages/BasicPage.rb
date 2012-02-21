@@ -13,7 +13,7 @@ class BasicPage < Page
     Label       :slow_ajax, :id => "slowAjax"
     TextBox     :bogus_field, :id => "bogus"
     List        :value_list, :xpath => "id('value_list')/td"
-    DropDown    :item_list, :id => "item_list"
+    DropDown    :item_list, :id => "item_list", :default => "Item 1"
     Button      :click_me!, :id => "button"
     Label       :button_clicked, :id => "button_clicked"
     Hyperlink   :link_click_me!, :id => "hyperlink"
