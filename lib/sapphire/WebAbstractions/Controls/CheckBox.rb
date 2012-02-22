@@ -17,7 +17,7 @@ module Sapphire
 
       def Checked
         radio = self.Find
-        radio.attribute("checked")
+        radio.attribute("checked") != nil
       end
 
       def Clear

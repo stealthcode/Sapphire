@@ -14,16 +14,12 @@ module Sapphire
       def Selected
         radio = self.Find
         val = radio.attribute("selected")
-        return val
+        return val != nil
       end
 
       def Visible
         radio = self.Find
-        val = radio.attribute("disabled")
-        puts val.inspect
-        x = val == false
-        x = x and radio.displayed?
-        return x
+        return radio.displayed?
       end
 
     end

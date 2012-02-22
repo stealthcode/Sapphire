@@ -62,7 +62,9 @@ class Symbol
 
   def Examine(key, comparator, &block)
     field = $page.Get(key)
+    element = field.Find(comparator)
 
+    return Evaluation.new(true, true) if element.nil? and comparator.Compare(true, false)
     return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
 
     begin
@@ -77,7 +79,8 @@ class Symbol
 
 
         return Fix(Evaluation.new(block.call(field), true), comparator)
-      rescue
+      rescue Exception => e
+        puts e.inspect
         return FieldNotFoundEvaluation.new(key, $page)
       end
 
