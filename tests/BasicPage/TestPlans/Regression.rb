@@ -6,7 +6,7 @@ TestPlan "Sapphire Regression" do
 
     Parameter :path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
 
-    #Run :file => :path + "/BrowserSpecs.rb"
+    Run :file => :path + "/BrowserSpecs.rb"
 
     Start FireFox With ""
     Navigate To BasicPage
