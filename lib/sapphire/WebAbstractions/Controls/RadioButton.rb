@@ -19,7 +19,8 @@ module Sapphire
 
       def Visible
         radio = self.Find
-        return radio.displayed?
+        x = radio.attribute("disabled")
+        return (x == "false")
       end
 
     end
