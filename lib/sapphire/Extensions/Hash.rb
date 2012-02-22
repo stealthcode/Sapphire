@@ -68,19 +68,9 @@ class Hash < Object
   end
 
   def In(item, comparator)
-     ExecuteHashAgainstControl(item) do |control, arg|
-        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        begin
-          evaluation = wait.until { x = control
-            return x.In(arg, comparator)
-          }
-        rescue
-          x = Evaluation.new(arg, control.Text)
-          return x
-        end
-
-        return evaluation
-     end
+    Examine(item, comparator) do |field, value|
+      field.In(value, comparator)
+    end
   end
 
 
