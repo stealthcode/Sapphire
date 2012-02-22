@@ -20,10 +20,14 @@ module Sapphire
       end
 
       def execute()
-        self.Evaluate()
+        self.Output()
       end
 
       def Evaluate()
+        Compare(@left, @right)
+      end
+
+      def Output()
 
         if(!Compare(@left, @right))
           messages = []

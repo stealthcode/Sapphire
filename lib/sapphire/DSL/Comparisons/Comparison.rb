@@ -18,8 +18,12 @@ module Sapphire
         item
       end
 
+      def Output()
+        @item.Output
+      end
+
       def Evaluate()
-        self.execute
+        @item.Evaluate()
       end
 
       def execute

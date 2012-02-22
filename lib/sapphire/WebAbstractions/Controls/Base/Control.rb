@@ -55,11 +55,13 @@ module Sapphire
       end
 
       def Equals(value, comparator)
-        return Evaluation.new(self.Text, value)
+        evaluation = Evaluation.new(self.Text, value)
+        return comparator.Create(evaluation) if comparator != nil
+        EqualsComparison.new(evaluation)
       end
 
-      def Contain(value, comparator)
-        return ContainsEvaluation.new(self.Text, value)
+      def Contain(value)
+        return ContainsComparison.new(Evaluation.new(value, self.Text))
       end
 
       def In(values, comparator)

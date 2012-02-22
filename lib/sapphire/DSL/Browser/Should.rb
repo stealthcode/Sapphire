@@ -3,7 +3,7 @@ module Sapphire
     module Browser
       def Should(item)
         results = item.execute()
-        results.Evaluate()
+        results.Output()
       end
     end
   end

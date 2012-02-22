@@ -42,7 +42,7 @@ module Sapphire
       end
 
       def AlertShown()
-        alert = self.browser.switch_to.alert
+        alert = self.FindAlert()
         return alert != nil
       end
 

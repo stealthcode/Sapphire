@@ -38,10 +38,6 @@ module Sapphire
         return Evaluation.new("Value not found in list", value)
       end
 
-      def Equals(value, comparator)
-        return Evaluation.new(self.Text, value)
-      end
-
       def Clear
         @hash.each do |item|
           if item.has_key? :default

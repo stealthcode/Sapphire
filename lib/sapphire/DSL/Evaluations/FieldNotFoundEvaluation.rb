@@ -9,7 +9,7 @@ module Sapphire
         @page = page
       end
 
-      def Evaluate()
+      def Output()
           messages = []
 
           messages << "Cannot find control matching " + @field.to_s + " for page " + @page.to_s

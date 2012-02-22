@@ -8,25 +8,40 @@ class Hash < Object
     {item => GetPageField(item).Text}
   end
 
-  def Show(item, comparator)
+  def Examine(item, &block)
     key = item.keys.first
-    control = GetPageField(key)
-    arg = item[key]
+    field = $page.Get(key)
+    value = item[key]
 
-    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+    return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
+
     begin
-      evaluation = wait.until { x = control
-        val = x.Equals(arg, comparator)
-        if (comparator.Compare(val.left, val.right))
-          val
-        end
-      }
+      return FieldNotFoundEvaluation.new(key, $page) if field == nil
+
+      begin
+        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+          result = wait.until {
+            y = block.call(field, value).Evaluate()
+            y if y == true
+          }
+
+
+        return block.call(field, value)
+      rescue
+        return FieldNotFoundEvaluation.new(key, $page)
+      end
+
     rescue
-      evaluation = Evaluation.new(arg, control.Text)
-      return Fix(evaluation, comparator)
+      return FieldNotFoundEvaluation.new(key, $page)
+    end
+  end
+
+  def Show(item, comparator)
+
+    Examine(item) do |field, value|
+      field.Equals(value, comparator)
     end
 
-    return Fix(evaluation, comparator)
   end
 
   def Contain(item, comparator)
@@ -39,18 +54,19 @@ class Hash < Object
     begin
       evaluation = wait.until { x = control
         val = x.Contain(arg)
+        comparator = EqualsComparison.new(val) if comparator == nil
         if comparator.Compare(val.left, val.right)
           val
         end
       }
-    rescue
+    rescue Exception => e
+      puts e.to_s
       begin
         return Fix(Evaluation.new(arg, control.Text), comparator)
       rescue
         return FieldNotFoundEvaluation.new(item, $page)
       end
     end
-
     return Fix(evaluation, comparator)
   end
 

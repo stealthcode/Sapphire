@@ -43,24 +43,50 @@ class Symbol
   end
 
   def Selected(item, comparator)
-    Examine(item, comparator, SelectedComparison) do |field|
+    Examine(item, comparator) do |field|
       field.Selected
     end
   end
 
   def Checked(item, comparator)
-    Examine(item, comparator, CheckedComparison) do |field|
+    Examine(item, comparator) do |field|
       field.Checked
     end
   end
 
   def Show(item, comparator)
-    Examine(item, comparator, VisibleComparison) do |field|
+    Examine(item, comparator) do |field|
       field.Visible
     end
   end
 
-  def Examine(item, comparator, comparison, &block)
+  def Examine(key, comparator, &block)
+    field = $page.Get(key)
+
+    return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
+
+    begin
+      return FieldNotFoundEvaluation.new(key, $page) if field == nil
+
+      begin
+        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+          result = wait.until {
+            y = comparator.Compare(block.call(field), true)
+            y if y == true
+          }
+
+
+        return Fix(Evaluation.new(block.call(field), true), comparator)
+      rescue
+        return FieldNotFoundEvaluation.new(key, $page)
+      end
+
+    rescue
+      return FieldNotFoundEvaluation.new(key, $page)
+    end
+  end
+
+  def a(item, comparator, comparison, &block)
     return FieldNotDefinedEvaluation.new(item, $page) if !$page.Contains item
 
     begin
@@ -74,8 +100,8 @@ class Symbol
 
       begin
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        result = wait.until { y = block.call(field)
-        y unless y == false
+          result = wait.until { y = block.call(field)
+          y unless y == false
         }
 
 

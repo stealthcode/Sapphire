@@ -3,28 +3,29 @@ module Sapphire
     class TextBox < Control
 
       def Text= (value)
-        text = self.Find
-        text.send_keys value
+        textBox = self.Find
+        textBox.send_keys value
       end
 
       def Text
-        text = self.Find
-        text.attribute("value")
+        textBox = self.Find
+        textBox.attribute("value")
       end
 
       def Set(value)
         if(value == "")
           self.Clear
         else
-          text = self.Find
-          text.send_keys value
+          textBox = self.Find
+          textBox.send_keys value
         end
       end
 
       def Clear
-        text = self.Find
-        text.clear
+        textBox = self.Find
+        textBox.clear
       end
+
     end
   end
 end

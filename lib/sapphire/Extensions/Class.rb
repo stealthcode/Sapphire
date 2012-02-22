@@ -43,7 +43,6 @@ class Class < Module
 
   def Fix(evaluation, comparator)
     comparator = comparator.Create(evaluation)
-
     comparator
   end
 
