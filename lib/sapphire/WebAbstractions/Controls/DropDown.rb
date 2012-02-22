@@ -28,14 +28,20 @@ module Sapphire
 
       def Contain(value)
         ddl = self.Find
-        x = ddl.find_elements(:tag_name, "option")
-        x.each do |item|
+        items = ddl.find_elements(:tag_name, "option")
+        items.each do |item|
           if item.text == value
             return Evaluation.new(item.text, value)
           end
         end
 
         return Evaluation.new("Value not found in list", value)
+      end
+
+      def Count(value)
+        ddl = self.Find
+        items = ddl.find_elements(:tag_name, "option")
+        return Evaluation.new(items.count, value)
       end
 
       def Clear

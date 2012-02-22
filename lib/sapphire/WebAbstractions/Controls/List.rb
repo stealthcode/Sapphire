@@ -71,9 +71,9 @@ module Sapphire
         end
       end
 
-      def Count
+      def Count(value)
         items = self.FindAll
-        return items.count
+        return Evaluation.new(items.count, value)
       end
 
       def Text

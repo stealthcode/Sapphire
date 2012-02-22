@@ -50,23 +50,8 @@ class Hash < Object
   end
 
   def Count(item, comparator)
-    ExecuteHashAgainstControl(item) do |control, arg|
-      wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-      count = 0
-      begin
-        evaluation = wait.until { x = control
-          count = x.Count
-          if comparator.Compare(x.Count, arg)
-            x = Evaluation.new(arg, count)
-            return x
-          end
-        }
-      rescue
-        x = Evaluation.new(arg, count)
-        return x
-      end
-
-      return evaluation
+    Examine(item, comparator) do |field, value|
+      field.Count(value)
     end
   end
 
