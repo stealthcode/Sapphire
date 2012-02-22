@@ -23,7 +23,7 @@ module Sapphire
       end
 
       def Evaluate()
-        @item.Evaluate()
+        @item.Evaluate
       end
 
       def execute

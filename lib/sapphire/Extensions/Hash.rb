@@ -8,7 +8,7 @@ class Hash < Object
     {item => GetPageField(item).Text}
   end
 
-  def Examine(item, &block)
+  def Examine(item, comparator, &block)
     key = item.keys.first
     field = $page.Get(key)
     value = item[key]
@@ -21,12 +21,13 @@ class Hash < Object
       begin
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
           result = wait.until {
-            y = block.call(field, value).Evaluate()
-            y if y == true
+            evaluation = block.call(field, value)
+            y = evaluation.Evaluate()
+            comparator = EqualsComparison.new(evaluation) if evaluation == nil
+            evaluation if comparator.Compare(y == true, true)
           }
 
-
-        return block.call(field, value)
+        return Fix(result, comparator)
       rescue
         return FieldNotFoundEvaluation.new(key, $page)
       end
@@ -37,37 +38,15 @@ class Hash < Object
   end
 
   def Show(item, comparator)
-
-    Examine(item) do |field, value|
+    Examine(item, comparator) do |field, value|
       field.Equals(value, comparator)
     end
-
   end
 
   def Contain(item, comparator)
-
-    key = item.keys.first
-    control = GetPageField(key)
-    arg = item[key]
-
-    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-    begin
-      evaluation = wait.until { x = control
-        val = x.Contain(arg)
-        comparator = EqualsComparison.new(val) if comparator == nil
-        if comparator.Compare(val.left, val.right)
-          val
-        end
-      }
-    rescue Exception => e
-      puts e.to_s
-      begin
-        return Fix(Evaluation.new(arg, control.Text), comparator)
-      rescue
-        return FieldNotFoundEvaluation.new(item, $page)
-      end
+    Examine(item, comparator) do |field, value|
+      field.Contain(value)
     end
-    return Fix(evaluation, comparator)
   end
 
   def Count(item, comparator)

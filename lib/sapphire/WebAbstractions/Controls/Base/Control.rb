@@ -56,7 +56,6 @@ module Sapphire
 
       def Equals(value, comparator)
         evaluation = Evaluation.new(self.Text, value)
-        return comparator.Create(evaluation) if comparator != nil
         EqualsComparison.new(evaluation)
       end
 
