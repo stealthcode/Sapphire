@@ -43,6 +43,18 @@ class Hash < Object
     end
   end
 
+  def AltText(item, comparator)
+    Examine(item, comparator) do |field, value|
+      field.AltText(value, comparator)
+    end
+  end
+
+  def Source(item, comparator)
+    Examine(item, comparator) do |field, value|
+      field.Source(value, comparator)
+    end
+  end
+
   def Contain(item, comparator)
     Examine(item, comparator) do |field, value|
       field.Contain(value)
@@ -74,12 +86,6 @@ class Hash < Object
 
   def Validate(hash)
     Evaluation.new(hash.keys.first.to_s, hash[hash.keys.first].to_s)
-  end
-
-  def Error(item, comparator)
-    ExecuteHashAgainstControl(item) do |control, arg|
-       return control.Equals(arg, comparator)
-     end
   end
 
   def Fix(evaluation, comparator)

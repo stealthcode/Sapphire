@@ -15,6 +15,7 @@ module Sapphire
         @comparator = EqualsComparison.new(@item) if @comparator == nil
         @block.call(@item, @comparator)
       end
+
     end
   end
 end
