@@ -34,4 +34,5 @@ Scenario "Testing the In Keyword" do
       Then "the values should not be in the list" do
         Should Not Be In :value_list => @list
       end
+  #-------------------------------------------------------------------------------
 end

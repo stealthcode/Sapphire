@@ -74,8 +74,8 @@ class Hash < Object
   end
 
 
-  def Validate(hash)
-    Evaluation.new(hash.keys.first.to_s, hash[hash.keys.first].to_s)
+  def Validate(hash, comparator)
+    Fix(Evaluation.new(hash.keys.first.to_s, hash[hash.keys.first].to_s), comparator)
   end
 
   def Fix(evaluation, comparator)

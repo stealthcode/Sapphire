@@ -15,14 +15,8 @@ TestPlan "Sapphire Regression" do
     Run :path => :specs_path + "/Verbs/"
     Run :path => :specs_path + "/Evaluators/"
 
-    #Run :file => :specs_path + "/Evaluators/InSpecs.rb"
-
-    #todo - /Verbs/Has
     #todo - /Verbs/MouseOver
-    #todo - /Verbs/Remove
     #todo - /Verbs/Switch
-    #todo - /Evaluators/Exist
-    #todo - /Evaluators/Validate
 
     Exit Browser
 
