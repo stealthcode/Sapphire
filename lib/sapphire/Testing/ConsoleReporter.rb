@@ -30,17 +30,17 @@ module Sapphire
         Indent(depth)
 
         if result.type == 'pass'
-          @output.puts result.text.colorize :green
+          @output.puts result.text
         elsif result.type == 'pending'
-          @output.puts result.text.colorize :yellow
+          @output.puts result.text
           Indent(depth+1)
           @output.puts " ## Not Yet Implemented ##"
         elsif result.type == 'problematic'
-          @output.puts result.text.colorize :orange
+          @output.puts result.text
           Indent(depth+1)
           @output.puts " ## Problematic ##"
         else
-          @output.puts result.text.colorize :red
+          @output.puts result.text
           if result.messages.is_a? Array
             result.messages.each do |message|
               Indent(depth+1)
@@ -72,47 +72,50 @@ module Sapphire
 
       def TestPassed(test)
         @passing_count = @passing_count + 1
-        @output.print ".".colorize :green
+        @output.print "."
       end
 
       def TestFailed(test)
         @failing_count = @failing_count + 1
         Add test
-        @output.print "F".colorize :red
+        @output.print "F"
       end
 
       def TestPending(test)
         @pending_count = @pending_count + 1
         Add test
-        @output.print "*".colorize :yellow
+        @output.print "*"
       end
 
       def TestProblematic(test)
         @problematic_count = @problematic_count + 1
         Add test
         #look of disapproval
-        @output.print "\u0CA0_\u0CA0".colorize :orange
+        @output.print "\u0CA0_\u0CA0"
       end
 
       def Add(r)
         result_passes = r.type == "pass"
 
-        if !result_passes and (r.item.is_a? Given or r.item.is_a? When or r.item.is_a? Background)
-          @not_passing = @not_passing.merge({ r => r })
-        elsif !result_passes and (r.item.is_a? And or r.item.parent.is_a? Given)
-          @not_passing = @not_passing.merge({ r.parent => r.parent })
+        if !result_passes and (r.item.is_a? Given or r.item.is_a? Background)
+          @not_passing = @not_passing.merge!({ r => r })
+        elsif !result_passes and (r.item.is_a? When)
+          @not_passing = @not_passing.merge!({ r.parent => r.parent })
+        elsif !result_passes and (r.item.is_a? And and r.item.parent.is_a? Given)
+          @not_passing = @not_passing.merge!({ r.parent => r.parent })
         elsif !result_passes and (r.item.is_a? And and r.parent.item.is_a? When)
-          @not_passing = @not_passing.merge({ r.parent => r.parent })
+          @not_passing = @not_passing.merge!({ r.parent.parent => r.parent.parent })
         elsif !result_passes and (r.item.is_a? Then)
-          @not_passing = @not_passing.merge({ r.parent => r.parent })
+          @not_passing = @not_passing.merge!({ r.parent.parent => r.parent.parent })
         elsif !result_passes and (r.item.is_a? And and r.parent.item.is_a? Then)
-          @not_passing = @not_passing.merge({ r.parent.parent => r.parent.parent })
+          @not_passing = @not_passing.merge!({ r.parent.parent.parent => r.parent.parent.parent })
         end
 
       end
 
       def OutputResults()
         @output.puts ""
+
 
         @not_passing.keys.each do |key|
           self.PrintResult @not_passing[key]
@@ -121,10 +124,10 @@ module Sapphire
         @output.puts ""
         @output.puts "Finished in " + (@end - @start).round().to_s + " seconds."
         @output.puts "Test Count: " + @test_count.to_s
-        @output.puts "Passing: " + @passing_count.to_s.colorize(:green)
-        @output.puts "Failing: " + @failing_count.to_s.colorize(:red)
-        @output.puts "Pending: " + @pending_count.to_s.colorize(:yellow)
-        @output.puts "Problematic: " + @problematic_count.to_s.colorize(:orange)
+        @output.puts "Passing: " + @passing_count.to_s
+        @output.puts "Failing: " + @failing_count.to_s
+        @output.puts "Pending: " + @pending_count.to_s
+        @output.puts "Problematic: " + @problematic_count.to_s
       end
 
       def Output(result, depth)

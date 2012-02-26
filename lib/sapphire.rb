@@ -6,7 +6,6 @@ require 'yaml'
 require 'selenium-webdriver'
 require 'delegate'
 require 'Forwardable'
-require 'colorize'
 
 require 'sapphire/Adapters'
 require 'sapphire/Testing'

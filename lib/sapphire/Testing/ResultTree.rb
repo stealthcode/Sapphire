@@ -18,10 +18,6 @@ module Sapphire
 
         if(result != nil)
           self.type = result.type
-          @iconCls = "accept" if result.type == "pass"
-          @iconCls = "delete" if result.type == "fail"
-          @iconCls = "error" if result.type == "pending"
-          @iconCls = "error" if result.type == "problematic"
           @time = result.execution_time
           @expanded = true
           @messages = result.messages

@@ -15,8 +15,8 @@ module Sapphire
           @and = []
         end
 
-        def add_and(text, &block)
-          self.and << Then.new(text, &block)
+        def add_and( text, &block)
+          self.and << And.new(self, text, &block)
         end
 
         def to_s

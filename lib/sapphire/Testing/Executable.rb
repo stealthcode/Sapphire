@@ -1,6 +1,16 @@
 module Sapphire
   module Testing
     module Executable
+
+      def pend()
+        start = Time.now
+        Report do |x| x.TestStarted(self) end
+
+        result = ResultTree.new(self.text, TestResult.new("pending", self, "Pending", "", Time.now - start))
+        self.AddResult(result)
+        Report do |x| x.TestPending(result) end
+      end
+
       def execute()
         start = Time.now
         Report do |x| x.TestStarted(self) end

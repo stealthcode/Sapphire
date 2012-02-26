@@ -9,46 +9,56 @@ module Sapphire
       end
 
       def execute()
-        Report do |x| x.ScenarioStart(self) end
+        Report do |reporter| reporter.ScenarioStart(self) end
 
-        self.backgrounds.each do |b|
+        self.backgrounds.each do |background|
 
-          b.execute
+          background.execute
 
-          b.and.each do |g_a|
+          background.and.each do |background_and|
 
-            g_a.execute
+            background_and.execute
 
           end
 
         end
 
-        self.givens.each do |g|
-          g.when.each do |w|
+        self.givens.each do |given|
+          given.when.each do |when_|
 
-            g.execute
+            if when_.value.is_a? Pending
+              given.pend()
 
-            g.and.each do |g_a|
+              given.and.each do |given_and|
 
-              g_a.execute
+                given_and.pend()
+
+              end
+            else
+              given.execute()
+
+              given.and.each do |given_and|
+
+                given_and.execute()
+
+              end
+            end
+
+            when_.execute
+
+            when_.and.each do |when_and|
+
+              when_and.execute
 
             end
 
-            w.execute
+            when_.then.each do |then_|
 
-            w.and.each do |w_a|
+              then_.execute
 
-              w_a.execute
+              then_.and.each do |then_and|
 
-            end
-
-            w.then.each do |t|
-
-              t.execute
-
-              t.and.each do |t_a|
-
-                t_a.execute
+                then_and.execute
 
               end
 
@@ -56,15 +66,15 @@ module Sapphire
 
           end
 
-          if(g.finally)
+          if(given.finally)
 
-            g.finally.execute
+            given.finally.execute
 
           end
 
         end
 
-        Report do |x| x.ScenarioComplete(self) end
+        Report do |reporter| reporter.ScenarioComplete(self) end
 
       end
     end
