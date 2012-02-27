@@ -40,7 +40,7 @@ module Sapphire
         x = self.FindAll
         x.each do |item|
           if item.text.include? value
-            return Evaluation.new(item.text, value)
+            return ContainsComparison.new(Evaluation.new(value, item.text))
           end
         end
 
