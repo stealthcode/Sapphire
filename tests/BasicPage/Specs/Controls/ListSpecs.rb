@@ -13,13 +13,13 @@ Scenario "Testing the List control" do
         Should Show :value_list
       end
       And "it should contain Value 1" do
-        Should Contain :value_list => "Value 1"
+        Should Contain :value_list => "Value"
       end
       And "it should contain Value 2" do
-        Should Contain :value_list => "Value 2"
+        Should Contain :value_list => "lue 2"
       end
       And "it should contain Value 3" do
-        Should Contain :value_list => "Value 3"
+        Should Contain :value_list => "Value "
       end
       And "it should contain Value 4" do
         Should Contain :value_list => "Value 4"
