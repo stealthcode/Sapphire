@@ -68,7 +68,7 @@ class Symbol
     return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
 
     begin
-      return FieldNotFoundEvaluation.new(key, $page) if field == nil
+      return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
 
       begin
         wait = Selenium::WebDriver::Wait.new(:timeout => 5)
@@ -79,12 +79,12 @@ class Symbol
 
 
         return Fix(Evaluation.new(block.call(field), true), comparator)
-      rescue
-        return FieldNotFoundEvaluation.new(key, $page)
+      rescue => e
+        return FieldNotFoundEvaluation.new(key, $page, e.to_s)
       end
 
-    rescue
-      return FieldNotFoundEvaluation.new(key, $page)
+    rescue => e
+      return FieldNotFoundEvaluation.new(key, $page, e.to_s)
     end
   end
 

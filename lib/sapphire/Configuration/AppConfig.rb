@@ -1,4 +1,3 @@
-require File.expand_path('attrmethods', File.dirname(__FILE__))
 require 'ostruct'
 
 module Sapphire

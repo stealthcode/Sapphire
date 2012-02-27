@@ -27,7 +27,6 @@ module Sapphire
     include DSL::Data
     include DSL::TestPlans
     include DSL::Events
-    include Configuration::AttrMethods
     include Configuration
     include DataAbstractions
     include JobAbstractions
