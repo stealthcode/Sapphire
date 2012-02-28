@@ -25,6 +25,10 @@ module Sapphire
         @fields = @fields.merge! args.first => TextBox.new(args[1..args.length])
       end
 
+      def TextArea(*args)
+        @fields = @fields.merge! args.first => TextArea.new(args[1..args.length])
+      end
+
       def RadioButton(*args)
         @fields = @fields.merge! args.first => RadioButton.new(args[1..args.length])
       end

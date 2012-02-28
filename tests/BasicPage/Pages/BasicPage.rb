@@ -30,6 +30,9 @@ class BasicPage < Page
     RadioButton :radio3, :id => "radio3"
     Label       :enter, :id => "enter"
     Image       :image, :id => "image"
+    TextArea    :new_note, :id => "new_note"
+    TextArea    :notes, :id => "notes"
+    Button      :click_me_to_add_note!, :id => "add_note"
 
   end
 
