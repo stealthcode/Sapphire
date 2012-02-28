@@ -83,6 +83,15 @@
     <br>
     <label id="enter">enter not pressed</label>
 
+    <br>
+    <br>
+    <textarea id="notes"></textarea>
+    <br>
+    <br>
+    <textarea id="new_note"></textarea>
+    <br>
+    <input type="button" id="add_note" value="Click Me!" onclick="javascript:$('#notes').val($('#new_note').val());"/>
+
     <script type="text/javascript">
         $(document).ready(function() {
             setTimeout(function() {$("#ajax").html("ajax loaded");}, 4000)
