@@ -66,25 +66,19 @@ class Symbol
 
     return Evaluation.new(true, true) if element.nil? and comparator.Compare(true, false)
     return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
+    return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
 
     begin
-      return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
-
-      begin
-        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-          result = wait.until {
-            y = comparator.Compare(block.call(field), true)
-            y if y == true
-          }
+      wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+        result = wait.until {
+          y = comparator.Compare(block.call(field), true)
+          y if y == true
+        }
 
 
-        return Fix(Evaluation.new(block.call(field), true), comparator)
-      rescue => e
-        return FieldNotFoundEvaluation.new(key, $page, e.to_s)
-      end
-
-    rescue => e
-      return FieldNotFoundEvaluation.new(key, $page, e.to_s)
+      return Fix(Evaluation.new(block.call(field), true), comparator)
+    rescue
+      return Evaluation.new(block.call(field), true)
     end
   end
 

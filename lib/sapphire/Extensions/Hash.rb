@@ -14,27 +14,23 @@ class Hash < Object
     value = item[key]
 
     return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
+    return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
 
     begin
-      return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
+      evaluation = block.call(field, value)
+      wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+        result = wait.until {
+          evaluation = block.call(field, value)
+          y = evaluation.Evaluate()
+          comparator = EqualsComparison.new(evaluation) if evaluation == nil
+          evaluation if comparator.Compare(y == true, true)
+        }
 
-      begin
-        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-          result = wait.until {
-            evaluation = block.call(field, value)
-            y = evaluation.Evaluate()
-            comparator = EqualsComparison.new(evaluation) if evaluation == nil
-            evaluation if comparator.Compare(y == true, true)
-          }
-
-        return Fix(result, comparator)
-      rescue => e
-        return FieldNotFoundEvaluation.new(key, $page, e.to_s)
-      end
-
-    rescue => e
-      return FieldNotFoundEvaluation.new(key, $page, e.to_s)
+      return Fix(result, comparator)
+    rescue
+      return Evaluation.new(evaluation.left, evaluation.right)
     end
+
   end
 
   def Show(item, comparator)

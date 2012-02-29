@@ -26,7 +26,7 @@ module Sapphire
         end
 
         def Differ(comparator)
-          return Fix(DifferComparison.new(Evaluation.new(@compare1 + @value, @compare2)), comparator)
+          return Fix(DifferComparison.new(Evaluation.new((@compare2 - @compare1).to_i, @value)), comparator)
         end
 
         def Fix(evaluation, comparator)
