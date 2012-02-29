@@ -14,7 +14,14 @@ module Sapphire
             return  EqualsComparison.new(Evaluation.new(item.text, value))
           end
         end
-        return  EqualsComparison.new(Evaluation.new("Value not found in list", value))
+
+        #if here then it couldnt make a match, build up the list of values
+        alltext = []
+        x.each do |item|
+          alltext << item.text
+        end
+
+        return  EqualsComparison.new(Evaluation.new(alltext, value))
       end
 
       def In(values, comparator)
