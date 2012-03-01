@@ -12,13 +12,14 @@ module Sapphire
           self.Clear
         else
           textarea = self.Find
+          textarea.clear
           textarea.send_keys value
         end
       end
 
       def Clear
         textarea = self.Find
-        textarea .clear
+        textarea.clear
       end
 
     end

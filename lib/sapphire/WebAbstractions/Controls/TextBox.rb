@@ -17,6 +17,7 @@ module Sapphire
           self.Clear
         else
           textBox = self.Find
+          textBox.clear
           textBox.send_keys value
         end
       end
