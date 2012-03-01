@@ -10,7 +10,7 @@ module Sapphire
       end
 
       def Visible()
-        $driver.AlertShown()
+        Evaluation.new($driver.AlertShown(), true)
       end
 
       def Find(comparator = nil)

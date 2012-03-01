@@ -43,43 +43,35 @@ class Symbol
   end
 
   def Selected(item, comparator)
-    Examine(item, comparator) do |field|
+    Examine(item, comparator) do |field, value|
       field.Selected
     end
   end
 
   def Checked(item, comparator)
-    Examine(item, comparator) do |field|
+    Examine(item, comparator) do |field, value|
       field.Checked
     end
   end
 
   def Show(item, comparator)
-    Examine(item, comparator) do |field|
+    Examine(item, comparator) do |field, value|
       field.Visible
     end
   end
 
   def Examine(key, comparator, &block)
-    field = $page.Get(key)
-    element = field.Find(comparator)
-
-    return Evaluation.new(true, true) if element.nil? and comparator.Compare(true, false)
+    item = key
+    key = item.first if item.is_a? Array
     return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
+
+    field = $page.Get(key)
     return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
 
-    begin
-      wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        result = wait.until {
-          y = comparator.Compare(block.call(field), true)
-          y if y == true
-        }
+    element = field.Find(comparator)
+    return Evaluation.new(true, true) if element.nil? and comparator.Compare(true, false)
 
-
-      return Fix(Evaluation.new(block.call(field), true), comparator)
-    rescue
-      return Evaluation.new(block.call(field), true)
-    end
+    return Fix(field.Evaluate(key, item, comparator, block), comparator)
   end
 
   def Fix(evaluation, comparator)

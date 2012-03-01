@@ -2,7 +2,7 @@ module Sapphire
   module WebAbstractions
     class CheckBox < Control
        def Check (value)
-        checked = self.Checked
+        checked = self.Checked().Evaluate()
 
         if value && checked
           return;
@@ -17,7 +17,7 @@ module Sapphire
 
       def Checked
         radio = self.Find
-        radio.attribute("checked") != nil
+        Evaluation.new(radio.attribute("checked") != nil, true)
       end
 
       def Clear

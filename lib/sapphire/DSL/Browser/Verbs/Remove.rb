@@ -12,7 +12,6 @@ module Sapphire
                 return nil
               }
             rescue
-              puts "Cant find item!"
               return nil
             end
          end

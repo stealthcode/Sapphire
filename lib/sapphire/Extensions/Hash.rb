@@ -9,28 +9,15 @@ class Hash < Object
   end
 
   def Examine(item, comparator, &block)
-    key = item.keys.first
-    field = $page.Get(key)
-    value = item[key]
+    key = item.first.keys.first if item.first.is_a? Hash
+    key = item.first.first if item.first.is_a? Array
 
     return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
+
+    field = $page.Get(key)
     return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
 
-    begin
-      evaluation = block.call(field, value)
-      wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-        result = wait.until {
-          evaluation = block.call(field, value)
-          y = evaluation.Evaluate()
-          comparator = EqualsComparison.new(evaluation) if evaluation == nil
-          evaluation if comparator.Compare(y == true, true)
-        }
-
-      return Fix(result, comparator)
-    rescue
-      return Evaluation.new(evaluation.left, evaluation.right)
-    end
-
+    return Fix(field.Evaluate(key, item, comparator, block), comparator)
   end
 
   def Show(item, comparator)

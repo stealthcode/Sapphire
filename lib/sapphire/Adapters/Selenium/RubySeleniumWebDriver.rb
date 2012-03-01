@@ -93,16 +93,37 @@ module Sapphire
         self.browser.get self.CurrentUrl
       end
 
-      def ShouldNavigateTo(page, comparator)
-        if(page.is_a? Class)
-          $page = page.new
-        else
-          $page = page
+      def GetValue(item, key)
+
+        if item.is_a? Array
+          item.each do |sub_item|
+            value = GetValue(sub_item, key)
+            return value if !value.nil?
+          end
         end
+
+        if item.is_a? Class and key.nil?
+          return item.new
+        end
+
+        if item.is_a? Hash
+          return item[key] if item.has_key? key
+        end
+
+        nil
+      end
+
+      def ShouldNavigateTo(page, comparator)
+
+        $page = GetValue(page, nil)
+        $page ||= page
+
+        timeout = GetValue(page, :wait)
+        timeout ||= 20
 
         $page.Init
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 20)
+        wait = Selenium::WebDriver::Wait.new(:timeout => timeout)
         begin
           item = wait.until {
             x = self.CurrentUrl.upcase.start_with?($page.Url.upcase)

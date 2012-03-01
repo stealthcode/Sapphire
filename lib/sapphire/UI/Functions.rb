@@ -3,7 +3,6 @@ module ChildProcess
     module Lib
 
       def self.create_proc(cmd, opts = {})
-        puts "1"
         cmd_ptr = F.from_string cmd
 
         flags   = 0

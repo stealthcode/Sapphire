@@ -51,7 +51,7 @@ module Sapphire
 
       def Visible
         control = self.Find
-        control.displayed?
+        Evaluation.new(control.displayed?, true)
       end
 
       def Equals(value, comparator)
@@ -74,6 +74,45 @@ module Sapphire
         #error land
         return Evaluation.new(text, values)
       end
+
+      def Evaluate(key, arg, comparator, block)
+
+        value = GetValue(arg, key)
+        timeout = GetValue(arg, :wait)
+        timeout ||= 5
+
+        begin
+          evaluation = block.call(self, value)
+          wait = Selenium::WebDriver::Wait.new(:timeout => timeout)
+            result = wait.until {
+              evaluation = block.call(self, value)
+              y = evaluation.Evaluate()
+              comparator = EqualsComparison.new(evaluation) if evaluation == nil
+              evaluation if comparator.Compare(y == true, true)
+            }
+
+          return result
+        rescue
+          return Evaluation.new(evaluation.left, evaluation.right)
+        end
+      end
+
+      def GetValue(item, key)
+
+        if item.is_a? Array
+          item.each do |sub_item|
+            value = GetValue(sub_item, key)
+            return value if !value.nil?
+          end
+        end
+
+        if item.is_a? Hash
+          return item[key] if item.has_key? key
+        end
+
+        nil
+      end
+
     end
   end
 end

@@ -14,13 +14,13 @@ module Sapphire
       def Selected
         radio = self.Find
         val = radio.attribute("selected")
-        return val != nil
+        return Evaluation.new(val != nil, true)
       end
 
       def Visible
         radio = self.Find
         x = radio.attribute("disabled")
-        return (x == "false")
+        Evaluation.new((x == "false"), true)
       end
 
     end
