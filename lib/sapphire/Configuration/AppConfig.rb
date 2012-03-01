@@ -5,7 +5,7 @@ module Sapphire
     class AppConfig < OpenStruct
 
       def self.create(hash)
-        @@instance ||= Config.new hash
+        @@instance ||= AppConfig.new hash
         @@instance
       end
 
