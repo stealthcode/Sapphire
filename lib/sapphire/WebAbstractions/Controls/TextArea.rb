@@ -12,7 +12,10 @@ module Sapphire
           self.Clear
         else
           textarea = self.Find
-          textarea.clear
+          readonly = textarea.attribute("readonly")
+          if readonly == "false"
+            textarea.clear
+          end
           textarea.send_keys value
         end
       end

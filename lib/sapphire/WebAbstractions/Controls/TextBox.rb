@@ -17,7 +17,10 @@ module Sapphire
           self.Clear
         else
           textBox = self.Find
-          textBox.clear
+          readonly = textBox.attribute("readonly")
+          if readonly == "false"
+            textBox.clear
+          end
           textBox.send_keys value
         end
       end

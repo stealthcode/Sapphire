@@ -33,6 +33,7 @@ class BasicPage < Page
     TextArea    :new_note, :id => "new_note"
     TextArea    :notes, :id => "notes"
     Button      :click_me_to_add_note!, :id => "add_note"
+    TextBox     :read_only, :id => "read_only"
 
   end
 
