@@ -30,4 +30,14 @@ Scenario "Testing the TextBox control" do
         Should Show :first_name => "Jane"
       end
   #-------------------------------------------------------------------------------
+    When "a box is readonly" do
+      Should Show :read_only => "Jane Doe"
+    end
+    And "we try to set it" do
+      Set :read_only => "new value"
+    end
+      Then "it does not set" do
+        Should Show :read_only => "Jane Doe"
+      end
+  #-------------------------------------------------------------------------------
 end
