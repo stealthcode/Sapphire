@@ -22,8 +22,8 @@ class When
   def add_then(pre, text, &block)
     if(self.value.is_a? Pending or text.is_a? Pending)
       @then << Then.new(self, pre, Pending.new(text.to_s), &block)
-    elsif(self.value.is_a? Problematic)
-      @then << Then.new(self, pre, Problematic.new(text), &block)
+    elsif(self.value.is_a? Broken)
+      @then << Then.new(self, pre, Broken.new(text), &block)
     else
       @then << Then.new(self, pre, text, &block)
     end
@@ -32,8 +32,8 @@ class When
   def add_and(pre, text, &block)
     if(self.value.is_a? Pending or text.is_a? Pending)
       self.and << And.new(self, Pending.new(pre + text.to_s), &block)
-    elsif(self.value.is_a? Problematic)
-      self.and << And.new(self, Problematic.new(pre + text), &block)
+    elsif(self.value.is_a? Broken)
+      self.and << And.new(self, Broken.new(pre + text), &block)
     else
       self.and << And.new(self, pre + text.to_s, &block)
     end

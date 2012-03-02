@@ -1,11 +1,11 @@
 module Sapphire
   module DSL
     module Scenarios
-      def Problematic(text)
-        Problematic.new text
+      def Broken(text)
+        Broken.new text
       end
 
-      class Problematic
+      class Broken
 
         attr_reader :text
         attr_reader :and

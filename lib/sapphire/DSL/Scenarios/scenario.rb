@@ -25,8 +25,8 @@ module Sapphire
         def add_given(given)
           if(self.value.is_a? Pending)
             @givens << Given.new(self, "", Pending.new(given.text), &block)
-          elsif(self.value.is_a? Problematic)
-            @givens << Given.new(self, "", Problematic.new(given.text), &block)
+          elsif(self.value.is_a? Broken)
+            @givens << Given.new(self, "", Broken.new(given.text), &block)
           else
             @givens << given
           end
@@ -39,8 +39,8 @@ module Sapphire
         def add_background(background)
           if(self.value.is_a? Pending)
             @backgrounds << Background.new(self, "", Pending.new(background.text), &block)
-          elsif(self.value.is_a? Problematic)
-            @backgrounds << Background.new(self, "", Problematic.new(background.text), &block)
+          elsif(self.value.is_a? Broken)
+            @backgrounds << Background.new(self, "", Broken.new(background.text), &block)
           else
             @backgrounds << background
           end

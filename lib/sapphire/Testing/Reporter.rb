@@ -6,7 +6,7 @@ module Sapphire
       attr_reader :passing_count
       attr_reader :failing_count
       attr_reader :pending_count
-      attr_reader :problematic_count
+      attr_reader :broken_count
       attr_reader :time
 
     end
