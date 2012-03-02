@@ -7,7 +7,7 @@ module Sapphire
         @passing_count = 0
         @failing_count = 0
         @pending_count = 0
-        @problematic_count = 0
+        @broken_count = 0
         @test_count = 0
         @output = $stdout
       end
@@ -35,10 +35,10 @@ module Sapphire
           @output.puts result.text
           Indent(depth+1)
           @output.puts " ## Not Yet Implemented ##"
-        elsif result.type == 'problematic'
+        elsif result.type == 'broken'
           @output.puts result.text
           Indent(depth+1)
-          @output.puts " ## Problematic ##"
+          @output.puts " ## Broken ##"
         else
           @output.puts result.text
           if result.messages.is_a? Array
@@ -87,8 +87,8 @@ module Sapphire
         @output.print "*"
       end
 
-      def TestProblematic(test)
-        @problematic_count = @problematic_count + 1
+      def TestBroken(test)
+        @broken_count = @broken_count + 1
         Add test
         #look of disapproval
         @output.print "\u0CA0_\u0CA0"
@@ -127,7 +127,7 @@ module Sapphire
         @output.puts "Passing: " + @passing_count.to_s
         @output.puts "Failing: " + @failing_count.to_s
         @output.puts "Pending: " + @pending_count.to_s
-        @output.puts "Problematic: " + @problematic_count.to_s
+        @output.puts "Broken: " + @broken_count.to_s
       end
 
       def Output(result, depth)

@@ -23,8 +23,8 @@ class Given
   def add_when(pre, text, &block)
     if(self.value.is_a? Pending)
       @when << When.new(self, pre, Pending.new(text.to_s), &block)
-    elsif(self.value.is_a? Problematic)
-      @when << When.new(self, pre, Problematic.new(text), &block)
+    elsif(self.value.is_a? Broken)
+      @when << When.new(self, pre, Broken.new(text), &block)
     else
       x = When.new(self, pre, text, &block)
       @when << x
@@ -42,8 +42,8 @@ class Given
   def add_and(pre, text, &block)
     if(self.value.is_a? Pending or text.is_a? Pending)
       self.and << And.new(self, Pending.new(pre + text.to_s), &block)
-    elsif(self.value.is_a? Problematic)
-      self.and << And.new(self, Problematic.new(pre + text.to_s), &block)
+    elsif(self.value.is_a? Broken)
+      self.and << And.new(self, Broken.new(pre + text.to_s), &block)
     else
       self.and << And.new(self, pre + text.to_s, &block)
     end

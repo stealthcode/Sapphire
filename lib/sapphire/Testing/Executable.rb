@@ -29,10 +29,10 @@ module Sapphire
           stack = msg.backtrace
           message = msg.messages if (msg.is_a? ExpectationException)
           message ||= msg.message
-          if(self.value.is_a? Problematic)
-            result = ResultTree.new(self.text, TestResult.new("problematic", self, message, stack, Time.now - start))
+          if(self.value.is_a? Broken)
+            result = ResultTree.new(self.text, TestResult.new("broken", self, message, stack, Time.now - start))
             self.AddResult(result)
-            Report do |x| x.TestProblematic(result) end
+            Report do |x| x.TestBroken(result) end
           else
             result = ResultTree.new(self.text, TestResult.new("fail", self, message, stack, Time.now - start))
             self.AddResult(result)
