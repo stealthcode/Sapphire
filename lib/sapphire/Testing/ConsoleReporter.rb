@@ -90,8 +90,7 @@ module Sapphire
       def TestBroken(test)
         @broken_count = @broken_count + 1
         Add test
-        #look of disapproval
-        @output.print "\u0CA0_\u0CA0"
+        @output.print "B"
       end
 
       def Add(r)
