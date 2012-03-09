@@ -26,6 +26,14 @@ module Sapphire
         @item.Evaluate
       end
 
+      def left=(val)
+        @item.left=val
+      end
+
+      def right=(val)
+        @item.right=val
+      end
+
       def left
         @item.left
       end

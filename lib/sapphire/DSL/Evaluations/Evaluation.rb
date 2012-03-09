@@ -2,8 +2,8 @@ module Sapphire
   module DSL
     class Evaluation
 
-      attr_reader :left
-      attr_reader :right
+      attr_accessor :left
+      attr_accessor :right
 
       def initialize(left, right)
         @left = left

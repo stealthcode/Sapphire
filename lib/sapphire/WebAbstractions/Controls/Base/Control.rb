@@ -82,6 +82,7 @@ module Sapphire
         timeout ||= 5
 
         begin
+          value = value.Text if value.is_a? Control
           evaluation = block.call(self, value)
           wait = Selenium::WebDriver::Wait.new(:timeout => timeout)
             result = wait.until {
@@ -98,6 +99,7 @@ module Sapphire
       end
 
       def GetValue(item, key)
+        return Parameter(key) if Parameters.instance.Contains(key)
 
         if item.is_a? Array
           item.each do |sub_item|
@@ -107,10 +109,17 @@ module Sapphire
         end
 
         if item.is_a? Hash
-          return item[key] if item.has_key? key
+          return Substitute(item[key]) if item.has_key? key
         end
 
         nil
+      end
+
+      def Substitute(item)
+        return Parameter(item) if Parameters.instance.Contains(item)
+        return $page.Get(item) if $page.Contains(item)
+
+        return item
       end
 
     end

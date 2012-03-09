@@ -9,15 +9,38 @@ class Hash < Object
   end
 
   def Examine(item, comparator, &block)
-    key = item.first.keys.first if item.first.is_a? Hash
-    key = item.first.first if item.first.is_a? Array
 
-    return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key
+    key = GetKey(item) do |item| item.keys.first end
 
-    field = $page.Get(key)
+    return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key and !Parameters.instance.Contains key
+
+    field = $page.Get(key) if $page.Contains key
+
+    if(field.nil?)
+      key1 = GetKey(item) do |item| item[item.keys.first] end
+      if $page.Contains key1
+        field = $page.Get(key1)
+        flip = true
+      end
+    end
+
     return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
+    evaluation = field.Evaluate(key, item, comparator, block)
 
-    return Fix(field.Evaluate(key, item, comparator, block), comparator)
+    if(flip)
+      left = evaluation.left
+      right = evaluation.right
+
+      evaluation.right = left
+      evaluation.left = right
+    end
+
+    return Fix(evaluation, comparator)
+  end
+
+  def GetKey(item, &block)
+    return block.call(item.first) if item.first.is_a? Hash
+    return item.first.first if item.first.is_a? Array
   end
 
   def Show(item, comparator)
