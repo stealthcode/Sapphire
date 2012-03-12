@@ -26,10 +26,31 @@ Scenario "Testing the Parameters Feature" do
       end
   #-------------------------------------------------------------------------------
     When "the user defines a parameter" do
-      Parameter :user_first_name => "John1"
+      Parameter :user_first_name => "John"
+    end
+      Then "the parameter should be able to be 'shown'" do
+        Should Show :user_first_name => "John"
+      end
+  #-------------------------------------------------------------------------------
+    When "the user defines a parameter" do
+      Parameter :user_first_name => "John"
     end
       Then "the parameter should be able to be used for comparisons as a left operand" do
-        Should Not Show :user_first_name => :first_name
+         Should Show :user_first_name => :first_name
+      end
+  #-------------------------------------------------------------------------------
+    When "the user defines a parameter" do
+      Parameter :user_first_name => "John1"
+    end
+      Then "the parameter should be not equal if the values are not equal" do
+         Should Not Show :user_first_name => :first_name
+      end
+  #-------------------------------------------------------------------------------
+    When "the user defines a parameter with the same name as a page variable" do
+      Parameter :first_name => "John1"
+    end
+      Then "the page variable should take precedence" do
+        Should Show :first_name => "John"
       end
   #-------------------------------------------------------------------------------
 

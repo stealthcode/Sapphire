@@ -14,7 +14,7 @@ TestPlan "Sapphire Regression" do
     Run :path => :specs_path + "/Controls/"
     Run :path => :specs_path + "/Verbs/"
     Run :path => :specs_path + "/Evaluators/"
-    Run :path => :specs_path + "/Language Features/"
+    Run :path => :specs_path + "/LanguageFeatures/"
 
     #todo - /Verbs/MouseOver
     #todo - /Verbs/Switch

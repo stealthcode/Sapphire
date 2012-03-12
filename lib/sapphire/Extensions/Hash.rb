@@ -10,6 +10,7 @@ class Hash < Object
 
   def Examine(item, comparator, &block)
 
+    flip = false
     key = GetKey(item) do |item| item.keys.first end
 
     return FieldNotDefinedEvaluation.new(key, $page) if !$page.Contains key and !Parameters.instance.Contains key
@@ -24,6 +25,8 @@ class Hash < Object
       end
     end
 
+    return Fix(Evaluation.new(Parameter(key), item.first[key]), comparator) if Parameters.instance.Contains(key) and field.nil?
+
     return FieldNotFoundEvaluation.new(key, $page, "selenium could not find the field") if field == nil
     evaluation = field.Evaluate(key, item, comparator, block)
 
@@ -34,6 +37,7 @@ class Hash < Object
       evaluation.right = left
       evaluation.left = right
     end
+
 
     return Fix(evaluation, comparator)
   end
