@@ -5,7 +5,6 @@ TestPlan "Sapphire Regression" do
   Virtually do
 
     Parameter :specs_path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
-    Parameter :matrix_plan => File.expand_path(File.dirname(__FILE__) + "/../TestPlans/", __FILE__)
 
     Run :file => :specs_path + "/BrowserSpecs.rb"
 
@@ -23,8 +22,8 @@ TestPlan "Sapphire Regression" do
     end
 
     Create Matrix :test_grid1 do
-      Using :user_first_name => "John",
-            :user_last_name => "Doe"
+      Using :user_first_name => "John22",
+            :user_last_name => "Doe22"
     end
 
     Using Matrix :test_grid do
