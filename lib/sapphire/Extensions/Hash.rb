@@ -92,4 +92,22 @@ class Hash < Object
     comparator = comparator.Create(evaluation)
     comparator
   end
+
+  def Using(items)
+    $matrices ||= {}
+
+    master_array = []
+    master_array = $matrices[$matrix_variable] if $matrices.has_key? $matrix_variable
+
+    array = []
+
+    items.keys.each do |key|
+      array << Proc.new { Parameter key => items[key] }
+    end
+
+    master_array << array
+
+    $matrices.merge! $matrix_variable => master_array
+  end
+
 end
