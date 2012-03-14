@@ -2,26 +2,23 @@ require File.expand_path('../../includes', File.dirname(__FILE__))
 
 TestPlan "Sapphire Regression" do
 
-  #Virtually do
+  Virtually do
 
     Parameter :specs_path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
 
-    #Run :file => :specs_path + "/BrowserSpecs.rb"
+    Run :file => :specs_path + "/BrowserSpecs.rb"
 
     Start FireFox With ""
     Navigate To BasicPage
 
-    #Run :path => :specs_path + "/Controls/"
-    #Run :path => :specs_path + "/Verbs/"
-    #Run :path => :specs_path + "/Evaluators/"
-    #Run :path => :specs_path + "/LanguageFeatures/"
+    Run :path => :specs_path + "/Controls/"
+    Run :path => :specs_path + "/Verbs/"
+    Run :path => :specs_path + "/Evaluators/"
+    Run :path => :specs_path + "/LanguageFeatures/"
 
     Create Matrix :test_grid do
       Using :user_first_name => "John",
             :user_last_name => "Doe"
-
-      Using :user_first_name => "John22",
-            :user_last_name => "Doe22"
     end
 
     Using Matrix :test_grid do
@@ -33,6 +30,6 @@ TestPlan "Sapphire Regression" do
 
     Exit Browser
 
-  #end
+  end
 
 end
