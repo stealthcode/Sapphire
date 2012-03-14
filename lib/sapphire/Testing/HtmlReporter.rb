@@ -1,6 +1,11 @@
+require 'pathname'
+require 'fileutils'
+
 module Sapphire
   module Testing
     class HtmlReporter < Reporter
+
+      attr_accessor :file
 
       def initialize()
         @failures = []
@@ -11,6 +16,7 @@ module Sapphire
         @broken_count = 0
         @test_count = 0
         @output = $stdout
+        @file = ""
       end
 
       def TestStarted(test)
@@ -49,6 +55,14 @@ module Sapphire
           end
         end
 
+        content = []
+        content << "<span>"
+
+        file_name = save_screenshot
+        content << link_for(file_name)
+
+        content << "</span>"
+        @output.puts content
         @output.puts "      </div>"
         @output.puts "    </dd>"
       end
@@ -306,6 +320,37 @@ a {
 }
 EOF
         end
+
+      def save_screenshot
+        if(!$driver)
+          return
+        end
+
+        begin
+          file_name = file_path("image.png")
+          $driver.Screenshot(file_name)
+        rescue => e
+          $stderr.puts "saving of screenshot failed."
+          $stderr.puts e.backtrace
+        end
+        file_name
+      end
+
+      def file_path(file_name)
+        extension = File.extname(file_name)
+        basename = File.basename(file_name, extension)
+        dir = File.dirname(@file)
+        file_path = File.join(dir, "", "#{basename}_#{Time.now.strftime("%H%M%S")}#{extension}")
+        file_path
+      end
+
+      def link_for(file_name)
+        return unless file_name && File.exists?(file_name)
+
+        path = Pathname.new(file_name)
+
+        "<a href='#{File.basename(path)}'>Screenshot</a>&nbsp;"
+      end
     end
   end
 end

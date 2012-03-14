@@ -5,11 +5,19 @@ require 'sapphire'
 include Sapphire::Sapphire
 
 $reporters = []
+$instances = []
 
 ARGV.each do |arg|
   if arg.start_with? "reporter="
     item = arg.split "reporter="
-    $reporters << Object.const_get(item.last).new()
+    $reporters << item.last
+
+    next
+  end
+
+  if arg.start_with? "file="
+    item = arg.split "file="
+    @file = item.last
     next
   end
 
@@ -18,28 +26,47 @@ ARGV.each do |arg|
   end
 
   require arg
+
   Runner.instance.last_scenario.file_name = arg if Runner.instance.last_scenario and Runner.instance.last_scenario.file_name == ""
 end
 
-if $reporters.empty?
-  $reporters << ConsoleReporter.new()
-end
-
 def Report(&block)
-  $reporters.each do |reporter|
+  $instances.each do |reporter|
     block.call reporter
   end
 end
 
-if Runner.instance.test_plans.count > 0
-  Runner.instance.last_test_plan.execute
-else
-  Report do |x| x.BeginTesting end
-
-  Runner.instance.scenarios.each do |scenario|
-    scenario.execute
+def Process()
+  $reporters.each do |r|
+    $instances << Object.const_get(r).new()
+    $instances.last.file = @file if $instances.last.is_a? HtmlReporter
   end
 
-  Report do |x| x.TestingComplete end
-  Report do |x| x.OutputResults end
+  if $instances.empty?
+    $instances << ConsoleReporter.new()
+  end
+
+  if Runner.instance.test_plans.count > 0
+    Runner.instance.last_test_plan.execute
+  else
+    Report do |x| x.BeginTesting end
+
+    Runner.instance.scenarios.each do |scenario|
+      scenario.execute
+    end
+
+    Report do |x| x.TestingComplete end
+    Report do |x| x.OutputResults end
+  end
 end
+
+if @file.nil?
+  Process()
+else
+  File.open(@file, 'w') do |f|
+    $stdout = f
+    Process()
+  end
+end
+
+

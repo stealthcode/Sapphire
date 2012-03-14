@@ -8,6 +8,10 @@ module Sapphire
         @rootUrl = url
       end
 
+      def Screenshot(file_name)
+        self.browser.save_screenshot(file_name)
+      end
+
       def Close
         self.browser.close
       end

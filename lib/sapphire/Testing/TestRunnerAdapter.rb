@@ -3,7 +3,7 @@ module Sapphire
     module TestRunnerAdapter
 
       def Report(&block)
-        $reporters.each do |reporter|
+        $instances.each do |reporter|
           block.call reporter
         end
       end
