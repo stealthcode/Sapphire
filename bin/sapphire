@@ -7,12 +7,11 @@ include Sapphire::Sapphire
 $reporters = []
 
 ARGV.each do |arg|
-
-  #if arg.start_with? "reporter="
-  #  item = arg.split "reporter="
-  #  $reporters << Object.const_get(item.last).new()
-  #  next
-  #end
+  if arg.start_with? "reporter="
+    item = arg.split "reporter="
+    $reporters << Object.const_get(item.last).new()
+    next
+  end
 
   if !arg.end_with? ".rb"
     next
