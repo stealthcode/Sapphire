@@ -17,6 +17,7 @@ require 'sapphire/Configuration'
 require 'sapphire/Data'
 require 'sapphire/Virtualization'
 require 'sapphire/TeamCity'
+require 'sapphire/Events'
 
 module Sapphire
   module Sapphire
@@ -26,7 +27,7 @@ module Sapphire
     include DSL::Configuration
     include DSL::Data
     include DSL::TestPlans
-    include DSL::Events
+    include Events
     include Configuration
     include DataAbstractions
     include JobAbstractions
