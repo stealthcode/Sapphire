@@ -23,9 +23,24 @@ module Sapphire
 
       end
 
+      def Indent(test)
+        indentation = ""
+
+        count = 0
+
+        count = 1 if test.item.is_a? When or (test.item.is_a? And and test.parent.item.is_a? When)
+        count = 2 if test.item.is_a? Then or (test.item.is_a? And and test.parent.item.is_a? Then)
+
+        count.times do
+          indentation << "<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>"
+        end
+
+        indentation
+      end
+
       def TestPassed(test)
         @passing_count = @passing_count + 1
-        @output.puts "    <dd class=\"spec passed\"><span class=\"passed_spec_name\">#{test.text}</span></dd>"
+        @output.puts "    <dd class=\"spec passed\"><span class=\"passed_spec_name\">#{Indent(test) + test.text}</span></dd>"
       end
 
       def TestFailed(test)
@@ -36,22 +51,22 @@ module Sapphire
         @output.puts "    <script type=\"text/javascript\">makeRed('example_group_#{@example_group_number}');</script>" unless @example_group_red
         @example_group_red = true
         @output.puts "    <dd class=\"spec #{failure_style}\">"
-        @output.puts "      <span class=\"failed_spec_name\">#{test.text}</span>"
+        @output.puts "      <span class=\"failed_spec_name\">#{Indent(test) + test.text}</span>"
         @output.puts "      <div class=\"failure\" id=\"failure_#{@test_count}\">"
 
         if test.messages.is_a? Array
           message_block = ""
           test.messages.each do |message|
-            message_block += message + "<br>"
+            message_block += Indent(test) + message + "<br>"
           end
           @output.puts "        <div class=\"message\"><pre>#{message_block}</pre></div>"
         else
-          @output.puts "        <div class=\"message\"><pre>#{test.messages}</pre></div>"
+          @output.puts "        <div class=\"message\"><pre>#{Indent(test) + test.messages}</pre></div>"
         end
 
         test.stack.each do |line|
           if (!line.include? "sapphire")
-            @output.puts "        <div class=\"backtrace\"><pre>#{line}</pre></div>"
+            @output.puts "        <div class=\"backtrace\"><pre>#{Indent(test) + line}</pre></div>"
           end
         end
 
@@ -59,7 +74,7 @@ module Sapphire
         content << "<span>"
 
         file_name = save_screenshot
-        content << link_for(file_name)
+        content << Indent(test) + link_for(file_name)
 
         content << "</span>"
         @output.puts content
@@ -70,13 +85,13 @@ module Sapphire
       def TestPending(test)
         @output.puts "    <script type=\"text/javascript\">makeYellow('rspec-header');</script>" unless @header_red
         @output.puts "    <script type=\"text/javascript\">makeYellow('example_group_#{@example_group_number}');</script>" unless @example_group_red
-        @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{test.text} (PENDING: ### Not Yet Implemented ###)</span></dd>"
+        @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{Indent(test) + test.text} (PENDING: ### Not Yet Implemented ###)</span></dd>"
       end
 
       def TestBroken(test)
         @output.puts "    <script type=\"text/javascript\">makeOrange('rspec-header');</script>" unless @header_red
         @output.puts "    <script type=\"text/javascript\">makeOrange('example_group_#{@example_group_number}');</script>" unless @example_group_red
-        @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{test.text} (BROKEN: ### Broken ###)</span></dd>"
+        @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{Indent(test) + test.text} (BROKEN: ### Broken ###)</span></dd>"
       end
 
       def TestingComplete
