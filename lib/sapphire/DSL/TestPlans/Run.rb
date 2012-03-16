@@ -10,14 +10,13 @@ module Sapphire
             @command = job.Path
           end
 
-          psFile = "C:\\runjob.ps1"
+
           psCommand = "& icm " + job.Server + " {" + @command + "}"
-          File.open(psFile, 'w') {|f| f.write(psCommand) }
+          psCommand = "powershell -inputformat none -command \"& {" + psCommand + "} \""
           puts ""
           puts ""
           puts "executing your job via powershell command: " + psCommand
-          system "powershell -inputformat none " + psFile
-          File.delete(psFile)
+          system psCommand
           puts ""
           puts ""
 
