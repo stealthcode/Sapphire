@@ -26,7 +26,6 @@ module Sapphire
     include DSL::Configuration
     include DSL::Data
     include DSL::TestPlans
-    include DSL::Events
     include Configuration
     include DataAbstractions
     include JobAbstractions
@@ -37,3 +36,5 @@ module Sapphire
     include UI
   end
 end
+
+$driver = Sapphire::WebAbstractions::MetaBrowser.new(nil)

@@ -8,38 +8,43 @@ module Sapphire
         @rootUrl = url
       end
 
+      def Browser()
+        raise "Browser is null. Did you forget to start the browser?" if self.browser.nil?
+        self.browser
+      end
+
       def Screenshot(file_name)
-        self.browser.save_screenshot(file_name)
+        self.Browser().save_screenshot(file_name)
       end
 
       def Close
-        self.browser.close
+        self.Browser().close
       end
 
       def Switch
-        self.browser.switch_to.window(self.browser.window_handles[0])
+        self.Browser().switch_to.window(self.Browser().window_handles[0])
       end
 
       def Type(keys)
-        self.browser.action.send_keys(keys).perform()
+        self.Browser().action.send_keys(keys).perform()
       end
 
       def AcceptAlert
-        alert = self.browser.switch_to.alert
+        alert = self.Browser().switch_to.alert
         alert.accept()
-        self.browser.switch_to.window(self.browser.window_handles[0])
+        self.Browser().switch_to.window(self.Browser().window_handles[0])
       end
 
       def SetAlert(text)
-        alert = self.browser.switch_to.alert
+        alert = self.Browser().switch_to.alert
         alert.send_keys(text)
         alert.accept()
-        self.browser.switch_to.window(self.browser.window_handles[0])
+        self.Browser().switch_to.window(self.Browser().window_handles[0])
       end
 
       def FindAlert()
         begin
-          return self.browser.switch_to.alert
+          return self.Browser().switch_to.alert
         rescue
           return nil
         end
@@ -51,17 +56,17 @@ module Sapphire
       end
 
       def ClosePopup
-        self.browser.switch_to.window(self.browser.window_handles.last)
-        self.browser.close
-        self.browser.switch_to.window(self.browser.window_handles[0])
+        self.Browser().switch_to.window(self.Browser().window_handles.last)
+        self.Browser().close
+        self.Browser().switch_to.window(self.Browser().window_handles[0])
       end
 
       def SwitchToPopup
-        self.browser.switch_to.window(self.browser.window_handles.last)
+        self.Browser().switch_to.window(self.Browser().window_handles.last)
       end
 
       def SwitchToIFrame(frame)
-        self.browser.switch_to.frame(frame)
+        self.Browser().switch_to.frame(frame)
       end
 
       def SetRootUrl(url)
@@ -80,13 +85,13 @@ module Sapphire
           $page = page
         end
 
-        self.browser.get $page.Url
+        self.Browser().get $page.Url
         $page.Init
       end
 
       def CurrentUrl
         wait = Selenium::WebDriver::Wait.new(:timeout => 20)
-        url = wait.until { x = self.browser.current_url
+        url = wait.until { x = self.Browser().current_url
             x unless x == nil
         }
 
@@ -94,7 +99,7 @@ module Sapphire
       end
 
       def Reload
-        self.browser.get self.CurrentUrl
+        self.Browser().get self.CurrentUrl
       end
 
       def GetValue(item, key)
@@ -231,15 +236,15 @@ module Sapphire
       end
 
       def FindElement(discriminator, selector)
-         self.browser.find_element discriminator, selector
+         self.Browser().find_element discriminator, selector
       end
 
       def FindElements(discriminator, selector)
-        self.browser.find_elements discriminator, selector
+        self.Browser().find_elements discriminator, selector
       end
 
       def ExecuteScript(script)
-        self.browser.execute_script(script)
+        self.Browser().execute_script(script)
       end
 
       def Create(type)

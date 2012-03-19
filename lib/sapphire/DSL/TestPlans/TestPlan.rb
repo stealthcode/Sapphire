@@ -48,7 +48,11 @@ module Sapphire
         def execute
           Report do |x| x.BeginTesting end
           $stdout.puts ""
-          @block.call
+          begin
+            @block.call
+          rescue => e
+            Report do |x| x.TestFailed TestPlanResult.new('fail', self, e.message, e.backtrace, 0) end
+          end
           Report do |x| x.TestingComplete end
           Report do |x| x.OutputResults end
         end

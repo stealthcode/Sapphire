@@ -53,10 +53,10 @@ module Sapphire
           end
           @output.puts ""
           result.stack.each do |line|
-            if (!line.include? "sapphire")
+            #if (!line.include? "sapphire")
               Indent(depth+1)
               @output.puts line
-            end
+            #end
           end
 
         end
@@ -108,6 +108,8 @@ module Sapphire
           @not_passing = @not_passing.merge!({ r.parent.parent => r.parent.parent })
         elsif !result_passes and (r.item.is_a? And and r.parent.item.is_a? Then)
           @not_passing = @not_passing.merge!({ r.parent.parent.parent => r.parent.parent.parent })
+        elsif r.item.is_a? TestPlan
+          @not_passing = @not_passing.merge!({ r => r })
         end
 
       end
@@ -150,6 +152,9 @@ module Sapphire
         elsif entry.item.is_a? When
           self.PrintItem entry.parent, 0
           self.Output entry, 1
+          self.InsertLineBreak
+        elsif entry.item.is_a? TestPlan
+          self.PrintItem entry, 0
           self.InsertLineBreak
         else
           self.PrintResult entry.parent

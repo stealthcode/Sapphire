@@ -3,8 +3,8 @@ module Sapphire
     class StartsWithComparison < Comparison
 
       def Compare(left, right)
-        return @comparator.Compare((left.start_with? right), true) if @comparator != nil
-        left.start_with? right
+        return @comparator.Compare((right.start_with? left), true) if @comparator != nil
+        right.start_with? left
       end
 
       def Text

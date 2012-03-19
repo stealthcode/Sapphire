@@ -13,9 +13,11 @@ module Sapphire
       def initialize()
         @browser = self.Create :chrome
         super @browser
-        $driver = self
+        $driver = MetaBrowser.new(self)
       end
     end
+
+
   end
 end
 
