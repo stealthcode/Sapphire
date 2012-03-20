@@ -6,15 +6,15 @@ TestPlan "Sapphire Regression" do
 
     Parameter :specs_path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
 
-    #Run :file => :specs_path + "/BrowserSpecs.rb"
+    Run :file => :specs_path + "/BrowserSpecs.rb"
 
     Start FireFox With ""
     Navigate To BasicPage
 
-    #Run :path => :specs_path + "/Controls/"
-    #Run :path => :specs_path + "/Verbs/"
-    #Run :path => :specs_path + "/Evaluators/"
-    #Run :path => :specs_path + "/LanguageFeatures/"
+    Run :path => :specs_path + "/Controls/"
+    Run :path => :specs_path + "/Verbs/"
+    Run :path => :specs_path + "/Evaluators/"
+    Run :path => :specs_path + "/LanguageFeatures/"
 
     Create Matrix :test_grid do
       Using :user_first_name => "John",

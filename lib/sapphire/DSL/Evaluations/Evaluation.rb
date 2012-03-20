@@ -32,10 +32,10 @@ module Sapphire
         if(!Compare(@left, @right))
           messages = []
 
-          messages << "expected" + @comparator.Text + ": (nil)" if @left == nil
-          messages << "expected" + @comparator.Text + ": " + @left.to_s if @left != nil
-          messages << "got: (nil)" if @right == nil
-          messages << "got: " + @right.to_s if @right != nil
+          messages << "expected" + @comparator.Text + ": (nil)" if @right == nil
+          messages << "expected" + @comparator.Text + ": " + @right.to_s if @right != nil
+          messages << "got: (nil)" if @left == nil
+          messages << "got: " + @left.to_s if @left != nil
 
           raise ExpectationException.new(messages)
         end

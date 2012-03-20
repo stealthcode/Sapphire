@@ -3,7 +3,7 @@ module Sapphire
     class Title < Control
 
       def Text
-        $driver.browser.title
+        $driver.Browser().title
       end
 
     end

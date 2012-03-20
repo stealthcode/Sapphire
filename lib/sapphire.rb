@@ -38,3 +38,5 @@ module Sapphire
     include UI
   end
 end
+
+$driver = Sapphire::WebAbstractions::MetaBrowser.new(nil)
