@@ -20,7 +20,7 @@ module Sapphire
       end
 
       def TestStarted(test)
-        @output.puts "    <dd class=\"spec passed\"><span class=\"passed_spec_name\">&nbsp;</span></dd>" if test.is_a? Given
+
       end
 
       def Indent(test)

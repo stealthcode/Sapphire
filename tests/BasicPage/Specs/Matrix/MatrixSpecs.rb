@@ -1,6 +1,6 @@
 require File.expand_path('../../../includes', File.dirname(__FILE__))
 
-Scenario "Testing the Matrix Feature" do
+Scenario "Testing the Matrix Feature: " + :description do
 
   Given "A user is on the page" do
     Reload BasicPage
