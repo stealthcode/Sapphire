@@ -136,12 +136,12 @@ module Sapphire
         begin
           item = wait.until {
             x = self.CurrentUrl.upcase.start_with?($page.Url.upcase)
-            y = StartsWithComparison.new(Evaluation.new($page.Url.upcase, self.CurrentUrl.upcase))
+            y = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, $page.Url.upcase))
             if(comparator.Compare(x == false, true))
               $page.AlternateUrls.each do |url|
                 if(comparator.Compare(x == false, true))
                   x = self.CurrentUrl.upcase.start_with?(url.upcase)
-                  y = StartsWithComparison.new(Evaluation.new(url.upcase, self.CurrentUrl.upcase))
+                  y = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
                 end
               end
             end
@@ -164,11 +164,11 @@ module Sapphire
 
       def ShouldTransitionTo(url, comparator)
         if(url.instance_of?(String))
-          temp = StartsWithComparison.new(Evaluation.new(url.upcase, self.CurrentUrl.upcase))
+          temp = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, url.upcase))
           @rootUrl = url
         else
           x = url.new().Url
-          temp = StartsWithComparison.new(Evaluation.new(x.upcase, self.CurrentUrl.upcase))
+          temp = StartsWithComparison.new(Evaluation.new(self.CurrentUrl.upcase, x.upcase))
           @rootUrl = x
         end
 
