@@ -7,20 +7,16 @@ include Sapphire::Sapphire
 $reporters = []
 $instances = []
 
+
+if ENV["reporter"]  
+  $reporters << ENV["reporter"]
+end
+
+if ENV["file"]
+  @file = ENV["file"]
+end
+
 ARGV.each do |arg|
-  if arg.start_with? "reporter="
-    item = arg.split "reporter="
-    $reporters << item.last
-
-    next
-  end
-
-  if arg.start_with? "file="
-    item = arg.split "file="
-    @file = item.last
-    next
-  end
-
   if !arg.end_with? ".rb"
     next
   end
