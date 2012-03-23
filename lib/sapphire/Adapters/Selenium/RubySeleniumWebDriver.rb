@@ -205,7 +205,9 @@ module Sapphire
         masterWait = Selenium::WebDriver::Wait.new(:timeout => 5)
 
         element = masterWait.until {
-          return FindItem(array, comparator)
+          x = FindItem(array, comparator)
+          return x if x != nil
+          return x if comparator.Compare(x != nil, true) if comparator != nil
         }
 
         return element if element != nil
