@@ -14,7 +14,7 @@ module Sapphire
       end
 
       def Browser
-        case($config["Browser"])
+        case(ENV["browser"] || $config["Browser"])
           when "Firefox" then FireFoxBrowser.new
           when "Chrome" then ChromeBrowser.new
           when "IE" then InternetExplorerBrowser.new
@@ -22,7 +22,7 @@ module Sapphire
       end
 
       def ConfiguredBrowser
-        $config["Browser"]
+        ENV["browser"] || $config["Browser"]
       end
 
     end

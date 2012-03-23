@@ -6,15 +6,15 @@ module Sapphire
       end
 
       def Find(comparator = nil)
-        $driver.FindItem(@hash, comparator)
+        $driver.FindItemWithWait(@hash, comparator)
       end
 
       def FindAll
         $driver.FindAllItems(@hash)
       end
 
-      def FindWithoutWait
-        $driver.FindElement @hash[0].keys.first, @hash[0].fetch(@hash[0].keys.first)
+      def FindWithoutWait(comparator = nil)
+        $driver.FindItemWithoutWait(@hash, comparator)
       end
 
       def Text
@@ -49,8 +49,9 @@ module Sapphire
         sleep(1)
       end
 
-      def Visible
-        control = self.Find
+      def Visible(shouldWait = true)
+        control = self.Find if shouldWait
+        control = self.FindWithoutWait if !shouldWait
         Evaluation.new(control.displayed?, true)
       end
 

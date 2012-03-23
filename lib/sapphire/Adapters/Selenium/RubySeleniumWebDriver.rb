@@ -176,34 +176,54 @@ module Sapphire
       end
 
       def FindItem(array, comparator = nil)
+
+        x = nil
+        array.each do |item|
+
+          if item.is_a? Hash
+              begin
+                x = self.FindElement item.keys.first, item.fetch(item.keys.first)
+              rescue
+                #do nothing, let it keep looping
+              end
+          end
+
+          x = self.FindElement item[0], item[1] if item.is_a? Array
+
+          return x if x != nil
+          return x if comparator.Compare(x != nil, true) if comparator != nil
+
+        end if array.is_a? Array
+
+        x = self.FindElement array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
+        return x if x != nil
+        return x if comparator.Compare(x != nil, true) if comparator != nil
+
+      end
+
+      def FindItemWithWait(array, comparator=nil)
         masterWait = Selenium::WebDriver::Wait.new(:timeout => 5)
 
         element = masterWait.until {
-          x = nil
-          array.each do |item|
-
-            if item.is_a? Hash
-                begin
-                  x = self.FindElement item.keys.first, item.fetch(item.keys.first)
-                rescue
-                  #do nothing, let it keep looping
-                end
-            end
-
-            x = self.FindElement item[0], item[1] if item.is_a? Array
-
-            return x if x != nil
-            return x if comparator.Compare(x != nil, true) if comparator != nil
-
-          end if array.is_a? Array
-
-          x = self.FindElement array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
+          x = FindItem(array, comparator)
           return x if x != nil
           return x if comparator.Compare(x != nil, true) if comparator != nil
         }
+
         return element if element != nil
         return element if comparator.Compare(element != nil, true) if comparator != nil
         raise "Could not find control for array: " + array.to_s
+
+      end
+
+      def FindItemWithoutWait(array, comparator=nil)
+
+        element = FindItem(array, comparator)
+
+        return element if element != nil
+        return element if comparator.Compare(element != nil, true) if comparator != nil
+        raise "Could not find control for array: " + array.to_s
+
       end
 
       def FindAllItems(array)
@@ -238,6 +258,7 @@ module Sapphire
       def FindElement(discriminator, selector)
          self.Browser().find_element discriminator, selector
       end
+
 
       def FindElements(discriminator, selector)
         self.Browser().find_elements discriminator, selector

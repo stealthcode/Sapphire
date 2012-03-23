@@ -7,27 +7,22 @@ include Sapphire::Sapphire
 $reporters = []
 $instances = []
 
+
+if ENV["reporter"]  
+  $reporters << ENV["reporter"]
+end
+
+if ENV["file"]
+  @file = ENV["file"]
+end
+
 ARGV.each do |arg|
-  if arg.start_with? "reporter="
-    item = arg.split "reporter="
-    $reporters << item.last
-
-    next
-  end
-
-  if arg.start_with? "file="
-    item = arg.split "file="
-    @file = item.last
-    next
-  end
-
   if !arg.end_with? ".rb"
     next
   end
 
   require arg
 
-  Runner.instance.last_scenario.file_name = arg if Runner.instance.last_scenario and Runner.instance.last_scenario.file_name == ""
 end
 
 def Report(&block)
@@ -47,8 +42,16 @@ def Process()
   end
 
   if Runner.instance.test_plans.count > 0
-    Runner.instance.last_test_plan.execute
+    Report do |x| x.BeginTesting end
+
+    Runner.instance.test_plans.each do |t|
+      t.execute
+    end
+
+    Report do |x| x.TestingComplete end
+    Report do |x| x.OutputResults end
   else
+
     Report do |x| x.BeginTesting end
 
     Runner.instance.scenarios.each do |scenario|

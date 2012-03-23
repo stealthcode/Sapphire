@@ -20,7 +20,7 @@ module Sapphire
       end
 
       def TestStarted(test)
-
+        @test_count = @test_count + 1
       end
 
       def Indent(test)
@@ -45,6 +45,7 @@ module Sapphire
 
       def TestFailed(test)
 
+        @failing_count = @failing_count + 1
         failure_style = 'failed'
         @output.puts "    <script type=\"text/javascript\">makeRed('rspec-header');</script>" unless @header_red
         @header_red = true
@@ -65,7 +66,7 @@ module Sapphire
         end
 
         test.stack.each do |line|
-          if (!line.include? "sapphire")
+          if (!line.include? "sapphire" and ! line.include? "-e:1:in")
             @output.puts "        <div class=\"backtrace\"><pre>#{Indent(test) + line}</pre></div>"
           end
         end
@@ -83,21 +84,23 @@ module Sapphire
       end
 
       def TestPending(test)
+        @pending_count = @pending_count + 1
         @output.puts "    <script type=\"text/javascript\">makeYellow('rspec-header');</script>" unless @header_red
         @output.puts "    <script type=\"text/javascript\">makeYellow('example_group_#{@example_group_number}');</script>" unless @example_group_red
         @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{Indent(test) + test.text} (PENDING: ### Not Yet Implemented ###)</span></dd>"
       end
 
       def TestBroken(test)
+        @broken_count = @broken_count + 1
         @output.puts "    <script type=\"text/javascript\">makeOrange('rspec-header');</script>" unless @header_red
         @output.puts "    <script type=\"text/javascript\">makeOrange('example_group_#{@example_group_number}');</script>" unless @example_group_red
-        @output.puts "    <dd class=\"spec not_implemented\"><span class=\"not_implemented_spec_name\">#{Indent(test) + test.text} (BROKEN: ### Broken ###)</span></dd>"
+        @output.puts "    <dd class=\"spec broken\"><span class=\"broken_spec_name\">#{Indent(test) + test.text} (BROKEN: ### Broken ###)</span></dd>"
       end
 
       def TestingComplete
         @end = Time.now
 
-        totals = "#{@test_count} example#{'s' unless @test_count == 1}, #{@failure_count} failure#{'s' unless @failure_count == 1}"
+        totals = "#{@test_count} example#{'s' unless @test_count == 1}, #{@failing_count} failure#{'s' unless @failing_count == 1}"
         totals << ", #{@pending_count} pending" if @pending_count > 0
         totals << ", #{@broken_count} broken" if @broken_count > 0
 
@@ -124,7 +127,7 @@ module Sapphire
         end
         @output.puts "<div class=\"example_group\">"
         @output.puts "  <dl>"
-        @output.puts "  <dt id=\"example_group_#{@example_group_number}\">#{scenario.text}</dt>"
+        @output.puts "  <dt id=\"example_group_#{@example_group_number}\">#{scenario.text} - #{scenario.file_name}</dt>"
       end
 
       def OutputResults()
@@ -174,7 +177,14 @@ EOF
 
 <div id="rspec-header">
   <div id="label">
-    <h1>RSpec Code Examples</h1>
+    <h1>Sapphire Test Results</h1>
+  </div>
+
+  <div id="display-filters">
+    <input id="passed_checkbox" name="passed_checkbox" type="checkbox" checked="" onchange="apply_filters()" value="1"> <label for="passed_checkbox">Passed</label>
+    <input id="failed_checkbox" name="failed_checkbox" type="checkbox" checked="" onchange="apply_filters()" value="2"> <label for="failed_checkbox">Failed</label>
+    <input id="pending_checkbox" name="pending_checkbox" type="checkbox" checked="" onchange="apply_filters()" value="3"> <label for="pending_checkbox">Pending</label>
+    <input id="broken_checkbox" name="broken_checkbox" type="checkbox" checked="" onchange="apply_filters()" value="4"> <label for="broken_checkbox">Broken</label>
   </div>
 
   <div id="summary">
@@ -189,12 +199,25 @@ EOF
 
         def global_scripts
           <<-EOF
+function addClass(element_id, classname) {
+  document.getElementById(element_id).className += (" " + classname);
+}
+
+function removeClass(element_id, classname) {
+  var elem = document.getElementById(element_id);
+  var classlist = elem.className.replace(classname,'');
+  elem.className = classlist;
+}
+
 function moveProgressBar(percentDone) {
   document.getElementById("rspec-header").style.width = percentDone +"%";
 }
+
 function makeRed(element_id) {
-  document.getElementById(element_id).style.background = '#C40D0D';
-  document.getElementById(element_id).style.color = '#FFFFFF';
+  removeClass(element_id, 'passed');
+  removeClass(element_id, 'not_implemented');
+  removeClass(element_id, 'broken');
+  addClass(element_id,'failed');
 }
 
 function makeYellow(element_id) {
@@ -207,6 +230,62 @@ function makeYellow(element_id) {
   {
     document.getElementById(element_id).style.background = '#FAF834';
     document.getElementById(element_id).style.color = '#000000';
+  }
+}
+
+function makeOrange(element_id) {
+  if (element_id == "rspec-header" && document.getElementById(element_id).style.background != '#C40D0D')
+  {
+    document.getElementById(element_id).style.background = '#FF8000';
+    document.getElementById(element_id).style.color = '#000000';
+  }
+  else
+  {
+    document.getElementById(element_id).style.background = '#FF8000';
+    document.getElementById(element_id).style.color = '#000000';
+  }
+}
+
+function apply_filters() {
+  var passed_filter = document.getElementById('passed_checkbox').checked;
+  var failed_filter = document.getElementById('failed_checkbox').checked;
+  var pending_filter = document.getElementById('pending_checkbox').checked;
+  var broken_filter = document.getElementById('broken_checkbox').checked;
+
+  assign_display_style("spec passed", passed_filter);
+  assign_display_style("spec failed", failed_filter);
+  assign_display_style("spec not_implemented", pending_filter);
+  assign_display_style("spec broken", broken_filter);
+
+}
+
+function get_display_style(display_flag) {
+  var style_mode = 'none';
+  if (display_flag == true) {
+    style_mode = 'block';
+  }
+  return style_mode;
+}
+
+function assign_display_style(classname, display_flag) {
+  var style_mode = get_display_style(display_flag);
+  var elems = document.getElementsByClassName(classname)
+  for (var i=0; i<elems.length;i++) {
+    elems[i].style.display = style_mode;
+  }
+}
+
+function assign_display_style_for_group(classname, display_flag, subgroup_flag) {
+  var display_style_mode = get_display_style(display_flag);
+  var subgroup_style_mode = get_display_style(subgroup_flag);
+  var elems = document.getElementsByClassName(classname)
+  for (var i=0; i<elems.length;i++) {
+    var style_mode = display_style_mode;
+    if ((display_flag != subgroup_flag) && (elems[i].getElementsByTagName('dt')[0].innerHTML.indexOf(", ") != -1)) {
+      elems[i].style.display = subgroup_style_mode;
+    } else {
+      elems[i].style.display = display_style_mode;
+    }
   }
 }
 EOF
@@ -283,6 +362,12 @@ dd.spec.not_implemented {
   background: #FCFB98; color: #131313;
 }
 
+dd.spec.broken {
+  border-left: 5px solid #FF8000;
+  border-bottom: 1px solid #FF8000;
+  background: #FCFB98; color: #131313;
+}
+
 dd.spec.pending_fixed {
   border-left: 5px solid #0000C2;
   border-bottom: 1px solid #0000C2;
@@ -305,6 +390,12 @@ a {
   color: white;
   background-color: black;
   padding: 0.1em 0 0.2em 0;
+}
+
+#display-filters {
+  float:left;
+  padding: 28px 0 0 40%;
+  font-family: "Lucida Grande", Helvetica, sans-serif;
 }
 
 .ruby .keyword { color: #FF6600; }
