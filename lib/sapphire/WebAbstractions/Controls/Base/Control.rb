@@ -13,8 +13,8 @@ module Sapphire
         $driver.FindAllItems(@hash)
       end
 
-      def FindWithoutWait
-        $driver.FindElement @hash[0].keys.first, @hash[0].fetch(@hash[0].keys.first)
+      def FindWithoutWait(comparator = nil)
+        $driver.FindItem @hash, comparator)
       end
 
       def Text
