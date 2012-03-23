@@ -23,7 +23,6 @@ ARGV.each do |arg|
 
   require arg
 
-  Runner.instance.last_scenario.file_name = arg if Runner.instance.last_scenario and Runner.instance.last_scenario.file_name == ""
 end
 
 def Report(&block)
@@ -43,8 +42,16 @@ def Process()
   end
 
   if Runner.instance.test_plans.count > 0
-    Runner.instance.last_test_plan.execute
+    Report do |x| x.BeginTesting end
+
+    Runner.instance.test_plans.each do |t|
+      t.execute
+    end
+
+    Report do |x| x.TestingComplete end
+    Report do |x| x.OutputResults end
   else
+
     Report do |x| x.BeginTesting end
 
     Runner.instance.scenarios.each do |scenario|
