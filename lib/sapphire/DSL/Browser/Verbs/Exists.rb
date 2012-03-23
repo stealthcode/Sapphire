@@ -4,7 +4,7 @@ module Sapphire
       def Exists(symbol)
         if($page.Contains symbol)
           begin
-            return $page.Get(symbol.Visible(false))
+            return $page.Get(symbol.Visible(true))
           rescue
             return false
           end
