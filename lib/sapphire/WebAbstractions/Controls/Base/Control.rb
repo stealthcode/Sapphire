@@ -14,7 +14,7 @@ module Sapphire
       end
 
       def FindWithoutWait(comparator = nil)
-        $driver.FindItem @hash, comparator)
+        $driver.FindItem (@hash, comparator)
       end
 
       def Text
