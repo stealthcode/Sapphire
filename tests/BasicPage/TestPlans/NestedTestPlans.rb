@@ -1,14 +1,23 @@
 require File.expand_path('../../includes', File.dirname(__FILE__))
 
-TestPlan "Sapphire Regression" do
+require 'rubygems'
+require 'sapphire'
+include Sapphire::Sapphire
 
-  Virtually do
-
-    Parameter :test_plans_path => File.expand_path(File.dirname(__FILE__), __FILE__)
-
-    Run :file => :test_plans_path + "/Regression.rb"
-    Run :file => :test_plans_path + "/Regression.rb"
-
+def Report(&block)
+  $instances.each do |reporter|
+    block.call reporter
   end
-
 end
+
+if $instances.empty?
+  $instances << ConsoleReporter.new()
+end
+
+Report do |x| x.BeginTesting end
+
+load File.expand_path(File.dirname(__FILE__)) + "/Regression.rb"
+load File.expand_path(File.dirname(__FILE__)) + "/Regression.rb"
+
+Report do |x| x.TestingComplete end
+Report do |x| x.OutputResults end
