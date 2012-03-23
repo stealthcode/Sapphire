@@ -66,7 +66,7 @@ module Sapphire
         end
 
         test.stack.each do |line|
-          if (!line.include? "sapphire")
+          if (!line.include? "sapphire" and ! line.include? "-e:1:in")
             @output.puts "        <div class=\"backtrace\"><pre>#{Indent(test) + line}</pre></div>"
           end
         end
@@ -127,7 +127,7 @@ module Sapphire
         end
         @output.puts "<div class=\"example_group\">"
         @output.puts "  <dl>"
-        @output.puts "  <dt id=\"example_group_#{@example_group_number}\">#{scenario.text}</dt>"
+        @output.puts "  <dt id=\"example_group_#{@example_group_number}\">#{scenario.text} - #{scenario.file_name}</dt>"
       end
 
       def OutputResults()
