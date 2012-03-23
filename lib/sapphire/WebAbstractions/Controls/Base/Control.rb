@@ -49,8 +49,9 @@ module Sapphire
         sleep(1)
       end
 
-      def Visible
-        control = self.Find
+      def Visible(shouldWait)
+        control = self.Find if shouldWait
+        control = self.FindWithoutWait if !shouldWait
         Evaluation.new(control.displayed?, true)
       end
 
