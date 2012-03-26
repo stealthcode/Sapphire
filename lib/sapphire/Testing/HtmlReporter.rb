@@ -15,7 +15,8 @@ module Sapphire
         @pending_count = 0
         @broken_count = 0
         @test_count = 0
-        @output = $stdout
+        $output ||= $stdout
+        @output = $output
         @file = ""
       end
 

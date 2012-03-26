@@ -4,6 +4,7 @@ require 'rubygems'
 require 'sapphire'
 include Sapphire::Sapphire
 
+$console = $stdout
 $reporters = []
 $instances = []
 
@@ -37,9 +38,7 @@ def Process()
     $instances.last.file = @file if $instances.last.is_a? HtmlReporter
   end
 
-  if $instances.empty?
-    $instances << ConsoleReporter.new()
-  end
+  $instances << ConsoleReporter.new()
 
   if Runner.instance.test_plans.count > 0
     Report do |x| x.BeginTesting end
@@ -67,7 +66,7 @@ if @file.nil?
   Process()
 else
   File.open(@file, 'w') do |f|
-    $stdout = f
+    $output = f
     Process()
   end
 end

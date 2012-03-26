@@ -9,7 +9,8 @@ module Sapphire
         @pending_count = 0
         @broken_count = 0
         @test_count = 0
-        @output = $stdout
+        $console ||= $stdout
+        @output = $console
       end
 
       def ScenarioStart(scenario)
