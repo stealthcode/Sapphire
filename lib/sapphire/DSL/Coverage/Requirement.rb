@@ -1,8 +1,8 @@
 module Sapphire
-  module Testing
+  module DSL
     module Coverage
-      def Requirement(hash, &block)
-        $features.last.AddRequirement(Requirement.new(hash))
+      def Requirement(token, hash, &block)
+        $features.last.AddRequirement(Requirement.new(token, hash))
         block.call
       end
 
@@ -12,8 +12,8 @@ module Sapphire
         attr_reader :priority
         attr_reader :behaviors
 
-        def initialize(hash)
-          @token = hash.keys.first
+        def initialize(token, hash)
+          @token = token
           @priority = hash[hash.keys.first]
           @behaviors = []
         end

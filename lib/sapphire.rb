@@ -26,12 +26,12 @@ module Sapphire
     include DSL::Configuration
     include DSL::Data
     include DSL::TestPlans
+    include DSL::Coverage
     include Configuration
     include DataAbstractions
     include JobAbstractions
     include WebAbstractions
     include Testing
-    include Testing::Coverage
     include Testing::TeamCity
     include UI
   end

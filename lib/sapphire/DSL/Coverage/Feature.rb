@@ -1,5 +1,5 @@
 module Sapphire
-  module Testing
+  module DSL
     module Coverage
       def Feature(token, &block)
         $features ||= []
@@ -23,6 +23,10 @@ module Sapphire
 
         def AddBehavior(behavior)
           @requirements.last().AddBehavior behavior
+        end
+
+        def Describe(text)
+
         end
 
       end

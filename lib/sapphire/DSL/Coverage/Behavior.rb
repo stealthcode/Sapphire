@@ -1,5 +1,5 @@
 module Sapphire
-  module Testing
+  module DSL
     module Coverage
       def Behavior(token, hash)
         $features.last().AddBehavior(Behavior.new(token, hash))
