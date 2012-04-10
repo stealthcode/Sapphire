@@ -40,9 +40,10 @@ def Process()
   $reporters.each do |r|
     $instances << Object.const_get(r).new()
     $instances.last.file = @file if $instances.last.is_a? HtmlReporter
+    ignore_console = true if $instances.last.is_a? TeamCityReporter
   end
 
-  $instances << ConsoleReporter.new()
+  $instances << ConsoleReporter.new() if !ignore_console
 
   if Runner.instance.test_plans.count > 0
     Report do |x| x.BeginTesting end
