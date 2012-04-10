@@ -27,7 +27,7 @@ zip do |zip|
   puts "CREATING ZIP"
   FileUtils.rm_rf(BUILDS_DIR, :verbose => true) if File.directory?(BUILDS_DIR)
   Dir.mkdir BUILDS_DIR if !File.directory?(BUILDS_DIR)
-  file = "sapphire_report.zip"
+  file = "sapphirereport.zip"
   File.delete(file) if File.exists?(file)
 
   zip.output_path = BUILDS_DIR

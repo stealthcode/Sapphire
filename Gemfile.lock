@@ -10,8 +10,6 @@ GEM
   remote: http://rubygems.org/
   specs:
     Platform (0.4.0)
-    albacore (0.2.7)
-      rubyzip (~> 0.9)
     childprocess (0.2.8)
       ffi (~> 1.0.6)
     colorize (0.5.8)
