@@ -3,8 +3,6 @@ require 'rubygems'
 require 'fileutils'
 require 'rspec/core/rake_task'
 
-require File.expand_path('../ReportFormatter', __FILE__)
-
 ABSOLUTE_PATH = File.expand_path(File.dirname(__FILE__))
 ZIP_FILE_PREFIX = "Sapphire"
 RELEASE_BUILD_NUMBER = ENV["BUILD_NUMBER"] || "1.0.0.0"
