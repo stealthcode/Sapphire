@@ -2,7 +2,7 @@ require File.expand_path('../../../includes', File.dirname(__FILE__))
 
 Scenario "Testing the Button control" do
 
-  Covers :feature => :clicking_buttons
+  Covers :requirement => :clicking_buttons
 
   Given "A user is on the page" do
     Reload BasicPage

@@ -10,7 +10,11 @@ $instances = []
 
 
 if ENV["reporter"]  
-  $reporters << ENV["reporter"]
+  reporters =  ENV["reporter"].split(',')
+
+  reporters.each do |r|
+    $reporters << r
+  end
 end
 
 if ENV["file"]
@@ -72,6 +76,4 @@ else
     Process()
   end
 end
-
-CoverageReporter.new().OutputResults
 

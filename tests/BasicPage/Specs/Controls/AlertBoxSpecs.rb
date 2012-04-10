@@ -2,7 +2,7 @@ require File.expand_path('../../../includes', File.dirname(__FILE__))
 
 Scenario "Testing the AlertBox control" do
 
-  Covers :feature => :showing_alert_box
+  Covers :requirement => :showing_alert_box
 
   Given "A user is on the page" do
     Reload BasicPage
