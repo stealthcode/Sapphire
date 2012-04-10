@@ -37,6 +37,7 @@ def Report(&block)
 end
 
 def Process()
+  ignore_console = false
   $reporters.each do |r|
     $instances << Object.const_get(r).new()
     $instances.last.file = @file if $instances.last.is_a? HtmlReporter
