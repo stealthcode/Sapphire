@@ -1,8 +1,11 @@
-require 'rake'
 require 'rubygems'
+require 'bundler'
+require 'rake'
 require 'albacore'
 require 'fileutils'
-require 'rspec/core/rake_task'
+
+Bundler::GemHelper.install_tasks
+
 
 ABSOLUTE_PATH = File.expand_path(File.dirname(__FILE__))
 ZIP_FILE_PREFIX = "Sapphire"
