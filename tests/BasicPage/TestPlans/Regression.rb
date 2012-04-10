@@ -21,9 +21,6 @@ Virtually do
       Using :description => "Test 1",
             :user_first_name => "John",
             :user_last_name => "Doe"
-      Using :description => "Test 2",
-            :user_first_name => "John222",
-            :user_last_name => "Doe"
     end
 
     Using Matrix :test_grid do
