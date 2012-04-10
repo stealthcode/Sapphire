@@ -1,5 +1,6 @@
 require 'rake'
 require 'rubygems'
+require 'albacore'
 require 'fileutils'
 require 'rspec/core/rake_task'
 
