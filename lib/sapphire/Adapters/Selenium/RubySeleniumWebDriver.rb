@@ -90,7 +90,7 @@ module Sapphire
       end
 
       def CurrentUrl
-        wait = Selenium::WebDriver::Wait.new(:timeout => 20)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 60)
         url = wait.until { x = self.Browser().current_url
             x unless x == nil
         }
@@ -128,7 +128,7 @@ module Sapphire
         $page ||= page
 
         timeout = GetValue(page, :wait)
-        timeout ||= 20
+        timeout ||= 60
 
         $page.Init
 
@@ -202,7 +202,7 @@ module Sapphire
       end
 
       def FindItemWithWait(array, comparator=nil)
-        masterWait = Selenium::WebDriver::Wait.new(:timeout => 5)
+        masterWait = Selenium::WebDriver::Wait.new(:timeout => 20)
 
         element = masterWait.until {
           x = FindItem(array, comparator)
@@ -227,7 +227,7 @@ module Sapphire
       end
 
       def FindAllItems(array)
-        masterWait = Selenium::WebDriver::Wait.new(:timeout => 5)
+        masterWait = Selenium::WebDriver::Wait.new(:timeout => 20)
 
         element = masterWait.until {
           x = nil
