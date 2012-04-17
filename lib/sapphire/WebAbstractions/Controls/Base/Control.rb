@@ -80,7 +80,7 @@ module Sapphire
 
         value = GetValue(arg, key)
         timeout = GetValue(arg, :wait)
-        timeout ||= 5
+        timeout ||= 20
 
         begin
           value = value.Text if value.is_a? Control

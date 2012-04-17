@@ -21,6 +21,12 @@ Scenario "Testing the Show keyword" do
       And "the first name should not be Jane" do
         Should Not Show :first_name => "Jane"
       end
+      And "the credit score should be 600" do
+        Should Not Show :credit_score => "600"
+      end
+      And "the credit score should not be 601" do
+        Should Not Show :credit_score => "601"
+      end
       And "the page should not be the incorrect page" do
         Should Not Show IncorrectPage
       end

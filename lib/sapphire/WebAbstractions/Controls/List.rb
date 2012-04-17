@@ -55,7 +55,7 @@ module Sapphire
       end
 
       def Click
-        wait = Selenium::WebDriver::Wait.new(:timeout => 3)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         begin
           clicked = wait.until { items = self.FindAll
             if items.empty? == false

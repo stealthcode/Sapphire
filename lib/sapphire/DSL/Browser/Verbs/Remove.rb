@@ -3,7 +3,7 @@ module Sapphire
     module Browser
       def Remove(item)
         ExecuteHashAgainstControl(item) do |control, arg|
-            wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+            wait = Selenium::WebDriver::Wait.new(:timeout => 20)
             begin
               evaluation = wait.until { x = control
                 val = x.Text
