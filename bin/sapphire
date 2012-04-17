@@ -4,12 +4,17 @@ require 'rubygems'
 require 'sapphire'
 include Sapphire::Sapphire
 
+$console = $stdout
 $reporters = []
 $instances = []
 
 
 if ENV["reporter"]  
-  $reporters << ENV["reporter"]
+  reporters =  ENV["reporter"].split(',')
+
+  reporters.each do |r|
+    $reporters << r
+  end
 end
 
 if ENV["file"]
@@ -23,7 +28,6 @@ ARGV.each do |arg|
 
   require arg
 
-  Runner.instance.last_scenario.file_name = arg if Runner.instance.last_scenario and Runner.instance.last_scenario.file_name == ""
 end
 
 def Report(&block)
@@ -33,18 +37,26 @@ def Report(&block)
 end
 
 def Process()
+  ignore_console = false
   $reporters.each do |r|
     $instances << Object.const_get(r).new()
     $instances.last.file = @file if $instances.last.is_a? HtmlReporter
+    ignore_console = true if $instances.last.is_a? TeamCityReporter
   end
 
-  if $instances.empty?
-    $instances << ConsoleReporter.new()
-  end
+  $instances << ConsoleReporter.new() if !ignore_console
 
   if Runner.instance.test_plans.count > 0
-    Runner.instance.last_test_plan.execute
+    Report do |x| x.BeginTesting end
+
+    Runner.instance.test_plans.each do |t|
+      t.execute
+    end
+
+    Report do |x| x.TestingComplete end
+    Report do |x| x.OutputResults end
   else
+
     Report do |x| x.BeginTesting end
 
     Runner.instance.scenarios.each do |scenario|
@@ -53,16 +65,17 @@ def Process()
 
     Report do |x| x.TestingComplete end
     Report do |x| x.OutputResults end
+
   end
 end
+
 
 if @file.nil?
   Process()
 else
   File.open(@file, 'w') do |f|
-    $stdout = f
+    $output = f
     Process()
   end
 end
-
 

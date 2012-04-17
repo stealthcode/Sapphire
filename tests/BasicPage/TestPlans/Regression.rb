@@ -1,8 +1,10 @@
 require File.expand_path('../../includes', File.dirname(__FILE__))
 
-TestPlan "Sapphire Regression" do
+Virtually do
 
-  Virtually do
+  TestPlan "Sapphire Regression" do
+
+    Covers :feature => :BasicPage
 
     Parameter :specs_path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
 
@@ -18,9 +20,6 @@ TestPlan "Sapphire Regression" do
     Create Matrix :test_grid do
       Using :description => "Test 1",
             :user_first_name => "John",
-            :user_last_name => "Doe"
-      Using :description => "Test 2",
-            :user_first_name => "John222",
             :user_last_name => "Doe"
     end
 

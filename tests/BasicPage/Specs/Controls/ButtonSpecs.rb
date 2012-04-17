@@ -2,6 +2,8 @@ require File.expand_path('../../../includes', File.dirname(__FILE__))
 
 Scenario "Testing the Button control" do
 
+  Covers :requirement => :clicking_buttons
+
   Given "A user is on the page" do
     Reload BasicPage
   end
@@ -20,6 +22,8 @@ Scenario "Testing the Button control" do
       Click :click_me!
     end
       Then "the button should have been clicked" do
+        Covers :behavior => :should_display_button_clicked
+
         Should Show :button_clicked => "button clicked"
       end
   #-------------------------------------------------------------------------------

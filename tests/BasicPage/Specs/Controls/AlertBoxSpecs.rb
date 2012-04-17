@@ -2,6 +2,8 @@ require File.expand_path('../../../includes', File.dirname(__FILE__))
 
 Scenario "Testing the AlertBox control" do
 
+  Covers :requirement => :showing_alert_box
+
   Given "A user is on the page" do
     Reload BasicPage
   end
@@ -17,6 +19,7 @@ Scenario "Testing the AlertBox control" do
       Click :alert_me
     end
       Then "the button should have been clicked" do
+        Covers :behavior => :should_display_alert_box
         Should Show :alert
       end
       And "it should say 'test!'" do

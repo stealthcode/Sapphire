@@ -9,7 +9,8 @@ module Sapphire
         @pending_count = 0
         @broken_count = 0
         @test_count = 0
-        @output = $stdout
+        $console ||= $stdout
+        @output = $console
       end
 
       def ScenarioStart(scenario)
@@ -53,7 +54,7 @@ module Sapphire
           end
           @output.puts ""
           result.stack.each do |line|
-            if (!line.include? "sapphire" and ! line.include? "-e:1")
+            if (!line.include? "sapphire" and ! line.include? "-e:1:in")
               Indent(depth+1)
               @output.puts line
             end

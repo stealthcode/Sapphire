@@ -14,7 +14,7 @@ require 'teamcity/utils/url_formatter'
 module Sapphire
   module Testing
     module TeamCity
-      class TeamCityReporter < Reporter
+      class RubyMineReporter < Reporter
         include ::Rake::TeamCity::StdCaptureHelper
         include ::Rake::TeamCity::RunnerUtils
         include ::Rake::TeamCity::RunnerCommon
@@ -68,6 +68,8 @@ module Sapphire
         end
 
         def ScenarioComplete(scenario)
+          log(@message_factory.create_suite_finished("Finally"))
+          log(@message_factory.create_suite_finished("Assuming"))
           log(@message_factory.create_suite_finished("Scenario: " + scenario.text))
         end
 
@@ -92,11 +94,39 @@ module Sapphire
         end
 
         def TestStarted(test)
+
+          if test.is_a? Given and @current > 0
+            log(@message_factory.create_suite_finished("Then"))
+            log(@message_factory.create_suite_finished("When"))
+            log(@message_factory.create_suite_finished("Given"))
+          elsif test.is_a? Finally
+            log(@message_factory.create_suite_finished("Then"))
+            log(@message_factory.create_suite_finished("When"))
+            log(@message_factory.create_suite_finished("Given"))
+          end
+
+          @current = 1
+
+          if test.is_a? Given
+            log(@message_factory.create_suite_started("Given"))
+          elsif test.is_a? When
+            log(@message_factory.create_suite_started("When"))
+          elsif test.is_a? Then
+            log(@message_factory.create_suite_started("Then"))
+          elsif test.is_a? Background
+            log(@message_factory.create_suite_started("Assuming"))
+          elsif test.is_a? Finally
+            log(@message_factory.create_suite_started("Finally"))
+          end
+
+          @current = @current + 1
+
           log(@message_factory.create_test_started(test.text))
         end
 
         def TestPassed(test)
           log(@message_factory.create_test_finished(test.text, test.time))
+          log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
         end
 
         def TestFailed(test)
@@ -112,14 +142,17 @@ module Sapphire
             end
           end
           log(@message_factory.create_test_failed(test.text, messages, stack))
+          log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
         end
 
         def TestPending(test)
           log(@message_factory.create_test_ignored(test.text, "Pending: Not Yet Implemented"))
+          log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
         end
 
         def TestBroken(test)
           log(@message_factory.create_test_ignored(test.text, "Broken"))
+          log(@message_factory.create_suite_finished("Finally")) if test.item.is_a? Finally
         end
 
         def TestingComplete()

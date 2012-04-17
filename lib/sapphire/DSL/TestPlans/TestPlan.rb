@@ -23,6 +23,7 @@ module Sapphire
 
           AddHandler :file => FileHandler.new
           AddHandler :path => PathHandler.new
+
         end
 
         def Cover(item)
@@ -46,15 +47,7 @@ module Sapphire
         end
 
         def execute
-          Report do |x| x.BeginTesting end
-          $stdout.puts ""
-          begin
-            @block.call
-          rescue => e
-            Report do |x| x.TestFailed TestPlanResult.new('fail', self, e.message, e.backtrace, 0) end
-          end
-          Report do |x| x.TestingComplete end
-          Report do |x| x.OutputResults end
+          @block.call
         end
 
         def Report(&block)
