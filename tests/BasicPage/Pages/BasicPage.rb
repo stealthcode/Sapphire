@@ -34,6 +34,7 @@ class BasicPage < Page
     TextArea    :notes, :id => "notes"
     Button      :click_me_to_add_note!, :id => "add_note"
     TextBox     :read_only, :id => "read_only"
+    Label       :credit_score, :id => "credit_score"
 
   end
 
