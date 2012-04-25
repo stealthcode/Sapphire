@@ -22,7 +22,7 @@ Scenario "Testing the Show keyword" do
         Should Not Show :first_name => "Jane"
       end
       And "the credit score should be 600" do
-        Should Not Show :credit_score => "600"
+        Should Show :credit_score => "600"
       end
       And "the credit score should not be 601" do
         Should Not Show :credit_score => "601"
