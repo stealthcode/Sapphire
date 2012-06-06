@@ -3,17 +3,25 @@ module Sapphire
     module Events
       def Event(name, &block)
         $events ||= {}
-        $events.merge!(name => Event.new(name, block))
+        $events.merge!(name => Event.new(name))
+        $currentEvent = name
+        block.call()
+        $currentEvent = nil
       end
 
       class Event
 
-        def initialize(name, block)
+        def initialize(name)
           @name = name
-          @block = block
+          @segments = {}
+        end
+
+        def AddSegment(segment)
+          @segments.merge! segment
         end
 
       end
+
     end
   end
 end

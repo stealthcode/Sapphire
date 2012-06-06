@@ -64,7 +64,7 @@ module ChildProcess
       end
 
       def create_process
-        startup_info[:lpDesktop] = FFI::MemoryPointer.from_string("test") if $isVirtual
+        @startup_info[:lpDesktop] = FFI::MemoryPointer.from_string("test") if $isVirtual
 
         ok = Lib.create_process(
             nil,          # application name

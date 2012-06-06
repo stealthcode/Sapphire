@@ -2,17 +2,9 @@ module Sapphire
   module DSL
     module Events
       def Expect(item)
-        $events ||= {}
-        $events.merge!(name => Event.new(name, block))
-      end
-
-      class Expectation
-
-        def initialize(name, block)
-          @name = name
-          @block = block
-        end
-
+        constraint = nil
+        constraint = $currentConstraint if !$currentConstraint.nil?
+        $events[$currentEvent].AddExpectation(Expectation.new(item, constraint))
       end
     end
   end

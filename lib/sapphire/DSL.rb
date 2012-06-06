@@ -13,4 +13,5 @@ Dir[File.dirname(__FILE__) + '/DSL/Configuration/*.rb'].each {|file| require fil
 Dir[File.dirname(__FILE__) + '/DSL/Data/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/DSL/Scenarios/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/DSL/Events/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/DSL/Profiles/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/DSL/Coverage/*.rb'].each {|file| require file }
