@@ -1,7 +1,6 @@
 module Sapphire
   module Observable
     def self.before(base, *names)
-      puts names
       names.each do |name|
         m = base.instance_method(name)
         puts name.to_s
@@ -14,7 +13,7 @@ module Sapphire
 
     def self.included(base)
       before(base, *base.instance_methods(false)) { |name|
-        puts "Calling: #{name}"
+        puts "Calling: #{name} on #{base}"
       }
     end
 

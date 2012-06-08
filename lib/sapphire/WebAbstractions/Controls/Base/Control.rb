@@ -128,6 +128,7 @@ module Sapphire
         return item
       end
 
+      include Sapphire::Observable
     end
   end
 end

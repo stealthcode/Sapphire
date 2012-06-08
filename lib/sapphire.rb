@@ -42,9 +42,10 @@ $driver = Sapphire::WebAbstractions::MetaBrowser.new(nil)
 
 Sapphire.sub_modules.each do |m|
   m.sub_classes.each do |s|
-    #puts s.to_s
-    class << m.const_get(s)
-      include Sapphire::Observable
+    if s.is_a? Sapphire::WebAbstractions::Control
+      class << m.const_get(s)
+        #include Sapphire::Observable
+      end
     end
   end
 end
