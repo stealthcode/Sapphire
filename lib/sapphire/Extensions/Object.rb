@@ -6,5 +6,8 @@ class Object
     return comparator.Create(evaluation)
   end
 
+  def self.observe()
+    include Sapphire::Observable
+  end
 
 end
