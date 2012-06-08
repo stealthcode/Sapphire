@@ -1,6 +1,6 @@
 class Symbol
 
-  def Clear
+  def Clear(item)
     ExecuteAgainstControl(self) do |control, arg|
       control.Clear
     end

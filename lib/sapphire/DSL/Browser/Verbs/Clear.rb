@@ -2,7 +2,7 @@ module Sapphire
   module DSL
     module Browser
       def Clear(item)
-        item.Clear
+        item.Clear(item)
       end
     end
   end

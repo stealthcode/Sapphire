@@ -6,4 +6,5 @@ class Object
     return comparator.Create(evaluation)
   end
 
+
 end

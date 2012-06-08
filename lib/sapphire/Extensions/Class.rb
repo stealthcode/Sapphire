@@ -1,7 +1,7 @@
 class Class < Module
 
-  def Clear
-    x = self.new
+  def Clear(item)
+    x = item.new
     x.Clear
   end
 

@@ -1,6 +1,7 @@
 module Sapphire
   module WebAbstractions
     class Control
+
       def initialize(hash)
         @hash = hash
       end
