@@ -12,10 +12,9 @@ module Sapphire
 
     def self.included(base)
       before(base, *base.instance_methods(false)) { |name, inst|
-        puts "Calling: #{name} on #{inst}"
+        observers = Observers::ObserverRepository.instance.Find(name.to_sym, inst.class)
+        observers.each do |x| x.Notify(inst, name) if x.respond_to? :Notify end
       }
     end
-
-
   end
 end

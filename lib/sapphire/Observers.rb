@@ -1,0 +1,1 @@
+Dir[File.dirname(__FILE__) + '/Observers/*.rb'].each {|file| require file }
