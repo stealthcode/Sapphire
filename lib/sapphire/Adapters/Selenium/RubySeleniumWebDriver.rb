@@ -255,38 +255,11 @@ module Sapphire
         raise "Could not find control for array: " + array.to_s
       end
 
-      def Spectate(discriminator, selector)
-        if ENV["spectator"] == "true"
-          begin
-            if(discriminator == :id)
-              self.ExecuteScript("document.getElementById('#{selector}').style.backgroundColor = '#FFF467'; ")
-            elsif (discriminator == :name )
-              self.ExecuteScript("document.getElementByName('#{selector}').style.backgroundColor = '#FFF467'; ")
-            elsif (discriminator == :xpath)
-              self.ExecuteScript("document.evaluate( '#{selector}', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.backgroundColor = '#FFF467'; ")
-            end
-
-            sleep 1
-
-            if(discriminator == :id)
-              self.ExecuteScript("document.getElementById('#{selector}').style.backgroundColor = '#ACD372'; ")
-            elsif (discriminator == :name )
-              self.ExecuteScript("document.getElementByName('#{selector}').style.backgroundColor = '#ACD372'; ")
-            elsif (discriminator == :xpath)
-              self.ExecuteScript("document.evaluate( '#{selector}', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.backgroundColor = '#ACD372'; ")
-            end
-          rescue
-          end
-        end
-      end
-
       def FindElement(discriminator, selector)
-        self.Spectate(discriminator, selector)
         self.Browser().find_element discriminator, selector
       end
 
       def FindElements(discriminator, selector)
-        self.Spectate(discriminator, selector)
         self.Browser().find_elements discriminator, selector
       end
 

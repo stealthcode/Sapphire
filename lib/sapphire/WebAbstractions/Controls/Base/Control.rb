@@ -7,7 +7,8 @@ module Sapphire
       end
 
       def Find(comparator = nil)
-        $driver.FindItemWithWait(@hash, comparator)
+        @control ||= $driver.FindItemWithWait(@hash, comparator)
+        @control
       end
 
       def FindAll
