@@ -297,6 +297,8 @@ module Sapphire
       def Create(type)
         Selenium::WebDriver.for type
       end
+
+      include Sapphire::Observable
     end
   end
 end

@@ -7,6 +7,7 @@ require 'selenium-webdriver'
 require 'delegate'
 require 'Forwardable'
 
+require 'sapphire/Observable'
 require 'sapphire/Adapters'
 require 'sapphire/Testing'
 require 'sapphire/Web'
@@ -18,7 +19,6 @@ require 'sapphire/Data'
 require 'sapphire/Virtualization'
 require 'sapphire/TeamCity'
 require 'sapphire/Observers'
-require 'sapphire/Observable'
 
 module Sapphire
   module Sapphire

@@ -17,11 +17,11 @@ module Sapphire
 
 
       def Add(observer)
-        @observers << observer
+        @observers << observer if !@observers.include? observer
       end
 
       def Find(method, object)
-        @observers.select {|o| ((o.object == object or o.object == :all) and (o.method == method or o.method == :all))  }
+        @observers.select {|o| ((o.object == object or o.object == :all or object < o.object) and (o.method == method or o.method == :all))  }
       end
 
       def self.observe()

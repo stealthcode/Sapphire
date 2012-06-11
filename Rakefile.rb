@@ -12,7 +12,7 @@ ZIP_FILE_PREFIX = "Sapphire"
 RELEASE_BUILD_NUMBER = ENV["BUILD_NUMBER"] || "1.0.0.0"
 BUILDS_DIR = File.join(ABSOLUTE_PATH,'builds')
 PACKAGE_DIR = File.join(ABSOLUTE_PATH,'report')
-REPORTS_DIR = "D:/Reports/"
+REPORTS_DIR = "C:/Reports/"
 
 
 task :regression do
