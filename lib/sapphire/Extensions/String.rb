@@ -12,7 +12,7 @@ class String
 
   def +(item)
     return plus(Parameter(item)) if Sapphire::DSL::TestPlans::Parameters.instance.Contains(item)
-    raise "No Parameter defined for: " << item.to_s if item.is_a? Symbol
+    raise "No Parameter defined for: " << item.to_s if item.is_a? Symbol and !item.nil?
 
     plus(item)
   end

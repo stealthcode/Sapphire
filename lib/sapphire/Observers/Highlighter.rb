@@ -10,9 +10,8 @@ module Sapphire
 
       end
 
-      def Notify(instance, method, args)
-
-        #return if ENV["spectator"] != "true"
+      def Before(instance, method, args)
+        return if ENV["spectator"] != "true"
 
         discriminator = args[0]
         selector = args[1]
@@ -29,6 +28,18 @@ module Sapphire
         rescue
         end
 
+      end
+
+      def After(instance, method, args)
+        #puts "yay after"
+      end
+
+      def OnSuccess(instance, method, args)
+        #puts "yay success"
+      end
+
+      def OnFailure(instance, method, exception, args)
+        #puts "yay failure"
       end
 
       def self.IsObserver()
