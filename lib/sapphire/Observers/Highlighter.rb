@@ -10,8 +10,7 @@ module Sapphire
 
       end
 
-      def Notify(instance, method, args)
-
+      def Before(instance, method, args)
         #return if ENV["spectator"] != "true"
 
         discriminator = args[0]

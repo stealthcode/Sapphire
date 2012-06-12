@@ -43,7 +43,6 @@ end
 $driver = Sapphire::WebAbstractions::MetaBrowser.new(nil)
 
 Sapphire.sub_modules.each do |m|
-
   m.sub_classes.each do |s|
     m.const_get(s).observe() if m.const_get(s).respond_to? :observe
     Sapphire::Observers::ObserverRepository.instance.Add(m.const_get(s).new) if m.const_get(s).respond_to? :IsObserver
