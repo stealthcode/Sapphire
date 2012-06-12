@@ -40,7 +40,7 @@ module Sapphire
           raise ExpectationException.new(messages)
         end
 
-      end
+        end
     end
   end
 end
