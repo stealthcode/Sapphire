@@ -6,12 +6,12 @@ module Sapphire
       def initialize
 
         observes :class => WebAbstractions::RubySeleniumWebDriver,
-                 :method => :FindElement
+                 :method => :FindItemWithWait
 
       end
 
       def Before(instance, method, args)
-        #return if ENV["spectator"] != "true"
+        return if ENV["spectator"] != "true"
 
         discriminator = args[0]
         selector = args[1]
@@ -23,6 +23,27 @@ module Sapphire
             instance.ExecuteScript("document.getElementByName('#{selector}').style.backgroundColor = '#FFF467'; ")
           elsif (discriminator == :xpath)
             instance.ExecuteScript("document.evaluate( '#{selector}', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.backgroundColor = '#FFF467'; ")
+          end
+
+        rescue
+        end
+
+      end
+
+      def OnFailure(instance, method, args)
+        #return if ENV["spectator"] != "true"
+
+        discriminator = args[0]
+        selector = args[1]
+        puts "failure discriminator = #{discriminator} selector = #{selector}"
+
+        begin
+          if(discriminator == :id)
+            instance.ExecuteScript("document.getElementById('#{selector}').style.backgroundColor = '#FF6667'; ")
+          elsif (discriminator == :name )
+            instance.ExecuteScript("document.getElementByName('#{selector}').style.backgroundColor = '#FF6666'; ")
+          elsif (discriminator == :xpath)
+            instance.ExecuteScript("document.evaluate( '#{selector}', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.backgroundColor = '#FF6667'; ")
           end
 
         rescue
