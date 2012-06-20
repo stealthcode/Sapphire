@@ -19,11 +19,11 @@ module Sapphire
 
         begin
           if(discriminator == :id)
-            $driver.ExecuteScript("document.getElementById('#{selector}').style.backgroundColor = '#FF0000'; ")
+            $driver.ExecuteScript("document.getElementById('#{selector}').style.border = '1px solid #FF0000'; ")
           elsif (discriminator == :name )
-            $driver.ExecuteScript("document.getElementByName('#{selector}').style.backgroundColor = '#FF0000'; ")
+            $driver.ExecuteScript("document.getElementByName('#{selector}').style.border = '1px solid #FF0000'; ")
           elsif (discriminator == :xpath)
-            $driver.ExecuteScript("document.evaluate( '#{selector}', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.backgroundColor = '#FF0000'; ")
+            $driver.ExecuteScript("document.evaluate( '#{selector}', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.border = '1px solid #FF0000'; ")
           end
 
         rescue
