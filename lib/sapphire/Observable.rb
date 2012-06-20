@@ -39,13 +39,13 @@ module Sapphire
           do_before.call(method_name, self, args) if hash.has_key? :before
           begin
             result = method.bind(self).(*args, &method_block)
-            do_after.call(method_name, self, args) if hash.has_key? :after
+            do_on_success.call(method_name, self, args) if hash.has_key? :after
             return result
           rescue => raised_exception
             do_on_failure.call(method_name, self, raised_exception, args) if hash.has_key? :failure
             raise raised_exception
           ensure
-            do_on_success.call(method_name, self, args) if hash.has_key? :success
+            do_after.call(method_name, self, args) if hash.has_key? :success
           end
         end
       end

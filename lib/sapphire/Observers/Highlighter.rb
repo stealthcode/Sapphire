@@ -11,7 +11,7 @@ module Sapphire
       end
 
       def Before(instance, method, args)
-        #return if ENV["spectator"] != "true"
+        return if ENV["highlighter"] != "true"
 
         discriminator = args[0]
         selector = args[1]

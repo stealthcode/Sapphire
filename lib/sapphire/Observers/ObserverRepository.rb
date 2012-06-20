@@ -13,10 +13,14 @@ module Sapphire
 
       def initialize
         @observers = []
+        @observer_types = []
       end
 
 
       def Add(observer)
+        return if(@observer_types.include? observer.class)
+
+        @observer_types << observer.class
         @observers << observer if !@observers.include? observer
       end
 

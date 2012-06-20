@@ -26,9 +26,9 @@ module Sapphire
         puts "failure" if ENV["verbose"] == "true"
       end
 
-      def self.IsObserver()
-        true
-      end
+      #def self.IsObserver()
+      #  true
+      #end
 
     end
 

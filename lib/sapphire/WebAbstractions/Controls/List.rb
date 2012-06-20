@@ -3,33 +3,33 @@ module Sapphire
     class List < Control
 
       def initialize(hash)
-        @hash = hash
         @retryAttempts = 0
+        super hash
       end
 
       def Equals(value, comparator)
         x = self.FindAll
         x.each do |item|
-          if comparator.Compare(item.text, value)
-            return  EqualsComparison.new(Evaluation.new(item.text, value))
+          if comparator.Compare(item.Text, value)
+            return  EqualsComparison.new(ControlEvaluation.new(item.Text, value, item))
           end
         end
 
         #if here then it couldnt make a match, build up the list of values
         alltext = []
         x.each do |item|
-          alltext << item.text
+          alltext << item.Text
         end
 
-        return  EqualsComparison.new(Evaluation.new(alltext, value))
+        return EqualsComparison.new(ControlEvaluation.new(alltext, value, self))
       end
 
       def In(values, comparator)
         x = self.FindAll
         x.each do |item|
           values.each do |value|
-            if comparator.Compare(item.text, value)
-              return Evaluation.new(item.text, value)
+            if comparator.Compare(item.Text, value)
+              return ControlEvaluation.new(item.Text, value, item)
             end
           end
         end
@@ -37,21 +37,21 @@ module Sapphire
         #if here then it couldnt make a match, build up the list of values
         alltext = []
         x.each do |item|
-          alltext << item.text
+          alltext << item.Text
         end
 
-        return Evaluation.new(values, alltext)
+        return ControlEvaluation.new(values, alltext, self)
       end
 
       def Contain(value)
         x = self.FindAll
         x.each do |item|
-          if item.text.include? value
-            return ContainsComparison.new(Evaluation.new(value, item.text))
+          if item.Text.include? value
+            return ContainsComparison.new(ControlEvaluation.new(value, item.Text, item))
           end
         end
 
-        return Evaluation.new("Value not found in list", value)
+        return ControlEvaluation.new("Value not found in list", value, self)
       end
 
       def Click
@@ -59,8 +59,8 @@ module Sapphire
         begin
           clicked = wait.until { items = self.FindAll
             if items.empty? == false
-              if items.first.displayed? == true
-                items.first.click
+              if items.first.Visible == true
+                items.first.Click
                 return true
               end
             end
@@ -80,14 +80,14 @@ module Sapphire
 
       def Count(value)
         items = self.FindAll
-        return Evaluation.new(items.count, value)
+        return ControlEvaluation.new(items.count, value, self)
       end
 
       def Text
         values = []
         x = self.FindAll
         x.each do |item|
-          values << item.text
+          values << item.Text
         end
 
         return values

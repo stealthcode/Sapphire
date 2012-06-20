@@ -29,16 +29,26 @@ module Sapphire
 
       def Output()
 
-        if(!Compare(@left, @right))
-          messages = []
+      if(!Compare(@left, @right))
+        self.Failed(@control)
+      else
+        self.Passed(@control)
+      end
 
-          messages << "expected" + @comparator.Text + ": (nil)" if @right == nil
-          messages << "expected" + @comparator.Text + ": " + @right.to_s if @right != nil
-          messages << "got: (nil)" if @left == nil
-          messages << "got: " + @left.to_s if @left != nil
+      end
 
-          raise ExpectationException.new(messages)
-        end
+      def Failed(control)
+        messages = []
+
+        messages << "expected" + @comparator.Text + ": (nil)" if @right == nil
+        messages << "expected" + @comparator.Text + ": " + @right.to_s if @right != nil
+        messages << "got: (nil)" if @left == nil
+        messages << "got: " + @left.to_s if @left != nil
+
+        raise ExpectationException.new(messages)
+      end
+
+      def Passed(control)
 
       end
     end
