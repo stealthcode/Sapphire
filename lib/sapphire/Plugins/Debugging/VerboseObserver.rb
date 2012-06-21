@@ -1,7 +1,7 @@
 module Sapphire
-  module Observers
+  module Plugins
 
-    class VerboseObserver < Observer
+    class VerbosePlugin < Plugin
 
       def initialize
 

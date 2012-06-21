@@ -8,10 +8,12 @@ Virtually do
 
     Parameter :specs_path => File.expand_path(File.dirname(__FILE__) + "/../Specs/", __FILE__)
 
-    #Run :file => :specs_path + "/BrowserSpecs.rb"
+    Run :file => :specs_path + "/BrowserSpecs.rb"
 
     Start FireFox With ""
     Navigate To BasicPage
+
+    #Run :file => :specs_path + "/Controls/TextBoxSpecs.rb"
 
     Run :path => :specs_path + "/Controls/"
     Run :path => :specs_path + "/Verbs/"

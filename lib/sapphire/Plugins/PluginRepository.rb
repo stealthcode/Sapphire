@@ -1,10 +1,10 @@
 module Sapphire
-  module Observers
+  module Plugins
 
-    class ObserverRepository
+    class PluginRepository
 
       def self.create
-        @@instance ||= ObserverRepository.new
+        @@instance ||= PluginRepository.new
       end
 
       def self.instance

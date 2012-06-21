@@ -1,7 +1,7 @@
 module Sapphire
-  module Observers
+  module Plugins
 
-    class FailedControlHighlighter < Observer
+    class FailedControlHighlighter < Plugin
 
       def initialize
 

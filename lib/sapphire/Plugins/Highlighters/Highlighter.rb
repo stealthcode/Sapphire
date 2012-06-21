@@ -1,7 +1,7 @@
 module Sapphire
-  module Observers
+  module Plugins
 
-    class Highlighter < Observer
+    class Highlighter < Plugin
 
       def initialize
 

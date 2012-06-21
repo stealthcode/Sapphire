@@ -1,5 +1,5 @@
 module Sapphire
-  module Observable
+  module Pluggable
     def self.intercept(base, hash, *method_names)
       do_before = proc { |name, inst, args|
         begin
@@ -36,16 +36,16 @@ module Sapphire
       method_names.each do |method_name|
         method = base.instance_method(method_name)
         base.send :define_method, method_name.to_sym do |*args, &method_block|
-          do_before.call(method_name, self, args) if hash.has_key? :before
+          do_before.call(method_name, self, args)
           begin
-            result = method.bind(self).(*args, &method_block)
-            do_on_success.call(method_name, self, args) if hash.has_key? :after
+            result =  method.bind(self).(*args, &method_block)
+            do_on_success.call(method_name, self, args)
             return result
           rescue => raised_exception
-            do_on_failure.call(method_name, self, raised_exception, args) if hash.has_key? :failure
+            do_on_failure.call(method_name, self, raised_exception, args)
             raise raised_exception
           ensure
-            do_after.call(method_name, self, args) if hash.has_key? :success
+            do_after.call(method_name, self, args)
           end
         end
       end
@@ -53,25 +53,26 @@ module Sapphire
 
     def self.included(base)
       before = proc { |name, inst, args|
-        observers = Observers::ObserverRepository.instance.Find(name.to_sym, inst.class)
+        observers = Plugins::PluginRepository.instance.Find(name.to_sym, inst.class)
         observers.each do |x| x.Before(inst, name, args) if x.respond_to? :Before end
       }
 
       after = proc { |name, inst, args|
-        observers = Observers::ObserverRepository.instance.Find(name.to_sym, inst.class)
+        observers = Plugins::PluginRepository.instance.Find(name.to_sym, inst.class)
         observers.each do |x| x.After(inst, name, args) if x.respond_to? :After end
       }
 
       success = proc { |name, inst, args|
-        observers = Observers::ObserverRepository.instance.Find(name.to_sym, inst.class)
+        observers = Plugins::PluginRepository.instance.Find(name.to_sym, inst.class)
         observers.each do |x| x.OnSuccess(inst, name, args) if x.respond_to? :OnSuccess end
       }
 
 
       failure = proc { |name, inst, exception, args|
-        observers = Observers::ObserverRepository.instance.Find(name.to_sym, inst.class)
+        observers = Plugins::PluginRepository.instance.Find(name.to_sym, inst.class)
         observers.each do |x| x.OnFailure(inst, name, exception, args) if x.respond_to? :OnFailure end
       }
+
 
 
       hash = {}

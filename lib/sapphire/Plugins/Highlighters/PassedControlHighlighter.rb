@@ -1,7 +1,7 @@
 module Sapphire
-  module Observers
+  module Plugins
 
-    class PassedControlHighlighter < Observer
+    class PassedControlHighlighter < Plugin
 
       def initialize
 

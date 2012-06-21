@@ -7,7 +7,7 @@ class Object
   end
 
   def self.observe()
-    include Sapphire::Observable
+    include Sapphire::Pluggable
   end
 
 end

@@ -7,7 +7,7 @@ require 'selenium-webdriver'
 require 'delegate'
 require 'Forwardable'
 
-require 'sapphire/Observable'
+require 'sapphire/Pluggable'
 require 'sapphire/Adapters'
 require 'sapphire/Testing'
 require 'sapphire/Web'
@@ -18,7 +18,7 @@ require 'sapphire/Configuration'
 require 'sapphire/Data'
 require 'sapphire/Virtualization'
 require 'sapphire/TeamCity'
-require 'sapphire/Observers'
+require 'sapphire/Plugins'
 
 module Sapphire
   module Sapphire
@@ -35,7 +35,7 @@ module Sapphire
     include WebAbstractions
     include Testing
     include Testing::TeamCity
-    include Observers
+    include Plugins
     include UI
   end
 end
@@ -45,7 +45,7 @@ $driver = Sapphire::WebAbstractions::MetaBrowser.new(nil)
 Sapphire.sub_modules.each do |m|
   m.sub_classes.each do |s|
     m.const_get(s).observe() if m.const_get(s).respond_to? :observe
-    Sapphire::Observers::ObserverRepository.instance.Add(m.const_get(s).new) if m.const_get(s).respond_to? :IsObserver
+    Sapphire::Plugins::PluginRepository.instance.Add(m.const_get(s).new) if m.const_get(s).respond_to? :IsObserver
   end
 end
 

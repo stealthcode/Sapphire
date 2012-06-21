@@ -248,11 +248,12 @@ module Sapphire
         self.Browser().execute_script(script)
       end
 
-      def Create(type)
+      def Create(args)
+        type = args[:type]
         Selenium::WebDriver.for type
       end
 
-      include Sapphire::Observable
+      include Sapphire::Pluggable
     end
   end
 end
