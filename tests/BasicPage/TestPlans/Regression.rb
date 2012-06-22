@@ -13,8 +13,6 @@ Virtually do
     Start FireFox With ""
     Navigate To BasicPage
 
-    #Run :file => :specs_path + "/Controls/TextBoxSpecs.rb"
-
     Run :path => :specs_path + "/Controls/"
     Run :path => :specs_path + "/Verbs/"
     Run :path => :specs_path + "/Evaluators/"

@@ -12,8 +12,7 @@ module Sapphire
       attr_reader :browser
 
       def initialize
-        args = { :type => :ie }
-        @browser = self.Create args
+        @browser = self.Create ie
         super(@browser)
         $driver = MetaBrowser.new(self)
       end
