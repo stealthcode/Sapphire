@@ -45,9 +45,11 @@ module Sapphire
       end
 
       def Clear
-        if @hash.has_key? :default
-          self.Set(@hash[:default])
-          return
+        @array.each do |item|
+          if item.has_key? :default
+            self.Set(item[:default])
+            return
+          end
         end
 
         raise "no :default set for DropDown"

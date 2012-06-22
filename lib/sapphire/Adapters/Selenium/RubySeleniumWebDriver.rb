@@ -92,7 +92,7 @@ module Sapphire
       def CurrentUrl
         wait = Selenium::WebDriver::Wait.new(:timeout => 60)
         url = wait.until { x = self.Browser().current_url
-            x unless x == nil
+        x unless x == nil
         }
 
         url
@@ -175,65 +175,110 @@ module Sapphire
         return temp
       end
 
-      def FindItem(by, value, comparator = nil)
+      def FindItem(array, comparator = nil)
 
         x = nil
+        by = nil
+        value = nil
 
-        begin
-          x = self.FindElement by, value
-        rescue
-          #do nothing, let it keep looping
-        end
+        array.each do |item|
 
-        return x if x != nil
-        return x if comparator.Compare(x != nil, true) if comparator != nil
-
-      end
-
-      def FindItemWithWait(by, value, comparator=nil)
-        masterWait = Selenium::WebDriver::Wait.new(:timeout => 20)
-
-        element = masterWait.until {
-          x = FindItem(by, value, comparator)
-          return x if x != nil
-          return x if comparator.Compare(x != nil, true) if comparator != nil
-        }
-
-        return element if element != nil
-        return element if comparator.Compare(element != nil, true) if comparator != nil
-
-        raise "Could not find control using lookup #{by} and value #{value}."
-
-      end
-
-      def FindItemWithoutWait(by, value, comparator=nil)
-
-        element = FindItem(by, value, comparator)
-
-        return element if element != nil
-        return element if comparator.Compare(element != nil, true) if comparator != nil
-        raise "Could not find control using lookup #{by} and value #{value}."
-
-      end
-
-      def FindAllItems(by, value)
-        masterWait = Selenium::WebDriver::Wait.new(:timeout => 20)
-
-        element = masterWait.until {
-          x = nil
-          begin
-            x = self.FindElements by, value
-            x = nil if x.is_a? Array and x.empty?
-          rescue
-            #do nothing, let it keep looping
+          if item.is_a? Hash
+            begin
+              x = self.FindElement item.keys.first, item.fetch(item.keys.first)
+              by = item.keys.first
+              value = item.fetch(item.keys.first)
+            rescue
+              #do nothing, let it keep looping
+            end
           end
 
-          x = nil if x.is_a? Array and x.empty?
-          return x if x != nil
+          if item.is_a? Array
+            x = self.FindElement item[0], item[1]
+            by = item[0]
+            value = item[1]
+          end
 
+          return x, by, value if x != nil
+          return x, by, value if comparator.Compare(x != nil, true) if comparator != nil
+
+        end if array.is_a? Array
+
+        if array.is_a? Hash
+          x = self.FindElement array.keys.first, array.fetch(array.keys.first)
+          by = item.keys.first
+          value = item.fetch(item.keys.first)
+        end
+        return x, by, value if x != nil
+        return x, by, value if comparator.Compare(x != nil, true) if comparator != nil
+
+      end
+
+      def FindItemWithWait(array, comparator=nil)
+        masterWait = Selenium::WebDriver::Wait.new(:timeout => 20)
+
+        element, by, value = masterWait.until {
+          x, by, value = FindItem(array, comparator)
+          return x, by, value if x != nil
+          return x, by, value if comparator.Compare(x != nil, true) if comparator != nil
         }
-        return element if element != nil
-        raise "Could not find control using lookup #{by} and value #{value}."
+
+        return element, by, value if element != nil
+        return element, by, value if comparator.Compare(element != nil, true) if comparator != nil
+        raise "Could not find control for array: " + array.to_s
+
+      end
+
+      def FindItemWithoutWait(array, comparator=nil)
+
+        element, by, value = FindItem(array, comparator)
+
+        return element, by, value if element != nil
+        return element, by, value if comparator.Compare(element != nil, true) if comparator != nil
+        raise "Could not find control for array: " + array.to_s
+
+      end
+
+      def FindAllItems(array)
+        masterWait = Selenium::WebDriver::Wait.new(:timeout => 20)
+
+        x = nil
+        by = nil
+        value = nil
+
+        element, by, value = masterWait.until {
+
+          array.each do |item|
+
+            if item.is_a? Hash
+              begin
+                x = self.FindElements item.keys.first, item.fetch(item.keys.first)
+                x = nil if x.is_a? Array and x.empty?
+
+                if !x.nil?
+                  by = item.keys.first
+                  value = item[item.keys.first]
+                end
+              rescue
+                #do nothing, let it keep looping
+              end
+            end
+
+            x, by, value = self.FindElements item[0], item[1] if item.is_a? Array
+            x = nil if x.is_a? Array and x.empty?
+            return x, by, value if x != nil
+
+          end if array.is_a? Array
+
+          x = self.FindElement array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
+          if !x.nil?
+            by = item.keys.first
+            value = item[item.keys.first]
+          end
+          return x, by, value if x != nil
+        }
+        return element, by, value if element != nil
+        raise "Could not find control for array: " + array.to_s
       end
 
       def FindElement(discriminator, selector)

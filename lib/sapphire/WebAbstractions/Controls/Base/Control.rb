@@ -2,38 +2,30 @@ module Sapphire
   module WebAbstractions
     class Control
 
-      attr_reader :found_by_type
-      attr_reader :found_by_value
+      attr_accessor :found_by_type
+      attr_accessor :found_by_value
 
       def initialize(args)
         return if args.nil?
+        @array = args
 
-        hash = {}
-        hash = args if args.is_a? Hash
-
-        args.each do |item|
-          hash.merge! item if item.is_a? Hash
-        end if args.is_a? Array
-
-        @hash = hash
-        @by = hash.keys.first
-        @value = hash[hash.keys.first]
-        @control = hash.fetch :instance if hash.has_key? :instance
-
-        @found_by_type = @by
-        @found_by_value = @value
+        if args.is_a? Hash
+          @control = args.fetch :instance if args.has_key? :instance
+          @found_by_type = @by
+          @found_by_value = @value
+        end
       end
 
       def Find(comparator = nil)
-        @control ||= $driver.FindItemWithWait(@by, @value, comparator)
+        @control, @found_by_type, @found_by_value = $driver.FindItemWithWait(@array, comparator) if @control.nil?
         @control
       end
 
       def FindAll
-        items = $driver.FindAllItems(@by, @value)
+        items, @found_by_type, @found_by_value = $driver.FindAllItems(@array)
         list = []
         items.each do |item|
-          hash = {@by => @value, :instance => item}
+          hash = {@found_by_type => @found_by_value, :instance => item}
           list << Control.new(hash)
         end
 
@@ -41,7 +33,7 @@ module Sapphire
       end
 
       def FindWithoutWait(comparator = nil)
-        $driver.FindItemWithoutWait(@by, @value, comparator)
+        $driver.FindItemWithoutWait(@array, comparator)
       end
 
       def Text
@@ -55,12 +47,12 @@ module Sapphire
       end
 
       def MouseOver
-        if(@by == :id)
-          $driver.ExecuteScript("document.getElementById('"+ @value +"').style.visibility = 'visible'; ")
-        elsif (@by == :name)
-          $driver.ExecuteScript("document.getElementByName('"+ @value +"').style.visibility = 'visible'; ")
-        elsif (@by == :xpath)
-          $driver.ExecuteScript("document.evaluate( '" + @value + "', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.visibility = 'visible'; ")
+        if(@found_by_type == :id)
+          $driver.ExecuteScript("document.getElementById('"+ @found_by_value +"').style.visibility = 'visible'; ")
+        elsif (@found_by_type == :name)
+          $driver.ExecuteScript("document.getElementByName('"+ @found_by_value +"').style.visibility = 'visible'; ")
+        elsif (@found_by_type == :xpath)
+          $driver.ExecuteScript("document.evaluate( '" + @found_by_value + "', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.visibility = 'visible'; ")
         end
 
         sleep(1)
