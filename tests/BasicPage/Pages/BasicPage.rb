@@ -7,7 +7,7 @@ class BasicPage < Page
   def Init
 
     Label       :welcome, :id => "welcome"
-    TextBox     :first_name, :id => "firstName11"
+    TextBox     :first_name, :id => "firstName"
     TextBox     :last_name, :id => "lastName"
     Label       :ajax, :id => "ajax"
     Label       :slow_ajax, :id => "slowAjax"
