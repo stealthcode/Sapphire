@@ -1,7 +1,7 @@
 module Sapphire
-  module Observers
+  module Plugins
 
-    class Observer
+    class Plugin
 
       attr_reader :object
       attr_reader :method

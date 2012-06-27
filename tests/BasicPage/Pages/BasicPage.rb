@@ -7,7 +7,7 @@ class BasicPage < Page
   def Init
 
     Label       :welcome, :id => "welcome"
-    TextBox     :first_name, :id => "firstName11"
+    TextBox     :first_name, :id => "firstName"
     TextBox     :last_name, :id => "lastName"
     Label       :ajax, :id => "ajax"
     Label       :slow_ajax, :id => "slowAjax"
@@ -35,6 +35,11 @@ class BasicPage < Page
     Button      :click_me_to_add_note!, :id => "add_note"
     TextBox     :read_only, :id => "read_only"
     Label       :credit_score, :id => "credit_score"
+    Label       :credit_score_multi, {:xpath => "//div[@id=\"theForm\"]/h2/span"},
+                                     {:xpath => "/html/body/div/div[2]/p/span"},
+                                     {:xpath => "/html/body/form/div/div[2]/div[2]/h2/span"},
+                                     {:xpath => "id('contentWrap')/p[1]/x:span"},
+                                     {:xpath => "id('credit_score')"}
 
   end
 

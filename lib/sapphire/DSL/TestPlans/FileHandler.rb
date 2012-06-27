@@ -10,12 +10,8 @@ module Sapphire
           file = File.expand_path(File.dirname(__FILE__) + item) if !File.exists?(file)
           raise "File Not Found: " + item if !File.exists?(file)
           load file if File.exists?(file)
-          
-          Runner.instance.scenarios.each do |scenario|
-            scenario.file_name = item if scenario.file_name == ""
-            scenario.execute
-          end
-
+          Runner.instance.last_scenario.file_name = item if Runner.instance.last_scenario and Runner.instance.last_scenario.file_name == ""
+          Runner.instance.last_scenario.execute
         end
       end
     end

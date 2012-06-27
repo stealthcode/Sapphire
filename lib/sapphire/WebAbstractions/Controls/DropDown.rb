@@ -31,21 +31,21 @@ module Sapphire
         items = ddl.find_elements(:tag_name, "option")
         items.each do |item|
           if item.text == value
-            return Evaluation.new(item.text, value)
+            return ControlEvaluation.new(item.text, value, self)
           end
         end
 
-        return Evaluation.new("Value not found in list", value)
+        return ControlEvaluation.new("Value not found in list", value, self)
       end
 
       def Count(value)
         ddl = self.Find
         items = ddl.find_elements(:tag_name, "option")
-        return Evaluation.new(items.count, value)
+        return ControlEvaluation.new(items.count, value, self)
       end
 
       def Clear
-        @hash.each do |item|
+        @array.each do |item|
           if item.has_key? :default
             self.Set(item[:default])
             return

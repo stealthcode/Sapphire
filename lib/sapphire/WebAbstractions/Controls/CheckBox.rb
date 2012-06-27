@@ -5,11 +5,11 @@ module Sapphire
         checked = self.Checked().Evaluate()
 
         if value && checked
-          return;
+          return
         end
 
         if !value && !checked
-          return;
+          return
         end
 
         self.Click
@@ -17,7 +17,7 @@ module Sapphire
 
       def Checked
         radio = self.Find
-        Evaluation.new(radio.attribute("checked") != nil, true)
+        ControlEvaluation.new(radio.attribute("checked") != nil, true, self)
       end
 
       def Clear

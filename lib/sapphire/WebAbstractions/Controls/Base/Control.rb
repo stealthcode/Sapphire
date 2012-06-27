@@ -2,21 +2,38 @@ module Sapphire
   module WebAbstractions
     class Control
 
-      def initialize(hash)
-        @hash = hash
+      attr_accessor :found_by_type
+      attr_accessor :found_by_value
+
+      def initialize(args)
+        return if args.nil?
+        @array = args
+
+        if args.is_a? Hash
+          @control = args.fetch :instance if args.has_key? :instance
+          @found_by_type = @by
+          @found_by_value = @value
+        end
       end
 
       def Find(comparator = nil)
-        @control ||= $driver.FindItemWithWait(@hash, comparator)
+        @control, @found_by_type, @found_by_value = $driver.FindItemWithWait(@array, comparator) if @control.nil?
         @control
       end
 
       def FindAll
-        $driver.FindAllItems(@hash)
+        items, @found_by_type, @found_by_value = $driver.FindAllItems(@array)
+        list = []
+        items.each do |item|
+          hash = {@found_by_type => @found_by_value, :instance => item}
+          list << Control.new(hash)
+        end
+
+        list
       end
 
       def FindWithoutWait(comparator = nil)
-        $driver.FindItemWithoutWait(@hash, comparator)
+        $driver.FindItemWithoutWait(@array, comparator)
       end
 
       def Text
@@ -30,22 +47,12 @@ module Sapphire
       end
 
       def MouseOver
-        if @hash.is_a? Hash
-          if(@hash.has_key?(:id))
-            $driver.ExecuteScript("document.getElementById('"+ @hash.fetch(:id) +"').style.visibility = 'visible'; ")
-          elsif (@hash.has_key?(:name))
-            $driver.ExecuteScript("document.getElementByName('"+ @hash.fetch(:name) +"').style.visibility = 'visible'; ")
-          elsif (@hash.has_key?(:xpath))
-            $driver.ExecuteScript("document.evaluate( '" + @hash.fetch(:xpath) + "', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.visibility = 'visible'; ")
-          end
-        elsif @hash.is_a? Array
-          if(@hash[0].has_key?(:id))
-            $driver.ExecuteScript("document.getElementById('"+ @hash[0].fetch(:id) +"').style.visibility = 'visible'; ")
-          elsif (@hash[0].has_key?(:name))
-            $driver.ExecuteScript("document.getElementByName('"+ @hash[0].fetch(:name) +"').style.visibility = 'visible'; ")
-          elsif (@hash[0].has_key?(:xpath))
-            $driver.ExecuteScript("document.evaluate( '" + @hash[0].fetch(:xpath) + "', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.visibility = 'visible'; ")
-          end
+        if(@found_by_type == :id)
+          $driver.ExecuteScript("document.getElementById('"+ @found_by_value +"').style.visibility = 'visible'; ")
+        elsif (@found_by_type == :name)
+          $driver.ExecuteScript("document.getElementByName('"+ @found_by_value +"').style.visibility = 'visible'; ")
+        elsif (@found_by_type == :xpath)
+          $driver.ExecuteScript("document.evaluate( '" + @found_by_value + "', document, null, XPathResult.ANY_TYPE, null ).iterateNext().style.visibility = 'visible'; ")
         end
 
         sleep(1)
@@ -54,28 +61,28 @@ module Sapphire
       def Visible(shouldWait = true)
         control = self.Find if shouldWait
         control = self.FindWithoutWait if !shouldWait
-        Evaluation.new(control.displayed?, true)
+        ControlEvaluation.new(control.displayed?, true, self)
       end
 
       def Equals(value, comparator)
-        evaluation = Evaluation.new(self.Text, value)
+        evaluation = ControlEvaluation.new(self.Text, value, self)
         EqualsComparison.new(evaluation)
       end
 
       def Contain(value)
-        return ContainsComparison.new(Evaluation.new(value, self.Text))
+        return ContainsComparison.new(ControlEvaluation.new(value, self.Text, self))
       end
 
       def In(values, comparator)
         text = self.Text
         values.each do |value|
           if comparator.Compare(text, value)
-            return Evaluation.new(text, value)
+            return ControlEvaluation.new(text, value, self)
           end
         end
 
         #error land
-        return Evaluation.new(text, values)
+        return ControlEvaluation.new(text, values, self)
       end
 
       def Evaluate(key, arg, comparator, block)
@@ -98,7 +105,7 @@ module Sapphire
 
           return result
         rescue
-          return Evaluation.new(evaluation.left, evaluation.right)
+          return ControlEvaluation.new(evaluation.left, evaluation.right, self)
         end
       end
 

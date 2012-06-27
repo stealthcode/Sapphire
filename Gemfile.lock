@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sapphire (0.8.0)
+    sapphire (0.8.2)
       Platform
       colorize
       selenium-webdriver
@@ -13,14 +13,13 @@ GEM
     childprocess (0.2.8)
       ffi (~> 1.0.6)
     colorize (0.5.8)
-    ffi (1.0.9)
     ffi (1.0.9-x86-mingw32)
     multi_json (1.0.4)
     rubyzip (0.9.4)
     selenium-webdriver (2.20.0)
       childprocess (>= 0.2.5)
-      ffi (~> 1.0.9)
-      multi_json (~> 1.0.4)
+      ffi (~> 1.0)
+      multi_json (~> 1.0)
       rubyzip
 
 PLATFORMS

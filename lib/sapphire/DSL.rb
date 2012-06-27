@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) +'/DSL/Evaluators/Evaluator.rb', __FILE__)
 require File.expand_path(File.dirname(__FILE__) +'/DSL/Comparisons/Comparison.rb', __FILE__)
+require File.expand_path(File.dirname(__FILE__) +'/DSL/Evaluations/Evaluation.rb', __FILE__)
 Dir[File.dirname(__FILE__) + '/DSL/Evaluators/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/DSL/Comparisons/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/DSL/Evaluations/*.rb'].each {|file| require file }
