@@ -70,7 +70,7 @@ module Sapphire
       end
 
       def Contain(value)
-        return ContainsComparison.new(ControlEvaluation.new(value, self.Text, self))
+        return ContainsComparison.new(ControlEvaluation.new(self.Text, value, self))
       end
 
       def In(values, comparator)
