@@ -1,12 +1,12 @@
 class GitHubHomePage < Page
 
   def Url
-    "github.com"
+    "http://github.com"
   end
 
   def Init
 
-    TextBox :search, :name => "q"
+    TextBox :search, :id => "q"
 
   end
 

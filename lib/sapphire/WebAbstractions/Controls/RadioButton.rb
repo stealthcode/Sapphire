@@ -20,7 +20,7 @@ module Sapphire
       def Visible
         radio = self.Find
         x = radio.attribute("disabled")
-        ControlEvaluation.new((x == "false"), true, self)
+        ControlEvaluation.new((x == "false" || x.nil?), true, self)
       end
 
     end

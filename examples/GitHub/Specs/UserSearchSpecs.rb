@@ -1,9 +1,9 @@
 require File.expand_path('../../includes', File.dirname(__FILE__))
 
-Scenario "On the GitHub Home Page" do
+Scenario "Searching for MarcusTheBold" do
 
   Background "Open the browser" do
-    Start ConfiguredBrowser With "www.google.com"
+    Start ConfiguredBrowser With ""
   end
 
   Given "A user is on GitHub" do
@@ -14,8 +14,15 @@ Scenario "On the GitHub Home Page" do
       Set :search => "MarcusTheBold"
       Press Enter
     end
-    Then "it should show the results page" do
-      Should Show GitHubSearchResults
+      Then "it should show the results page" do
+        Should Show GitHubSearchResults
+      end
+      And "it should list MarcusTheBold as a user" do
+        Should Contain :users => "MarcusTheBold"
+      end
+      And "it should list Chris Alderson as a user" do
+        #this test will fail
+        Should Contain :users => "Chris Alderson"
       end
   #-------------------------------------------------------------------------------
   Finally "Close the browser" do
