@@ -26,16 +26,16 @@ module Sapphire
         selection.click
       end
 
-      def Contain(value)
+      def Contain(expected_value)
         ddl = self.Find
         items = ddl.find_elements(:tag_name, "option")
         items.each do |item|
-          if item.text == value
-            return ControlEvaluation.new(item.text, value, self)
+          if item.text == expected_value
+            return ControlEvaluation.new(item.text, expected_value, self)
           end
         end
 
-        return ControlEvaluation.new("Value not found in list", value, self)
+        return ControlEvaluation.new("Value not found in list", expected_value, self)
       end
 
       def Count(value)

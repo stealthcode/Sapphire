@@ -43,15 +43,15 @@ module Sapphire
         return ControlEvaluation.new(values, alltext, self)
       end
 
-      def Contain(value)
+      def Contain(expected_text)
         x = self.FindAll
         x.each do |item|
-          if item.Text.include? value
-            return ContainsComparison.new(ControlEvaluation.new(value, item.Text, item))
+          if item.Text.include? expected_text
+            return ContainsComparison.new(ControlEvaluation.new(item.Text, expected_text, item))
           end
         end
 
-        return ControlEvaluation.new("Value not found in list", value, self)
+        return ControlEvaluation.new("Value not found in list", expected_text, self)
       end
 
       def Click

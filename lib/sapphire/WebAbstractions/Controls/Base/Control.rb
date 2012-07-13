@@ -17,7 +17,7 @@ module Sapphire
       end
 
       def Find(comparator = nil)
-        @control, @found_by_type, @found_by_value = $driver.FindItemWithWait(@array, comparator) if @control.nil?
+        @control, @found_by_type, @found_by_value = $driver.FindItemWithWait(@array, comparator)
         @control
       end
 
@@ -33,7 +33,8 @@ module Sapphire
       end
 
       def FindWithoutWait(comparator = nil)
-        $driver.FindItemWithoutWait(@array, comparator)
+        @control, @found_by_type, @found_by_value = $driver.FindItemWithoutWait(@array, comparator)
+        @control
       end
 
       def Text
@@ -69,8 +70,8 @@ module Sapphire
         EqualsComparison.new(evaluation)
       end
 
-      def Contain(value)
-        return ContainsComparison.new(ControlEvaluation.new(self.Text, value, self))
+      def Contain(expected_value)
+        return ContainsComparison.new(ControlEvaluation.new(self.Text, expected_value, self))
       end
 
       def In(values, comparator)

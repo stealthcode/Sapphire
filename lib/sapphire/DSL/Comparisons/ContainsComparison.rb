@@ -2,9 +2,9 @@ module Sapphire
   module DSL
     class ContainsComparison < Comparison
 
-      def Compare(left, right)
-        return @comparator.Compare((right.include? left), true) if @comparator != nil
-        right.include? left
+      def Compare(actual, expected)
+        return @comparator.Compare((actual.include? expected), true) if @comparator != nil
+        actual.include? expected
       end
 
       def Text
