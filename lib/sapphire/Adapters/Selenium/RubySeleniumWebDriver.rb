@@ -128,7 +128,7 @@ module Sapphire
         $page ||= page
 
         timeout = GetValue(page, :wait)
-        timeout ||= 5
+        timeout ||= 20
 
         $page.Init
 
