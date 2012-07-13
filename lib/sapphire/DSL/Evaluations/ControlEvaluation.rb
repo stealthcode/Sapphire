@@ -4,9 +4,9 @@ module Sapphire
 
       attr_reader :control
 
-      def initialize(left, right, control)
+      def initialize(actual, expected, control)
         @control = control
-        super left, right
+        super actual, expected
       end
     end
   end

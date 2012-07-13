@@ -4,6 +4,7 @@ module Sapphire
 
       attr_accessor :found_by_type
       attr_accessor :found_by_value
+      attr_accessor :control
 
       def initialize(args)
         return if args.nil?
@@ -11,8 +12,8 @@ module Sapphire
 
         if args.is_a? Hash
           @control = args.fetch :instance if args.has_key? :instance
-          @found_by_type = @by
-          @found_by_value = @value
+          @found_by_type = args.keys.first
+          @found_by_value = args.fetch(args.keys.first)
         end
       end
 
@@ -43,11 +44,12 @@ module Sapphire
       end
 
       def Click
-        control = self.Find
-        control.click
+        self.Find if @control.nil?
+        @control.click
       end
 
       def MouseOver
+        self.Find
         if(@found_by_type == :id)
           $driver.ExecuteScript("document.getElementById('"+ @found_by_value +"').style.visibility = 'visible'; ")
         elsif (@found_by_type == :name)
@@ -106,6 +108,7 @@ module Sapphire
 
           return result
         rescue
+          puts $!.backtrace if !$verbose.nil?
           return ControlEvaluation.new(evaluation.left, evaluation.right, self)
         end
       end

@@ -44,10 +44,10 @@ module Sapphire
       end
 
       def Contain(expected_text)
-        x = self.FindAll
-        x.each do |item|
-          if item.Text.include? expected_text
-            return ContainsComparison.new(ControlEvaluation.new(item.Text, expected_text, item))
+        text = self.Text
+        text.each do |t|
+          if t.include? expected_text
+            return ContainsComparison.new(ControlEvaluation.new(t, expected_text, nil))
           end
         end
 
@@ -58,12 +58,10 @@ module Sapphire
         wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         begin
           clicked = wait.until { items = self.FindAll
-            if items.empty? == false
-              if items.first.Visible == true
-                items.first.Click
-                return true
-              end
-            end
+          if !items.empty? && items.first.Visible
+            items.first.Click
+            return true
+          end
           }
           return nil
         rescue
@@ -87,7 +85,7 @@ module Sapphire
         values = []
         x = self.FindAll
         x.each do |item|
-          values << item.Text
+          values << item.control.text
         end
 
         return values

@@ -206,8 +206,8 @@ module Sapphire
 
         if array.is_a? Hash
           x = self.FindElement array.keys.first, array.fetch(array.keys.first)
-          by = item.keys.first
-          value = item.fetch(item.keys.first)
+          by = array.keys.first
+          value = array.fetch(array.keys.first)
         end
         return x, by, value if x != nil
         return x, by, value if comparator.Compare(x != nil, true) if comparator != nil
@@ -270,7 +270,7 @@ module Sapphire
 
           end if array.is_a? Array
 
-          x = self.FindElement array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
+          x = self.FindElements array.keys.first, array.fetch(array.keys.first) if array.is_a? Hash
           if !x.nil?
             by = item.keys.first
             value = item[item.keys.first]

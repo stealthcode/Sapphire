@@ -29,11 +29,11 @@ module Sapphire
 
       def Output()
 
-      if(!Compare(@left, @right))
-        self.Failed(@control)
-      else
-        self.Passed(@control)
-      end
+        if(!Compare(@left, @right))
+          self.Failed(@control)
+        else
+          self.Passed(@control)
+        end
 
       end
 
