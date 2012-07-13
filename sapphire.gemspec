@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.executables = ["sapphire"]
   s.add_dependency('selenium-webdriver')
+  s.add_dependency('ffi', '= 1.0.9')
   s.add_dependency('colorize')
   s.add_dependency('Platform')
 end
