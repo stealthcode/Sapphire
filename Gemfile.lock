@@ -10,6 +10,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    albacore (0.2.7)
     Platform (0.4.0)
     addressable (2.2.8)
     childprocess (0.3.3)
