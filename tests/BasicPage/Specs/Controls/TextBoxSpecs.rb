@@ -10,7 +10,7 @@ Scenario "Testing the TextBox control" do
       Should Show BasicPage
     end
       Then "the first name is set to John" do
-        Should Show :first_name => "John1"
+        Should Show :first_name => "John"
       end
   #-------------------------------------------------------------------------------
     When "the user is on the page" do
