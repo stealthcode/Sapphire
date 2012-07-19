@@ -61,10 +61,19 @@ module Sapphire
         sleep(1)
       end
 
+      def IsEditable
+        control = self.Find
+        if (!control.nil?)
+          ControlEvaluation.new(control["disabled"], false, self)
+        end
+      end
+
       def Visible(shouldWait = true)
         control = self.Find if shouldWait
         control = self.FindWithoutWait if !shouldWait
-        ControlEvaluation.new(control.displayed?, true, self)
+        if (!control.nil?)
+          ControlEvaluation.new(control.displayed?, true, self)
+        end
       end
 
       def Equals(value, comparator)
