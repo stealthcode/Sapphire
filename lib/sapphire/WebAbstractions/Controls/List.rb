@@ -58,7 +58,7 @@ module Sapphire
         wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         begin
           clicked = wait.until { items = self.FindAll
-          if !items.empty? && items.first.Visible
+          if !items.empty? && items.first.Visible && items.first.IsEditable
             items.first.Click
             return true
           end

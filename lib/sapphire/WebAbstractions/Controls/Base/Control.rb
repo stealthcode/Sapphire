@@ -44,8 +44,10 @@ module Sapphire
       end
 
       def Click
-        self.Find if @control.nil?
-        @control.click
+        #self.Find if @control.nil?
+        if (self.Visible(true))
+          @control.click
+        end
       end
 
       def MouseOver
