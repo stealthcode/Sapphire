@@ -17,7 +17,7 @@ module Sapphire
         return ControlEvaluation.new(val != nil, true, self)
       end
 
-      def Visible
+      def Visible(*should_wait)
         radio = self.Find
         x = radio.attribute("disabled")
         ControlEvaluation.new((x == "false" || x.nil?), true, self)
